@@ -4,11 +4,85 @@ plugins {
     id("org.jetbrains.kotlin.plugin.compose")
     id("com.google.gms.google-services")
     id("com.google.firebase.crashlytics")
+    id("com.google.firebase.firebase-perf")
 }
+
+val keystoreFile: String? = System.getenv("KEYSTORE_FILE")
+val keystorePassword: String? = System.getenv("KEYSTORE_PASSWORD")
+val keyAliasEnv: String? = System.getenv("KEY_ALIAS")
+val keyPassword: String? = System.getenv("KEY_PASSWORD")
+
+val keystoreFile: String? = System.getenv("KEYSTORE_FILE")
+val keystorePassword: String? = System.getenv("KEYSTORE_PASSWORD")
+val keyAlias: String? = System.getenv("KEY_ALIAS")
+val keyPassword: String? = System.getenv("KEY_PASSWORD")
 
 android {
     namespace = "com.scamradar.app"
     compileSdk = 35
+
+    defaultConfig {
+        applicationId = "com.scamradar.app"
+        minSdk = 26
+        targetSdk = 35
+        versionCode = 1
+        versionName = "1.0.0"
+
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField(
+            "String",
+            "MODEL_SHA256",
+            "\"\""
+        )
+        buildConfigField(
+            "String",
+            "MODEL_DOWNLOAD_URL",
+            "\"https://huggingface.co/litert-community/gemma-4-E2B-it-litert-lm/resolve/main/gemma-4-E2B-it.litertlm\""
+        )
+        buildConfigField(
+            "String",
+            "MODEL_CONFIG_URL",
+            "\"https://scamradar.github.io/model-config.json\""
+        )
+        buildConfigField(
+            "long",
+            "MODEL_SIZE_BYTES",
+            "2588147712L"
+        )
+    }
+
+    signingConfigs {
+        create("release") {
+            if (keystoreFile != null) {
+                storeFile = file(keystoreFile)
+                storePassword = keystorePassword ?: ""
+                keyAlias = keyAlias ?: ""
+                keyPassword = keyPassword ?: ""
+            }
+        }
+    }
+
+    buildTypes {
+        debug {
+            isMinifyEnabled = false
+            buildConfigField("Boolean", "USE_TEST_ADS", "true")
+        }
+        release {
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+            buildConfigField("Boolean", "USE_TEST_ADS", "false")
+            if (keystoreFile != null) {
+                signingConfig = signingConfigs.getByName("release")
+            }
+        }
+    }
+        }
+    }
 
     defaultConfig {
         applicationId = "com.scamradar.app"
@@ -53,6 +127,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            signingConfig = signingConfigs.getByName("release")
             buildConfigField("Boolean", "USE_TEST_ADS", "false")
         }
     }
@@ -92,6 +167,7 @@ dependencies {
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-text")
+    implementation("androidx.compose.ui:ui-text-google-fonts")
     implementation("androidx.compose.material3:material3")
     implementation("androidx.compose.material:material-icons-extended")
     implementation("androidx.compose.ui:ui-tooling-preview")
@@ -110,6 +186,7 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:33.7.0"))
     implementation("com.google.firebase:firebase-analytics")
     implementation("com.google.firebase:firebase-crashlytics")
+    implementation("com.google.firebase:firebase-perf")
 
     implementation("com.google.code.gson:gson:2.11.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.9.0")
