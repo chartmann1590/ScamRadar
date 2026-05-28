@@ -45,15 +45,23 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.scamradar.app.data.datastore.UserPrefs
 import com.scamradar.app.download.ModelDownloadService
 import com.scamradar.app.download.ModelManager
+import com.scamradar.app.ui.components.AdBanner
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.rememberCoroutineScope
+import kotlinx.coroutines.launch
 
 @Composable
 fun SettingsScreen(modifier: Modifier = Modifier) {
     val context = LocalContext.current
+    val coroutineScope = rememberCoroutineScope()
+    val prefs = remember { UserPrefs(context) }
+    val wifiOnly by prefs.wifiOnlyDownload.collectAsState(initial = true)
 
     var modelRefreshKey by remember { mutableIntStateOf(0) }
-    var wifiOnly by remember { mutableStateOf(true) }
     var darkMode by remember { mutableStateOf(0) }
     val modelDownloaded = remember(modelRefreshKey) { ModelManager.isModelDownloaded(context) }
     val modelSizeBytes = remember(modelRefreshKey) { ModelManager.getModelFileSize(context) }
@@ -173,7 +181,9 @@ fun SettingsScreen(modifier: Modifier = Modifier) {
                     }
                     Switch(
                         checked = wifiOnly,
-                        onCheckedChange = { wifiOnly = it }
+                        onCheckedChange = { newValue ->
+                            coroutineScope.launch { prefs.setWifiOnlyDownload(newValue) }
+                        }
                     )
                 }
             }
@@ -292,8 +302,7 @@ fun SettingsScreen(modifier: Modifier = Modifier) {
                     modifier = Modifier
                         .fillMaxWidth()
                         .clickable {
-                            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://scamradar.app/privacy"))
-                            context.startActivity(intent)
+                            openUrl(context, "https://chartmann1590.github.io/ScamRadar/privacy.html")
                         }
                         .padding(vertical = 4.dp)
                 ) {
@@ -311,6 +320,22 @@ fun SettingsScreen(modifier: Modifier = Modifier) {
                     )
                 }
 
+                Spacer(modifier = Modifier.height(8.dp))
+
+                SettingsLinkRow(
+                    label = "Website",
+                    url = "https://chartmann1590.github.io/ScamRadar/",
+                    onClick = { openUrl(context, "https://chartmann1590.github.io/ScamRadar/") }
+                )
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                SettingsLinkRow(
+                    label = "Support development",
+                    url = "buymeacoffee.com/charleshartmann",
+                    onClick = { openUrl(context, "https://buymeacoffee.com/charleshartmann") }
+                )
+
                 Spacer(modifier = Modifier.height(12.dp))
 
                 Text(
@@ -321,8 +346,51 @@ fun SettingsScreen(modifier: Modifier = Modifier) {
             }
         }
 
+        Spacer(modifier = Modifier.height(16.dp))
+
+        AdBanner()
+
         Spacer(modifier = Modifier.height(24.dp))
     }
+}
+
+@Composable
+private fun SettingsLinkRow(
+    label: String,
+    url: String,
+    onClick: () -> Unit
+) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable(onClick = onClick)
+            .padding(vertical = 4.dp)
+    ) {
+        Icon(
+            imageVector = Icons.Default.Language,
+            contentDescription = null,
+            tint = MaterialTheme.colorScheme.primary
+        )
+        Spacer(modifier = Modifier.width(8.dp))
+        Column(modifier = Modifier.weight(1f)) {
+            Text(
+                text = label,
+                style = MaterialTheme.typography.bodyLarge,
+                color = MaterialTheme.colorScheme.primary
+            )
+            Text(
+                text = url,
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        }
+    }
+}
+
+private fun openUrl(context: android.content.Context, url: String) {
+    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+    context.startActivity(intent)
 }
 
 private fun formatModelSize(bytes: Long): String {

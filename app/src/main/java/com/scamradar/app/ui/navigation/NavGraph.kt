@@ -39,8 +39,6 @@ import com.scamradar.app.ui.screens.result.ResultScreen
 import com.scamradar.app.ui.screens.scanning.ScanningScreen
 import com.scamradar.app.ui.screens.settings.SettingsScreen
 import java.io.File
-import java.net.URLDecoder
-import java.net.URLEncoder
 import kotlinx.coroutines.launch
 
 private val bottomNavRoutes = setOf("scan", "library", "library/{patternId}", "history", "settings")
@@ -164,8 +162,8 @@ fun ScamRadarNavHost(
                     navArgument("scanMode") { type = NavType.StringType }
                 )
             ) { backStackEntry ->
-                val message = URLDecoder.decode(
-                    backStackEntry.arguments?.getString("message") ?: "", "UTF-8"
+                val message = NavArgCodec.decode(
+                    backStackEntry.arguments?.getString("message") ?: ""
                 )
                 val scanModeStr = backStackEntry.arguments?.getString("scanMode") ?: "TEXT"
                 val scanMode = try { ScanMode.valueOf(scanModeStr) } catch (_: Exception) { ScanMode.TEXT }
@@ -178,7 +176,7 @@ fun ScamRadarNavHost(
                         coroutineScope.launch {
                             database.scanHistoryDao().insert(ScanHistoryEntity(scanResult, scanMode))
                         }
-                        val json = URLEncoder.encode(gson.toJson(scanResult), "UTF-8")
+                        val json = NavArgCodec.encode(gson.toJson(scanResult))
                         navController.navigate("result/$json") {
                             popUpTo(Screen.Scan.route)
                         }
@@ -195,14 +193,13 @@ fun ScamRadarNavHost(
                     navArgument("scanResultJson") { type = NavType.StringType }
                 )
             ) { backStackEntry ->
-                val json = URLDecoder.decode(
-                    backStackEntry.arguments?.getString("scanResultJson") ?: "", "UTF-8"
+                val json = NavArgCodec.decode(
+                    backStackEntry.arguments?.getString("scanResultJson") ?: ""
                 )
                 val scanResult = gson.fromJson(json, ScanResult::class.java)
 
                 ResultScreen(
                     scanResult = scanResult,
-                    onShare = {},
                     onScanAgain = {
                         navController.navigate(Screen.Scan.route) {
                             popUpTo(Screen.Scan.route) { inclusive = true }
@@ -235,11 +232,11 @@ fun ScamRadarNavHost(
                 HistoryScreen(
                     onOpenResult = { entity ->
                         val scanResult = entity.toScanResult(gson)
-                        val json = URLEncoder.encode(gson.toJson(scanResult), "UTF-8")
+                        val json = NavArgCodec.encode(gson.toJson(scanResult))
                         navController.navigate("result/$json")
                     },
                     onRescan = { entity ->
-                        val encoded = URLEncoder.encode(entity.originalMessage, "UTF-8")
+                        val encoded = NavArgCodec.encode(entity.originalMessage)
                         navController.navigate("scanning/$encoded/${entity.scanMode}")
                     }
                 )

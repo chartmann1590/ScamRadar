@@ -73,8 +73,10 @@ import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavController
 import com.scamradar.app.data.model.ScanMode
 import com.scamradar.app.ocr.OcrProcessor
+import com.scamradar.app.speech.SpeechProcessor
+import com.scamradar.app.speech.TranscriptionResult
+import com.scamradar.app.ui.navigation.NavArgCodec
 import com.scamradar.app.ui.navigation.Screen
-import java.net.URLEncoder
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -89,7 +91,39 @@ fun HomeScreen(
     var showDialog by remember { mutableStateOf(false) }
     var noticeMessage by remember { mutableStateOf<String?>(null) }
     var isExtractingScreenshot by remember { mutableStateOf(false) }
+    var isTranscribingFile by remember { mutableStateOf(false) }
+    var showVoicemailChooser by remember { mutableStateOf(false) }
     val scrollState = rememberScrollState()
+    val speechProcessor = remember { SpeechProcessor() }
+    val audioPicker = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetContent()
+    ) { uri ->
+        if (uri == null) return@rememberLauncherForActivityResult
+        coroutineScope.launch {
+            isTranscribingFile = true
+            val result = speechProcessor.transcribeAudioFile(uri, context)
+            isTranscribingFile = false
+            when (result) {
+                is TranscriptionResult.Success -> {
+                    if (result.text.isBlank()) {
+                        noticeMessage = "We couldn't make out any speech in that file."
+                    } else {
+                        val voicePrompt = """
+                            Source: voicemail audio file transcript.
+                            Analyze the following voicemail transcript for scams, including family-emergency scams, voice-cloning scripts, impersonation, urgency, payment requests, and credential theft.
+
+                            Voicemail transcript:
+                            ${result.text}
+                        """.trimIndent()
+                        val encoded = NavArgCodec.encode(voicePrompt)
+                        navController.navigate("scanning/$encoded/${ScanMode.VOICE.name}")
+                    }
+                }
+                is TranscriptionResult.Error -> noticeMessage = result.message
+                is TranscriptionResult.Unsupported -> noticeMessage = result.message
+            }
+        }
+    }
     val imagePicker = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
     ) { uri ->
@@ -108,7 +142,7 @@ fun HomeScreen(
                     Extracted screenshot text:
                     $extractedText
                 """.trimIndent()
-                val encoded = URLEncoder.encode(screenshotPrompt, "UTF-8")
+                val encoded = NavArgCodec.encode(screenshotPrompt)
                 navController.navigate("scanning/$encoded/${ScanMode.OCR.name}")
             }
         }
@@ -132,7 +166,7 @@ fun HomeScreen(
                 Voicemail transcript:
                 $transcript
             """.trimIndent()
-            val encoded = URLEncoder.encode(voicePrompt, "UTF-8")
+            val encoded = NavArgCodec.encode(voicePrompt)
             navController.navigate("scanning/$encoded/${ScanMode.VOICE.name}")
         }
     }
@@ -142,7 +176,7 @@ fun HomeScreen(
             onDismiss = { showDialog = false },
             onAnalyze = { message ->
                 showDialog = false
-                val encoded = URLEncoder.encode(message, "UTF-8")
+                val encoded = NavArgCodec.encode(message)
                 navController.navigate("scanning/$encoded/${ScanMode.TEXT.name}")
             }
         )
@@ -152,6 +186,34 @@ fun HomeScreen(
         NoticeDialog(
             message = message,
             onDismiss = { noticeMessage = null }
+        )
+    }
+
+    if (showVoicemailChooser) {
+        VoicemailChooserDialog(
+            fileImportSupported = speechProcessor.isFileImportSupported(),
+            onDismiss = { showVoicemailChooser = false },
+            onRecordLive = {
+                showVoicemailChooser = false
+                val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
+                    putExtra(
+                        RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                        RecognizerIntent.LANGUAGE_MODEL_FREE_FORM
+                    )
+                    putExtra(RecognizerIntent.EXTRA_PROMPT, "Play the voicemail near your phone")
+                    putExtra(RecognizerIntent.EXTRA_PREFER_OFFLINE, true)
+                    putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 3)
+                }
+                runCatching {
+                    speechRecognizer.launch(intent)
+                }.onFailure {
+                    noticeMessage = "Speech recognition is not available on this device."
+                }
+            },
+            onImportFile = {
+                showVoicemailChooser = false
+                audioPicker.launch("audio/*")
+            }
         )
     }
 
@@ -273,24 +335,9 @@ fun HomeScreen(
                 )
                 ActionCard(
                     icon = Icons.Filled.Voicemail,
-                    label = "Check voicemail",
+                    label = if (isTranscribingFile) "Transcribing…" else "Check voicemail",
                     modifier = Modifier.weight(1f),
-                    onClick = {
-                        val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
-                            putExtra(
-                                RecognizerIntent.EXTRA_LANGUAGE_MODEL,
-                                RecognizerIntent.LANGUAGE_MODEL_FREE_FORM
-                            )
-                            putExtra(RecognizerIntent.EXTRA_PROMPT, "Play the voicemail near your phone")
-                            putExtra(RecognizerIntent.EXTRA_PREFER_OFFLINE, true)
-                            putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 3)
-                        }
-                        runCatching {
-                            speechRecognizer.launch(intent)
-                        }.onFailure {
-                            noticeMessage = "Speech recognition is not available on this device."
-                        }
-                    }
+                    onClick = { showVoicemailChooser = true }
                 )
                 ActionCard(
                     icon = Icons.Filled.Keyboard,
@@ -655,6 +702,113 @@ private fun TextInputDialog(
                         Text(text = "Analyze")
                     }
                 }
+            }
+        }
+    }
+}
+
+@Composable
+private fun VoicemailChooserDialog(
+    fileImportSupported: Boolean,
+    onDismiss: () -> Unit,
+    onRecordLive: () -> Unit,
+    onImportFile: () -> Unit
+) {
+    Dialog(onDismissRequest = onDismiss) {
+        Surface(
+            shape = RoundedCornerShape(24.dp),
+            color = MaterialTheme.colorScheme.surface,
+            tonalElevation = 6.dp
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(24.dp)
+            ) {
+                Text(
+                    text = "Check a voicemail",
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.onSurface
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(
+                    text = "Pick how you want to feed the voicemail in.",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+                Spacer(modifier = Modifier.height(16.dp))
+                VoicemailChoiceRow(
+                    icon = Icons.Filled.Voicemail,
+                    title = "Play near phone",
+                    subtitle = "We'll listen through the mic and transcribe it on-device.",
+                    onClick = onRecordLive
+                )
+                Spacer(modifier = Modifier.height(10.dp))
+                VoicemailChoiceRow(
+                    icon = Icons.Filled.AddPhotoAlternate,
+                    title = if (fileImportSupported) "Import audio file" else "Import (requires Android 13+)",
+                    subtitle = if (fileImportSupported)
+                        "Pick an .m4a, .mp3, or .wav file from your phone."
+                    else
+                        "Audio file import needs Android 13 or newer.",
+                    enabled = fileImportSupported,
+                    onClick = onImportFile
+                )
+                Spacer(modifier = Modifier.height(16.dp))
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.End
+                ) {
+                    TextButton(onClick = onDismiss) {
+                        Text(text = "Cancel")
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun VoicemailChoiceRow(
+    icon: ImageVector,
+    title: String,
+    subtitle: String,
+    enabled: Boolean = true,
+    onClick: () -> Unit
+) {
+    Surface(
+        onClick = onClick,
+        enabled = enabled,
+        shape = RoundedCornerShape(16.dp),
+        color = MaterialTheme.colorScheme.surfaceContainerLow
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(14.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Icon(
+                imageVector = icon,
+                contentDescription = null,
+                tint = if (enabled) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline,
+                modifier = Modifier.size(28.dp)
+            )
+            Spacer(modifier = Modifier.width(14.dp))
+            Column(modifier = Modifier.weight(1f)) {
+                Text(
+                    text = title,
+                    style = MaterialTheme.typography.titleSmall,
+                    fontWeight = FontWeight.SemiBold,
+                    color = MaterialTheme.colorScheme.onSurface
+                )
+                Spacer(modifier = Modifier.height(2.dp))
+                Text(
+                    text = subtitle,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
             }
         }
     }

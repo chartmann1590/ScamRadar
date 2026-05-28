@@ -54,6 +54,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.foundation.lazy.grid.GridItemSpan
+import com.scamradar.app.ads.NativeAdLoader
+import com.scamradar.app.analytics.Analytics
+import com.scamradar.app.ui.components.AdBanner
+import com.scamradar.app.ui.components.NativeAdCard
 
 data class ScamPattern(
     val id: Int,
@@ -365,6 +371,16 @@ fun LibraryScreen(
         selectedPattern = scamPatterns.firstOrNull { it.id == initialPatternId }
     }
 
+    val context = LocalContext.current
+    LaunchedEffect(Unit) {
+        Analytics.libraryViewed()
+        NativeAdLoader.preload(context, listOf(0, 1, 2))
+    }
+
+    LaunchedEffect(selectedPattern?.id) {
+        selectedPattern?.let { Analytics.libraryDetailViewed(it.category) }
+    }
+
     val filteredPatterns = remember(selectedCategory, searchQuery) {
         val query = searchQuery.trim()
         scamPatterns
@@ -433,7 +449,8 @@ fun LibraryScreen(
         if (filteredPatterns.isEmpty()) {
             Column(
                 modifier = Modifier
-                    .fillMaxSize()
+                    .fillMaxWidth()
+                    .weight(1f)
                     .padding(top = 48.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
@@ -451,20 +468,36 @@ fun LibraryScreen(
                 )
             }
         } else {
+            val cellPlan = remember(filteredPatterns) { buildCellPlan(filteredPatterns) }
             LazyVerticalGrid(
                 columns = GridCells.Fixed(2),
                 horizontalArrangement = Arrangement.spacedBy(10.dp),
                 verticalArrangement = Arrangement.spacedBy(10.dp),
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f)
             ) {
-                items(filteredPatterns, key = { it.id }) { pattern ->
-                    ScamPatternCard(
-                        pattern = pattern,
-                        onClick = { selectedPattern = pattern }
-                    )
+                items(
+                    count = cellPlan.size,
+                    span = { index ->
+                        if (cellPlan[index] is LibraryCell.Ad) GridItemSpan(2)
+                        else GridItemSpan(1)
+                    }
+                ) { index ->
+                    when (val cell = cellPlan[index]) {
+                        is LibraryCell.Pattern -> ScamPatternCard(
+                            pattern = cell.pattern,
+                            onClick = { selectedPattern = cell.pattern }
+                        )
+                        is LibraryCell.Ad -> {
+                            val ad = NativeAdLoader.slotCache[cell.slot]
+                            if (ad != null) NativeAdCard(ad = ad)
+                        }
+                    }
                 }
             }
         }
+        AdBanner(modifier = Modifier.padding(vertical = 4.dp))
     }
 
     selectedPattern?.let { pattern ->
@@ -642,4 +675,22 @@ private fun ScamPatternCard(
             )
         }
     }
+}
+
+private sealed interface LibraryCell {
+    data class Pattern(val pattern: ScamPattern) : LibraryCell
+    data class Ad(val slot: Int) : LibraryCell
+}
+
+private fun buildCellPlan(patterns: List<ScamPattern>): List<LibraryCell> {
+    val result = mutableListOf<LibraryCell>()
+    var slot = 0
+    patterns.forEachIndexed { index, pattern ->
+        result.add(LibraryCell.Pattern(pattern))
+        if ((index + 1) % 8 == 0) {
+            result.add(LibraryCell.Ad(slot))
+            slot++
+        }
+    }
+    return result
 }

@@ -29,6 +29,7 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.scamradar.app.analytics.Analytics
 import com.scamradar.app.classifier.ClassifierRouter
 import com.scamradar.app.data.model.ScanMode
 import com.scamradar.app.data.model.ScanResult
@@ -45,10 +46,22 @@ fun ScanningScreen(
     val currentOnError by rememberUpdatedState(onError)
 
     LaunchedEffect(message) {
+        val tier = classifierRouter.currentTier()
+        Analytics.scanStarted(scanMode, tier)
+        val trace = Analytics.startClassifyTrace(tier)
+        val startedAt = System.currentTimeMillis()
         try {
             val result = classifierRouter.selectClassifier().classify(message)
+            trace.stop()
+            Analytics.scanCompleted(
+                verdict = result.verdict,
+                scamType = result.scamType,
+                tier = result.classifierTier,
+                durationMs = System.currentTimeMillis() - startedAt
+            )
             currentOnResult(result)
         } catch (_: Exception) {
+            trace.stop()
             currentOnError()
         }
     }

@@ -1,6 +1,6 @@
 # ScamRadar Privacy Policy
 
-**Last updated: May 28, 2026**
+**Last updated: May 28, 2026 (rev. 2)**
 
 ---
 
@@ -38,7 +38,8 @@ ScamRadar uses **Firebase Analytics** to collect anonymous, aggregated app usage
 
 - **Scan events:** When a scan is started or completed (verdict type only — no message content)
 - **Feature usage:** Which features are used (Library, History, Share Card)
-- **App performance:** Crash reports via Firebase Crashlytics
+- **Crash reports:** Via Firebase Crashlytics (stack traces, device model, OS version — no message content)
+- **Performance traces:** Via Firebase Performance Monitoring (app start time, screen render times, classifier latency by tier — no message content)
 - **Device info:** Device model, OS version, app version (standard Firebase collection)
 
 All analytics data is anonymous and cannot be linked to you personally. We never log, transmit, or store the content of any message you scan.
@@ -97,9 +98,10 @@ All runtime permissions are requested in-context with a plain-language explanati
 - May collect device advertising identifiers
 - Privacy policy: [https://policies.google.com/privacy](https://policies.google.com/privacy)
 
-### Firebase Analytics & Crashlytics
+### Firebase Analytics, Crashlytics & Performance Monitoring
 - Collects anonymous app usage statistics
 - Reports app crashes to help us fix bugs
+- Measures app performance and stability (start time, render time, classifier latency) to help us improve responsiveness — no message content is included in performance traces
 - Privacy policy: [https://firebase.google.com/policies/analytics](https://firebase.google.com/policies/analytics)
 
 ### Google LiteRT / Gemma 4
@@ -173,7 +175,7 @@ ScamRadar does not "sell" personal information as defined by the CCPA. We do not
 
 As declared in our Google Play Data Safety form:
 
-- **Data collected:** Anonymous app interaction events (scan started/completed, feature usage)
+- **Data collected:** Anonymous app interaction events (scan started/completed, feature usage), crash reports, and anonymous app performance traces (no message content)
 - **Data shared:** None
 - **Data encrypted in transit:** Yes (Firebase default)
 - **User can request deletion:** Yes (in-app or by clearing app data)
@@ -181,4 +183,4 @@ As declared in our Google Play Data Safety form:
 
 ---
 
-*This privacy policy is effective as of May 28, 2026.*
+*This privacy policy is effective as of May 28, 2026 (rev. 2).*

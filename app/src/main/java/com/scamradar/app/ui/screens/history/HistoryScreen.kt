@@ -53,6 +53,7 @@ import androidx.compose.ui.unit.dp
 import com.scamradar.app.data.db.AppDatabase
 import com.scamradar.app.data.db.ScanHistoryEntity
 import com.scamradar.app.data.model.Verdict
+import com.scamradar.app.ui.components.AdBanner
 import kotlinx.coroutines.launch
 
 private val verdictColors = mapOf(
@@ -135,7 +136,8 @@ fun HistoryScreen(
         if (filteredItems.isEmpty()) {
             Box(
                 modifier = Modifier
-                    .fillMaxSize(),
+                    .fillMaxWidth()
+                    .weight(1f),
                 contentAlignment = Alignment.Center
             ) {
                 Column(
@@ -165,7 +167,9 @@ fun HistoryScreen(
         } else {
             LazyColumn(
                 verticalArrangement = Arrangement.spacedBy(8.dp),
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f)
             ) {
                 items(
                     items = filteredItems,
@@ -212,6 +216,7 @@ fun HistoryScreen(
                 }
             }
         }
+        AdBanner(modifier = Modifier.padding(vertical = 4.dp))
     }
 }
 

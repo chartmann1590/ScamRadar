@@ -58,6 +58,14 @@ object ModelManager {
         return hashString.equals(expectedHash, ignoreCase = true)
     }
 
+    fun verifyModelOnStartup(context: Context) {
+        if (!isModelDownloaded(context)) return
+        if (BuildConfig.MODEL_SHA256.isEmpty()) return
+        if (!verifyModelHash(context)) {
+            deleteModel(context)
+        }
+    }
+
     fun getDeviceClass(context: Context): DeviceClass {
         val activityManager = context.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
         val memoryInfo = ActivityManager.MemoryInfo()

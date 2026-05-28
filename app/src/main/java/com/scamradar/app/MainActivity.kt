@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.Modifier
+import com.scamradar.app.ads.InterstitialController
 import com.scamradar.app.data.datastore.UserPrefs
 import com.scamradar.app.ui.navigation.ScamRadarNavHost
 import com.scamradar.app.ui.theme.ScamRadarTheme
@@ -18,6 +19,7 @@ class MainActivity : ComponentActivity() {
 
         val userPrefs = UserPrefs(applicationContext)
         val filesDir = applicationContext.filesDir
+        InterstitialController.preload(applicationContext)
 
         setContent {
             ScamRadarTheme {

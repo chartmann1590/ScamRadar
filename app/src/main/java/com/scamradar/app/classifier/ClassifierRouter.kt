@@ -1,6 +1,7 @@
 package com.scamradar.app.classifier
 
 import android.content.Context
+import com.scamradar.app.data.model.ClassifierTier
 import java.io.File
 
 class ClassifierRouter(
@@ -16,6 +17,14 @@ class ClassifierRouter(
             gemmaClassifier
         } else {
             liteClassifier
+        }
+    }
+
+    fun currentTier(): ClassifierTier {
+        return if (modelFile.exists() && modelFile.length() > 0L) {
+            ClassifierTier.GEMMA
+        } else {
+            ClassifierTier.LITE
         }
     }
 }

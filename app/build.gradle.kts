@@ -7,80 +7,23 @@ plugins {
     id("com.google.firebase.firebase-perf")
 }
 
-val keystoreFile: String? = System.getenv("KEYSTORE_FILE")
-val keystorePassword: String? = System.getenv("KEYSTORE_PASSWORD")
+val keystoreFilePath: String? = System.getenv("KEYSTORE_FILE")
+val keystorePasswordEnv: String? = System.getenv("KEYSTORE_PASSWORD")
 val keyAliasEnv: String? = System.getenv("KEY_ALIAS")
-val keyPassword: String? = System.getenv("KEY_PASSWORD")
-
-val keystoreFile: String? = System.getenv("KEYSTORE_FILE")
-val keystorePassword: String? = System.getenv("KEYSTORE_PASSWORD")
-val keyAlias: String? = System.getenv("KEY_ALIAS")
-val keyPassword: String? = System.getenv("KEY_PASSWORD")
+val keyPasswordEnv: String? = System.getenv("KEY_PASSWORD")
 
 android {
     namespace = "com.scamradar.app"
     compileSdk = 35
 
-    defaultConfig {
-        applicationId = "com.scamradar.app"
-        minSdk = 26
-        targetSdk = 35
-        versionCode = 1
-        versionName = "1.0.0"
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-
-        buildConfigField(
-            "String",
-            "MODEL_SHA256",
-            "\"\""
-        )
-        buildConfigField(
-            "String",
-            "MODEL_DOWNLOAD_URL",
-            "\"https://huggingface.co/litert-community/gemma-4-E2B-it-litert-lm/resolve/main/gemma-4-E2B-it.litertlm\""
-        )
-        buildConfigField(
-            "String",
-            "MODEL_CONFIG_URL",
-            "\"https://scamradar.github.io/model-config.json\""
-        )
-        buildConfigField(
-            "long",
-            "MODEL_SIZE_BYTES",
-            "2588147712L"
-        )
-    }
-
     signingConfigs {
         create("release") {
-            if (keystoreFile != null) {
-                storeFile = file(keystoreFile)
-                storePassword = keystorePassword ?: ""
-                keyAlias = keyAlias ?: ""
-                keyPassword = keyPassword ?: ""
+            if (keystoreFilePath != null) {
+                storeFile = file(keystoreFilePath)
+                storePassword = keystorePasswordEnv
+                keyAlias = keyAliasEnv
+                keyPassword = keyPasswordEnv
             }
-        }
-    }
-
-    buildTypes {
-        debug {
-            isMinifyEnabled = false
-            buildConfigField("Boolean", "USE_TEST_ADS", "true")
-        }
-        release {
-            isMinifyEnabled = true
-            isShrinkResources = true
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-            buildConfigField("Boolean", "USE_TEST_ADS", "false")
-            if (keystoreFile != null) {
-                signingConfig = signingConfigs.getByName("release")
-            }
-        }
-    }
         }
     }
 
