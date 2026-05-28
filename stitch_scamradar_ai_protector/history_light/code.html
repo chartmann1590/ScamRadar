@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ScamRadar - Scan History</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary": "#006c49",
+                        "surface-container-high": "#e8e7f3",
+                        "outline-variant": "#c4c5d8",
+                        "on-secondary-fixed-variant": "#005236",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-fixed": "#001158",
+                        "surface-dim": "#dad9e5",
+                        "inverse-primary": "#b9c3ff",
+                        "tertiary-fixed": "#ffddb8",
+                        "on-tertiary-fixed": "#2a1700",
+                        "inverse-on-surface": "#f1effc",
+                        "on-tertiary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "surface-tint": "#2b4edf",
+                        "on-primary": "#ffffff",
+                        "on-secondary-container": "#00714d",
+                        "primary": "#0033c6",
+                        "on-primary-fixed-variant": "#0032c3",
+                        "surface-container-low": "#f4f2ff",
+                        "outline": "#747686",
+                        "primary-fixed-dim": "#b9c3ff",
+                        "tertiary-container": "#875400",
+                        "on-surface": "#1a1b24",
+                        "surface": "#fbf8ff",
+                        "on-primary-container": "#d3d8ff",
+                        "on-error-container": "#93000a",
+                        "secondary-container": "#6cf8bb",
+                        "inverse-surface": "#2f3039",
+                        "surface-container": "#eeedf9",
+                        "on-secondary-fixed": "#002113",
+                        "secondary-fixed-dim": "#4edea3",
+                        "primary-container": "#2d4fe0",
+                        "on-background": "#1a1b24",
+                        "surface-variant": "#e2e1ed",
+                        "surface-bright": "#fbf8ff",
+                        "error": "#ba1a1a",
+                        "error-container": "#ffdad6",
+                        "secondary-fixed": "#6ffbbe",
+                        "tertiary": "#663f00",
+                        "on-tertiary-container": "#ffd29f",
+                        "primary-fixed": "#dee1ff",
+                        "tertiary-fixed-dim": "#ffb95f",
+                        "background": "#fbf8ff",
+                        "on-surface-variant": "#444655",
+                        "on-tertiary-fixed-variant": "#653e00",
+                        "on-secondary": "#ffffff",
+                        "surface-container-highest": "#e2e1ed"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-md": "16px",
+                        "stack-sm": "8px",
+                        "touch-target": "48px",
+                        "stack-lg": "24px",
+                        "stack-xl": "32px",
+                        "margin-main": "20px",
+                        "gutter-grid": "16px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "label-md": ["Inter"],
+                        "title-lg": ["Inter"],
+                        "headline-sm": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "label-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.5px", "fontWeight": "600"}],
+                        "title-lg": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "headline-lg-mobile": ["28px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.1px", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .radar-pulse {
+            animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.1; }
+            50% { transform: scale(1.1); opacity: 0.3; }
+        }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface font-body-md text-on-surface min-h-screen pb-20">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-surface dark:bg-surface-dim flex items-center h-16 px-margin-main w-full max-w-[360px] mx-auto left-0 right-0">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary dark:text-primary-fixed-dim" style="font-variation-settings: 'FILL' 1;">shield_with_heart</span>
+<h1 class="font-headline-sm text-headline-sm font-bold text-primary dark:text-primary-fixed-dim">ScamRadar</h1>
+</div>
+<div class="ml-auto">
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant">search</span>
+</button>
+</div>
+</header>
+<main class="pt-20 px-margin-main max-w-[360px] mx-auto">
+<!-- Filter Chips Section -->
+<div class="flex gap-2 overflow-x-auto hide-scrollbar pb-stack-md">
+<button class="px-4 py-2 rounded-full bg-secondary-container text-on-secondary-container font-label-lg text-label-lg flex items-center gap-2 whitespace-nowrap active:scale-95 transition-transform">
+                All Scans
+            </button>
+<button class="px-4 py-2 rounded-full border border-outline-variant text-on-surface-variant font-label-lg text-label-lg flex items-center gap-2 whitespace-nowrap hover:bg-surface-container-low active:scale-95 transition-transform">
+<span class="w-2 h-2 rounded-full bg-error"></span>
+                Scams
+            </button>
+<button class="px-4 py-2 rounded-full border border-outline-variant text-on-surface-variant font-label-lg text-label-lg flex items-center gap-2 whitespace-nowrap hover:bg-surface-container-low active:scale-95 transition-transform">
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+                Suspicious
+            </button>
+<button class="px-4 py-2 rounded-full border border-outline-variant text-on-surface-variant font-label-lg text-label-lg flex items-center gap-2 whitespace-nowrap hover:bg-surface-container-low active:scale-95 transition-transform">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+                Safe
+            </button>
+</div>
+<!-- History Content -->
+<section class="space-y-stack-md mt-4">
+<!-- Row Item: Dangerous -->
+<div class="bg-surface-container-lowest p-4 rounded-xl border border-surface-variant shadow-sm flex flex-col gap-2 relative overflow-hidden group hover:shadow-md transition-shadow">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-error"></div>
+<div class="flex justify-between items-start">
+<span class="font-label-md text-label-md text-outline">Today, 2:45 PM</span>
+<span class="bg-error-container text-on-error-container px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider">Scam Detected</span>
+</div>
+<p class="font-body-md text-on-surface line-clamp-2">"Your Amazon account will be locked in 2 hours. Click here to verify your identity: http://bit.ly/secure-amz-234..."</p>
+<div class="flex items-center gap-1 mt-1">
+<span class="material-symbols-outlined text-[16px] text-error">report</span>
+<span class="text-[12px] font-semibold text-error">High-risk phishing link</span>
+</div>
+</div>
+<!-- Row Item: Suspicious -->
+<div class="bg-surface-container-lowest p-4 rounded-xl border border-surface-variant shadow-sm flex flex-col gap-2 relative overflow-hidden group hover:shadow-md transition-shadow">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-tertiary"></div>
+<div class="flex justify-between items-start">
+<span class="font-label-md text-label-md text-outline">Yesterday, 10:12 AM</span>
+<span class="bg-tertiary-container text-on-tertiary-container px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider">Suspicious</span>
+</div>
+<p class="font-body-md text-on-surface line-clamp-2">"Hi mom, I lost my phone and I'm using a friend's. Can you please wire $200 for a new one?"</p>
+<div class="flex items-center gap-1 mt-1">
+<span class="material-symbols-outlined text-[16px] text-tertiary">warning</span>
+<span class="text-[12px] font-semibold text-tertiary">Impersonation attempt likely</span>
+</div>
+</div>
+<!-- Row Item: Safe -->
+<div class="bg-surface-container-lowest p-4 rounded-xl border border-surface-variant shadow-sm flex flex-col gap-2 relative overflow-hidden group hover:shadow-md transition-shadow">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-secondary"></div>
+<div class="flex justify-between items-start">
+<span class="font-label-md text-label-md text-outline">Oct 24, 09:30 AM</span>
+<span class="bg-secondary-container text-on-secondary-container px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider">Clear</span>
+</div>
+<p class="font-body-md text-on-surface line-clamp-2">"Your order #9942 has been shipped! Track your package at official-delivery.com"</p>
+<div class="flex items-center gap-1 mt-1">
+<span class="material-symbols-outlined text-[16px] text-secondary">check_circle</span>
+<span class="text-[12px] font-semibold text-secondary">Verified sender</span>
+</div>
+</div>
+<!-- Empty State (Hidden by default, shown when list is empty) -->
+<div class="hidden flex flex-col items-center justify-center py-stack-xl text-center" id="empty-state">
+<div class="relative w-48 h-48 mb-6 flex items-center justify-center">
+<div class="absolute w-full h-full border-2 border-primary/10 rounded-full radar-pulse"></div>
+<div class="absolute w-32 h-32 border-2 border-primary/20 rounded-full radar-pulse" style="animation-delay: 1s;"></div>
+<div class="absolute w-16 h-16 border-2 border-primary/30 rounded-full radar-pulse" style="animation-delay: 2s;"></div>
+<span class="material-symbols-outlined text-6xl text-primary/40">radar</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-2">No scans yet</h3>
+<p class="font-body-md text-on-surface-variant px-8">Paste a suspicious message in the Scan tab to get started with protection.</p>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center h-20 px-4 pb-2 bg-surface-container dark:bg-surface-container-lowest shadow-[0_-4px_12px_rgba(0,0,0,0.04)] z-50 rounded-t-xl">
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-5 py-1 hover:bg-surface-variant/50 transition-all active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined">radar</span>
+<span class="font-label-md text-label-md">Scan</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-5 py-1 hover:bg-surface-variant/50 transition-all active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined">library_books</span>
+<span class="font-label-md text-label-md">Library</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-secondary-container dark:bg-secondary-fixed-dim text-on-secondary-container dark:text-on-secondary-fixed rounded-full px-5 py-1 active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">history</span>
+<span class="font-label-md text-label-md">History</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-5 py-1 hover:bg-surface-variant/50 transition-all active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-md text-label-md">Settings</span>
+</a>
+</nav>
+<script>
+        // Simple logic to demonstrate empty state toggle if needed
+        function checkEmpty() {
+            const listItems = document.querySelectorAll('section > div:not(#empty-state)');
+            const emptyState = document.getElementById('empty-state');
+            if (listItems.length === 0) {
+                emptyState.classList.remove('hidden');
+            } else {
+                emptyState.classList.add('hidden');
+            }
+        }
+        
+        // Interaction simulation for chips
+        const chips = document.querySelectorAll('button.rounded-full');
+        chips.forEach(chip => {
+            chip.addEventListener('click', () => {
+                chips.forEach(c => {
+                    c.classList.remove('bg-secondary-container', 'text-on-secondary-container');
+                    c.classList.add('border', 'border-outline-variant', 'text-on-surface-variant');
+                });
+                chip.classList.remove('border', 'border-outline-variant', 'text-on-surface-variant');
+                chip.classList.add('bg-secondary-container', 'text-on-secondary-container');
+            });
+        });
+    </script>
+</body></html>

@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary": "#006c49",
+                    "surface-container-high": "#e8e7f3",
+                    "outline-variant": "#c4c5d8",
+                    "on-secondary-fixed-variant": "#005236",
+                    "surface-container-lowest": "#ffffff",
+                    "on-primary-fixed": "#001158",
+                    "surface-dim": "#dad9e5",
+                    "inverse-primary": "#b9c3ff",
+                    "tertiary-fixed": "#ffddb8",
+                    "on-tertiary-fixed": "#2a1700",
+                    "inverse-on-surface": "#f1effc",
+                    "on-tertiary": "#ffffff",
+                    "on-error": "#ffffff",
+                    "surface-tint": "#2b4edf",
+                    "on-primary": "#ffffff",
+                    "on-secondary-container": "#00714d",
+                    "primary": "#0033c6",
+                    "on-primary-fixed-variant": "#0032c3",
+                    "surface-container-low": "#f4f2ff",
+                    "outline": "#747686",
+                    "primary-fixed-dim": "#b9c3ff",
+                    "tertiary-container": "#875400",
+                    "on-surface": "#1a1b24",
+                    "surface": "#fbf8ff",
+                    "on-primary-container": "#d3d8ff",
+                    "on-error-container": "#93000a",
+                    "secondary-container": "#6cf8bb",
+                    "inverse-surface": "#2f3039",
+                    "surface-container": "#eeedf9",
+                    "on-secondary-fixed": "#002113",
+                    "secondary-fixed-dim": "#4edea3",
+                    "primary-container": "#2d4fe0",
+                    "on-background": "#1a1b24",
+                    "surface-variant": "#e2e1ed",
+                    "surface-bright": "#fbf8ff",
+                    "error": "#ba1a1a",
+                    "error-container": "#ffdad6",
+                    "secondary-fixed": "#6ffbbe",
+                    "tertiary": "#663f00",
+                    "on-tertiary-container": "#ffd29f",
+                    "primary-fixed": "#dee1ff",
+                    "tertiary-fixed-dim": "#ffb95f",
+                    "background": "#fbf8ff",
+                    "on-surface-variant": "#444655",
+                    "on-tertiary-fixed-variant": "#653e00",
+                    "on-secondary": "#ffffff",
+                    "surface-container-highest": "#e2e1ed"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "stack-md": "16px",
+                    "stack-sm": "8px",
+                    "touch-target": "48px",
+                    "stack-lg": "24px",
+                    "stack-xl": "32px",
+                    "margin-main": "20px",
+                    "gutter-grid": "16px"
+            },
+            "fontFamily": {
+                    "body-md": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "label-md": ["Inter"],
+                    "title-lg": ["Inter"],
+                    "headline-sm": ["Inter"],
+                    "headline-lg-mobile": ["Inter"],
+                    "label-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.5px", "fontWeight": "600"}],
+                    "title-lg": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.1px", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .scam-gradient {
+            background: linear-gradient(135deg, #ba1a1a 0%, #ef4444 100%);
+        }
+        .emerald-gradient {
+            background: linear-gradient(135deg, #006c49 0%, #10b981 100%);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface min-h-screen pb-32">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-surface dark:bg-surface-dim">
+<div class="flex items-center h-16 px-margin-main w-full max-w-[360px] mx-auto justify-between">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary dark:text-primary-fixed-dim" data-icon="shield_with_heart">shield_with_heart</span>
+<h1 class="font-headline-sm text-headline-sm font-bold text-primary dark:text-primary-fixed-dim">ScamRadar</h1>
+</div>
+<button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-low transition-colors p-2 rounded-full" data-icon="close">close</button>
+</div>
+</header>
+<main class="pt-20 px-margin-main max-w-[360px] mx-auto flex flex-col gap-stack-lg">
+<!-- Verdict Header -->
+<section class="scam-gradient rounded-xl p-stack-lg text-white shadow-lg transform transition-transform active:scale-95 duration-100">
+<div class="flex justify-between items-start mb-stack-sm">
+<span class="bg-white/20 backdrop-blur-md px-3 py-1 rounded-full font-label-md text-label-md flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]" data-icon="verified" style="font-variation-settings: 'FILL' 1;">verified</span>
+                    92% Confidence
+                </span>
+<span class="material-symbols-outlined text-3xl" data-icon="report_problem" style="font-variation-settings: 'FILL' 1;">report_problem</span>
+</div>
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile font-extrabold tracking-tight">LIKELY SCAM</h2>
+<p class="font-body-md text-body-md opacity-90 mt-1">This interaction shows multiple patterns common to phishing attempts.</p>
+</section>
+<!-- Message Card -->
+<div class="bg-surface-container-low border border-outline-variant/30 rounded-[20px] p-stack-md relative overflow-hidden">
+<div class="absolute top-0 left-0 w-1 h-full bg-error"></div>
+<h3 class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider mb-stack-sm">Analyzed Content</h3>
+<div class="bg-white p-stack-md rounded-xl border border-outline-variant/20 shadow-sm">
+<p class="font-body-lg text-body-lg text-on-surface">
+<span class="bg-error-container text-on-error-container px-1 rounded">URGENT:</span> Your USPS package is held due to an incorrect address. Please update your details at 
+                    <span class="text-error font-semibold underline decoration-2 decoration-error/30">bit.ly/usps-track-992</span> or your package will be returned.
+                </p>
+</div>
+</div>
+<!-- Why we think so Card -->
+<section class="bg-surface-container rounded-[20px] p-stack-md shadow-sm border border-outline-variant/20">
+<h3 class="font-title-lg text-title-lg text-on-surface mb-stack-md">Red Flags Detected</h3>
+<ul class="flex flex-col gap-stack-md">
+<li class="flex gap-4">
+<div class="bg-error-container text-on-error-container w-10 h-10 rounded-full flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined" data-icon="alarm">alarm</span>
+</div>
+<div>
+<p class="font-label-lg text-label-lg text-on-surface">False Urgency</p>
+<p class="font-body-md text-body-md text-on-surface-variant">Uses threatening language to force a quick decision.</p>
+</div>
+</li>
+<li class="flex gap-4">
+<div class="bg-error-container text-on-error-container w-10 h-10 rounded-full flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined" data-icon="link_off">link_off</span>
+</div>
+<div>
+<p class="font-label-lg text-label-lg text-on-surface">Suspicious Link</p>
+<p class="font-body-md text-body-md text-on-surface-variant">The URL uses a shortener to hide its real destination.</p>
+</div>
+</li>
+<li class="flex gap-4">
+<div class="bg-error-container text-on-error-container w-10 h-10 rounded-full flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined" data-icon="person_alert">person_alert</span>
+</div>
+<div>
+<p class="font-label-lg text-label-lg text-on-surface">Impersonation</p>
+<p class="font-body-md text-body-md text-on-surface-variant">Mimics USPS branding but uses unofficial channels.</p>
+</div>
+</li>
+</ul>
+</section>
+<!-- What to do Card -->
+<section class="emerald-gradient rounded-[20px] p-stack-md text-white shadow-md">
+<h3 class="font-title-lg text-title-lg mb-stack-md flex items-center gap-2">
+<span class="material-symbols-outlined" data-icon="security">security</span>
+                Protective Actions
+            </h3>
+<div class="grid grid-cols-1 gap-stack-sm">
+<button class="bg-white/10 hover:bg-white/20 transition-all border border-white/20 py-3 px-4 rounded-xl flex items-center justify-between group active:scale-95">
+<span class="font-label-lg text-label-lg">Don't reply</span>
+<span class="material-symbols-outlined opacity-60 group-hover:opacity-100" data-icon="block">block</span>
+</button>
+<button class="bg-white/10 hover:bg-white/20 transition-all border border-white/20 py-3 px-4 rounded-xl flex items-center justify-between group active:scale-95">
+<span class="font-label-lg text-label-lg">Report to 7726</span>
+<span class="material-symbols-outlined opacity-60 group-hover:opacity-100" data-icon="flag">flag</span>
+</button>
+<button class="bg-white/10 hover:bg-white/20 transition-all border border-white/20 py-3 px-4 rounded-xl flex items-center justify-between group active:scale-95">
+<span class="font-label-lg text-label-lg">Block sender</span>
+<span class="material-symbols-outlined opacity-60 group-hover:opacity-100" data-icon="person_remove">person_remove</span>
+</button>
+</div>
+</section>
+<!-- Action Buttons -->
+<div class="flex flex-col gap-stack-sm mt-4">
+<button class="w-full bg-primary text-on-primary font-label-lg text-label-lg py-4 rounded-full flex items-center justify-center gap-2 hover:bg-primary-container transition-all shadow-md active:scale-95">
+<span class="material-symbols-outlined text-[20px]" data-icon="share">share</span>
+                Share this verdict
+            </button>
+<button class="w-full bg-surface-container-high text-primary font-label-lg text-label-lg py-4 rounded-full flex items-center justify-center gap-2 hover:bg-surface-variant transition-all active:scale-95">
+<span class="material-symbols-outlined text-[20px]" data-icon="history">history</span>
+                Save to history
+            </button>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center h-20 px-4 pb-2 bg-surface-container dark:bg-surface-container-lowest shadow-[0_-4px_12px_rgba(0,0,0,0.04)] z-50 rounded-t-xl">
+<a class="flex flex-col items-center justify-center bg-secondary-container dark:bg-secondary-fixed-dim text-on-secondary-container dark:text-on-secondary-fixed rounded-full px-5 py-1 transition-all active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="radar" style="font-variation-settings: 'FILL' 1;">radar</span>
+<span class="font-label-md text-label-md">Scan</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-5 py-1 hover:bg-surface-variant/50 transition-all active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="library_books">library_books</span>
+<span class="font-label-md text-label-md">Library</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-5 py-1 hover:bg-surface-variant/50 transition-all active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="history">history</span>
+<span class="font-label-md text-label-md">History</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-5 py-1 hover:bg-surface-variant/50 transition-all active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-label-md text-label-md">Settings</span>
+</a>
+</nav>
+<script>
+        // Subtle micro-interaction for red flags
+        document.querySelectorAll('li.flex').forEach(item => {
+            item.addEventListener('mouseenter', () => {
+                item.querySelector('.material-symbols-outlined').style.fontVariationSettings = "'FILL' 1";
+            });
+            item.addEventListener('mouseleave', () => {
+                item.querySelector('.material-symbols-outlined').style.fontVariationSettings = "'FILL' 0";
+            });
+        });
+    </script>
+</body></html>

@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ScamRadar - Safe Result</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .radar-pulse {
+            animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 0.15; transform: scale(1); }
+            50% { opacity: 0.3; transform: scale(1.1); }
+        }
+        .safe-glow {
+            box-shadow: 0 0 40px rgba(16, 185, 129, 0.15);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary": "#006c49",
+                        "surface-container-high": "#e8e7f3",
+                        "outline-variant": "#c4c5d8",
+                        "on-secondary-fixed-variant": "#005236",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-fixed": "#001158",
+                        "surface-dim": "#dad9e5",
+                        "inverse-primary": "#b9c3ff",
+                        "tertiary-fixed": "#ffddb8",
+                        "on-tertiary-fixed": "#2a1700",
+                        "inverse-on-surface": "#f1effc",
+                        "on-tertiary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "surface-tint": "#2b4edf",
+                        "on-primary": "#ffffff",
+                        "on-secondary-container": "#00714d",
+                        "primary": "#0033c6",
+                        "on-primary-fixed-variant": "#0032c3",
+                        "surface-container-low": "#f4f2ff",
+                        "outline": "#747686",
+                        "primary-fixed-dim": "#b9c3ff",
+                        "tertiary-container": "#875400",
+                        "on-surface": "#1a1b24",
+                        "surface": "#fbf8ff",
+                        "on-primary-container": "#d3d8ff",
+                        "on-error-container": "#93000a",
+                        "secondary-container": "#6cf8bb",
+                        "inverse-surface": "#2f3039",
+                        "surface-container": "#eeedf9",
+                        "on-secondary-fixed": "#002113",
+                        "secondary-fixed-dim": "#4edea3",
+                        "primary-container": "#2d4fe0",
+                        "on-background": "#1a1b24",
+                        "surface-variant": "#e2e1ed",
+                        "surface-bright": "#fbf8ff",
+                        "error": "#ba1a1a",
+                        "error-container": "#ffdad6",
+                        "secondary-fixed": "#6ffbbe",
+                        "tertiary": "#663f00",
+                        "on-tertiary-container": "#ffd29f",
+                        "primary-fixed": "#dee1ff",
+                        "tertiary-fixed-dim": "#ffb95f",
+                        "background": "#fbf8ff",
+                        "on-surface-variant": "#444655",
+                        "on-tertiary-fixed-variant": "#653e00",
+                        "on-secondary": "#ffffff",
+                        "surface-container-highest": "#e2e1ed",
+                        "success-emerald": "#10B981"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-md": "16px",
+                        "stack-sm": "8px",
+                        "touch-target": "48px",
+                        "stack-lg": "24px",
+                        "stack-xl": "32px",
+                        "margin-main": "20px",
+                        "gutter-grid": "16px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "label-md": ["Inter"],
+                        "title-lg": ["Inter"],
+                        "headline-sm": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "label-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.5px", "fontWeight": "600"}],
+                        "title-lg": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                        "headline-sm": ["200x", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "headline-lg-mobile": ["28px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.1px", "fontWeight": "600"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen pb-24">
+<!-- Top App Bar -->
+<header class="fixed top-0 w-full z-50 bg-surface flex items-center h-16 px-margin-main w-full max-w-[360px] mx-auto">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" data-icon="shield_with_heart" style="font-variation-settings: 'FILL' 1;">shield_with_heart</span>
+<h1 class="font-headline-sm text-headline-sm font-bold text-primary">ScamRadar</h1>
+</div>
+<div class="ml-auto">
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container-low transition-colors active:scale-95 duration-100">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="more_vert">more_vert</span>
+</button>
+</div>
+</header>
+<main class="pt-20 px-margin-main max-w-[360px] mx-auto space-y-stack-lg"><!-- Verdict Header -->
+<section class="emerald-gradient rounded-xl p-stack-lg text-white shadow-lg transform transition-transform active:scale-95 duration-100">
+<div class="flex justify-between items-start mb-stack-sm">
+<div class="flex flex-col gap-2">
+<span class="bg-white/20 backdrop-blur-md px-3 py-1 rounded-full font-label-md text-label-md flex items-center gap-1 w-fit">
+<span class="material-symbols-outlined text-[14px]" data-icon="verified" style="font-variation-settings: 'FILL' 1;">verified</span>98% Safety Score
+      </span>
+<div class="flex gap-2">
+<span class="bg-white/30 px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider">Risk: Low</span>
+<span class="bg-white/30 px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider">Status: Verified</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-4xl" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile font-extrabold tracking-tight">LOOKS SAFE</h2>
+<p class="font-body-md text-body-md opacity-90 mt-1">Analysis complete. No common scam patterns or malicious intent detected.</p>
+</section>
+<!-- Scanned Content Card -->
+<div class="bg-surface-container-low border border-outline-variant/30 rounded-[20px] p-stack-md relative overflow-hidden">
+<div class="absolute top-0 left-0 w-1 h-full bg-success-emerald"></div>
+<h3 class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider mb-stack-sm">Analyzed Content</h3>
+<div class="bg-white p-stack-md rounded-xl border border-outline-variant/20 shadow-sm">
+<p class="font-body-lg text-body-lg text-on-surface italic">
+      "Your order #12345 has been shipped. Track your delivery at: shipping.verified-store.com"
+    </p>
+</div>
+</div>
+<!-- Trust Indicators -->
+<section class="bg-surface-container rounded-[20px] p-stack-md shadow-sm border border-outline-variant/20">
+<h3 class="font-title-lg text-title-lg text-on-surface mb-stack-md">Trust Indicators</h3>
+<ul class="flex flex-col gap-stack-md">
+<li class="flex gap-4">
+<div class="bg-secondary-container text-on-secondary-container w-10 h-10 rounded-full flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined" data-icon="verified_user">verified_user</span>
+</div>
+<div><p class="font-label-lg text-label-lg text-on-surface">Verified Origin (100%)</p><p class="font-body-md text-body-md text-on-surface-variant">The sender's identity matches known official communication channels.</p></div>
+</li>
+<li class="flex gap-4">
+<div class="bg-secondary-container text-on-secondary-container w-10 h-10 rounded-full flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined" data-icon="lock">lock</span>
+</div>
+<div><p class="font-label-lg text-label-lg text-on-surface">Standard SSL Encryption</p><p class="font-body-md text-body-md text-on-surface-variant">Data transmission is secured using industry-standard protocols.</p></div>
+</li>
+<li class="flex gap-4">
+<div class="bg-secondary-container text-on-secondary-container w-10 h-10 rounded-full flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined" data-icon="calendar_today">calendar_today</span>
+</div>
+<div><p class="font-label-lg text-label-lg text-on-surface">Domain Age (8+ Years)</p><p class="font-body-md text-body-md text-on-surface-variant">The destination domain has a long-standing positive reputation.</p></div>
+</li>
+</ul>
+</section>
+<!-- Safe Verdict Card -->
+<section class="bg-surface-container-low border border-outline-variant/30 rounded-[20px] p-stack-md">
+<h3 class="font-title-lg text-title-lg text-on-surface mb-stack-sm flex items-center gap-2">
+<span class="material-symbols-outlined text-success-emerald" data-icon="shield">shield</span>Analysis Summary
+  </h3>
+<ul class="space-y-2">
+<li class="flex items-center gap-2 text-body-md"><span class="w-1.5 h-1.5 rounded-full bg-success-emerald"></span>No phishing keywords or deceptive links identified</li>
+<li class="flex items-center gap-2 text-body-md"><span class="w-1.5 h-1.5 rounded-full bg-success-emerald"></span>Official branding and tone are consistent</li>
+</ul>
+</section>
+<!-- Recommended Next Steps -->
+<section class="emerald-gradient rounded-[20px] p-stack-md text-white shadow-md">
+<h3 class="font-title-lg text-title-lg mb-stack-md flex items-center gap-2">
+<span class="material-symbols-outlined" data-icon="task_alt">task_alt</span>Next Steps
+  </h3>
+<div class="grid grid-cols-1 gap-stack-sm">
+<button class="bg-white/10 hover:bg-white/20 transition-all border border-white/20 py-3 px-4 rounded-xl flex items-center justify-between group active:scale-95">
+<span class="font-label-lg text-label-lg">Add to Safe List</span>
+<span class="material-symbols-outlined opacity-60 group-hover:opacity-100" data-icon="person_add">person_add</span>
+</button>
+<button class="bg-white/10 hover:bg-white/20 transition-all border border-white/20 py-3 px-4 rounded-xl flex items-center justify-between group active:scale-95">
+<span class="font-label-lg text-label-lg">Share Safe Report</span>
+<span class="material-symbols-outlined opacity-60 group-hover:opacity-100" data-icon="share">share</span>
+</button>
+<button class="bg-white/10 hover:bg-white/20 transition-all border border-white/20 py-3 px-4 rounded-xl flex items-center justify-between group active:scale-95">
+<span class="font-label-lg text-label-lg">Proceed to site</span>
+<span class="material-symbols-outlined opacity-60 group-hover:opacity-100" data-icon="open_in_new">open_in_new</span>
+</button>
+</div>
+</section>
+<!-- Final Action Buttons -->
+<div class="flex flex-col gap-stack-sm mt-4">
+<button class="w-full bg-primary text-on-primary font-label-lg text-label-lg py-4 rounded-full flex items-center justify-center gap-2 hover:bg-primary-container transition-all shadow-md active:scale-95">
+<span class="material-symbols-outlined text-[20px]" data-icon="check_circle">check_circle</span>
+    Dismiss Analysis
+  </button>
+<button class="w-full bg-surface-container-high text-primary font-label-lg text-label-lg py-4 rounded-full flex items-center justify-center gap-2 hover:bg-surface-variant transition-all active:scale-95">
+<span class="material-symbols-outlined text-[20px]" data-icon="history">history</span>
+    View in History
+  </button>
+</div></main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center h-20 px-4 pb-2 bg-surface-container shadow-[0_-4px_12px_rgba(0,0,0,0.04)] z-50 rounded-t-xl">
+<button class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-5 py-1 active:scale-90 duration-200 transition-all">
+<span class="material-symbols-outlined" data-icon="radar" style="font-variation-settings: 'FILL' 1;">radar</span>
+<span class="font-label-md text-label-md mt-1">Scan</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-5 py-1 hover:bg-surface-variant/50 active:scale-90 duration-200 transition-all">
+<span class="material-symbols-outlined" data-icon="library_books">library_books</span>
+<span class="font-label-md text-label-md mt-1">Library</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-5 py-1 hover:bg-surface-variant/50 active:scale-90 duration-200 transition-all">
+<span class="material-symbols-outlined" data-icon="history">history</span>
+<span class="font-label-md text-label-md mt-1">History</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-5 py-1 hover:bg-surface-variant/50 active:scale-90 duration-200 transition-all">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-label-md text-label-md mt-1">Settings</span>
+</button>
+</nav>
+<script>
+        // Subtle micro-interaction for cards
+        document.querySelectorAll('.bg-surface-container').forEach(card => {
+            card.addEventListener('mousedown', () => {
+                card.style.transform = 'scale(0.98)';
+            });
+            card.addEventListener('mouseup', () => {
+                card.style.transform = 'scale(1)';
+            });
+        });
+    </script>
+</body></html>

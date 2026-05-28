@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary": "#006c49",
+                    "surface-container-high": "#e8e7f3",
+                    "outline-variant": "#c4c5d8",
+                    "on-secondary-fixed-variant": "#005236",
+                    "surface-container-lowest": "#ffffff",
+                    "on-primary-fixed": "#001158",
+                    "surface-dim": "#dad9e5",
+                    "inverse-primary": "#b9c3ff",
+                    "tertiary-fixed": "#ffddb8",
+                    "on-tertiary-fixed": "#2a1700",
+                    "inverse-on-surface": "#f1effc",
+                    "on-tertiary": "#ffffff",
+                    "on-error": "#ffffff",
+                    "surface-tint": "#2b4edf",
+                    "on-primary": "#ffffff",
+                    "on-secondary-container": "#00714d",
+                    "primary": "#0033c6",
+                    "on-primary-fixed-variant": "#0032c3",
+                    "surface-container-low": "#f4f2ff",
+                    "outline": "#747686",
+                    "primary-fixed-dim": "#b9c3ff",
+                    "tertiary-container": "#875400",
+                    "on-surface": "#1a1b24",
+                    "surface": "#fbf8ff",
+                    "on-primary-container": "#d3d8ff",
+                    "on-error-container": "#93000a",
+                    "secondary-container": "#6cf8bb",
+                    "inverse-surface": "#2f3039",
+                    "surface-container": "#eeedf9",
+                    "on-secondary-fixed": "#002113",
+                    "secondary-fixed-dim": "#4edea3",
+                    "primary-container": "#2d4fe0",
+                    "on-background": "#1a1b24",
+                    "surface-variant": "#e2e1ed",
+                    "surface-bright": "#fbf8ff",
+                    "error": "#ba1a1a",
+                    "error-container": "#ffdad6",
+                    "secondary-fixed": "#6ffbbe",
+                    "tertiary": "#663f00",
+                    "on-tertiary-container": "#ffd29f",
+                    "primary-fixed": "#dee1ff",
+                    "tertiary-fixed-dim": "#ffb95f",
+                    "background": "#fbf8ff",
+                    "on-surface-variant": "#444655",
+                    "on-tertiary-fixed-variant": "#653e00",
+                    "on-secondary": "#ffffff",
+                    "surface-container-highest": "#e2e1ed"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "stack-md": "16px",
+                    "stack-sm": "8px",
+                    "touch-target": "48px",
+                    "stack-lg": "24px",
+                    "stack-xl": "32px",
+                    "margin-main": "20px",
+                    "gutter-grid": "16px"
+            },
+            "fontFamily": {
+                    "body-md": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "label-md": ["Inter"],
+                    "title-lg": ["Inter"],
+                    "headline-sm": ["Inter"],
+                    "headline-lg-mobile": ["Inter"],
+                    "label-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.5px", "fontWeight": "600"}],
+                    "title-lg": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.1px", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { background-color: #0B1220; color: #fbf8ff; }
+        .coral-accent { background-color: #EF4444; }
+        .scam-glow { box-shadow: 0 0 20px rgba(239, 68, 68, 0.2); }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="flex flex-col min-h-screen">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-surface dark:bg-surface-dim flex items-center h-16 px-margin-main w-full max-w-[360px] mx-auto">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary dark:text-primary-fixed-dim" style="font-variation-settings: 'FILL' 1;">shield_with_heart</span>
+<h1 class="font-headline-sm text-headline-sm font-bold text-primary dark:text-primary-fixed-dim">ScamRadar</h1>
+</div>
+<div class="ml-auto flex gap-2">
+<button class="p-2 hover:bg-surface-container-low dark:hover:bg-surface-container-high transition-colors rounded-full active:scale-95 duration-100">
+<span class="material-symbols-outlined text-on-surface-variant dark:text-outline">history</span>
+</button>
+</div>
+</header>
+<main class="flex-1 mt-16 pb-24 px-margin-main overflow-y-auto w-full max-w-[360px] mx-auto">
+<!-- Verdict Header -->
+<div class="mt-stack-lg flex flex-col items-center"><div class="w-20 h-20 rounded-full coral-accent flex items-center justify-center mb-4 scam-glow">
+<span class="material-symbols-outlined text-white text-[40px]" style="font-variation-settings: 'FILL' 1;">report</span>
+</div>
+<div class="coral-accent px-6 py-2 rounded-full mb-3">
+<span class="font-headline-sm text-headline-sm text-white font-bold tracking-tight">LIKELY SCAM</span>
+</div>
+<div class="flex gap-4 mb-4">
+<div class="flex items-center gap-1.5 bg-error/10 px-3 py-1 rounded-full border border-error/20">
+<span class="w-2 h-2 rounded-full bg-error animate-pulse"></span>
+<span class="font-label-md text-label-md text-error uppercase tracking-wider">Risk Level: High</span>
+</div>
+<div class="flex items-center gap-1.5 bg-surface-container-highest/10 px-3 py-1 rounded-full border border-white/10">
+<span class="font-label-md text-label-md text-outline-variant uppercase tracking-wider">Threat Type: Phishing</span>
+</div>
+</div>
+<p class="font-body-md text-body-md text-outline-variant text-center px-4">Our AI has detected high-risk patterns consistent with common phishing attempts.</p></div>
+<!-- Message Card -->
+<section class="mt-stack-xl">
+<h2 class="font-label-lg text-label-lg text-outline-variant mb-stack-sm uppercase tracking-wider">Original Message</h2>
+<div class="bg-surface-container-lowest/5 border border-error/20 rounded-xl p-4 relative overflow-hidden">
+<div class="absolute top-0 left-0 w-1 h-full coral-accent"></div>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+                    "Urgent: Your <span class="bg-error/20 text-error px-1 rounded">bank account</span> has been restricted due to suspicious activity. Please verify your identity immediately at <span class="bg-error/20 text-error px-1 underline rounded">hxxp://secure-login-302.com/verify</span> to avoid permanent closure."
+                </p>
+</div>
+</section>
+<!-- Why we think so Card -->
+<section class="mt-stack-lg">
+<div class="bg-[#1A2235] rounded-xl p-5 border border-white/5"><h3 class="font-title-lg text-title-lg mb-4 flex items-center gap-2 text-error">
+<span class="material-symbols-outlined">crisis_alert</span>
+                    Detailed Red Flags
+                </h3>
+<ul class="space-y-4">
+<li class="flex gap-3">
+<span class="material-symbols-outlined text-error font-bold mt-0.5">warning</span>
+<div>
+<p class="font-label-lg text-label-lg text-on-surface">Urgent Language</p>
+<p class="font-body-md text-body-md text-outline-variant">Uses artificial pressure to force immediate, impulsive action.</p>
+</div>
+</li>
+<li class="flex gap-3">
+<span class="material-symbols-outlined text-error font-bold mt-0.5">link_off</span>
+<div>
+<p class="font-label-lg text-label-lg text-on-surface">Suspicious URL</p>
+<p class="font-body-md text-body-md text-outline-variant">Domain: bit.ly/bank-security... (Masked destination leading to known malicious host).</p>
+</div>
+</li>
+<li class="flex gap-3">
+<span class="material-symbols-outlined text-error font-bold mt-0.5">person_alert</span>
+<div>
+<p class="font-label-lg text-label-lg text-on-surface">Impersonation Risk</p>
+<p class="font-body-md text-body-md text-outline-variant">Matches patterns found in 4,200 reported phishing campaigns targeting financial institutions.</p>
+</div>
+</li>
+</ul></div>
+</section><section class="mt-stack-lg">
+<div class="bg-surface-container-highest/5 rounded-xl p-5 border border-white/5">
+<h3 class="font-title-lg text-title-lg mb-3 flex items-center gap-2">
+<span class="material-symbols-outlined text-outline-variant">assessment</span>
+                    Impact Assessment
+                </h3>
+<p class="font-body-md text-body-md text-outline-variant leading-relaxed">
+                    Clicking this link could lead to <strong>credential theft</strong> (login IDs and passwords) and unauthorized access to your financial accounts. 
+                </p>
+</div>
+</section>
+<!-- What to do Card -->
+<section class="mt-stack-lg">
+<div class="bg-secondary/10 rounded-xl p-5 border border-secondary/20">
+<h3 class="font-title-lg text-title-lg mb-4 flex items-center gap-2 text-secondary-fixed">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+                    What to do
+                </h3>
+<div class="space-y-3">
+<div class="flex items-center gap-3 p-3 bg-secondary/20 rounded-lg">
+<span class="material-symbols-outlined text-secondary-fixed">block</span>
+<p class="font-label-lg text-label-lg text-secondary-fixed">Do not click any links</p>
+</div>
+<div class="flex items-center gap-3 p-3 bg-secondary/20 rounded-lg">
+<span class="material-symbols-outlined text-secondary-fixed">report_gmailerrorred</span>
+<p class="font-label-lg text-label-lg text-secondary-fixed">Report as spam to your carrier</p>
+</div>
+<div class="flex items-center gap-3 p-3 bg-secondary/20 rounded-lg">
+<span class="material-symbols-outlined text-secondary-fixed">delete</span>
+<p class="font-label-lg text-label-lg text-secondary-fixed">Delete this message immediately</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Bottom Actions -->
+<div class="mt-stack-xl flex gap-3 mb-8">
+<button class="flex-1 h-14 bg-primary text-white rounded-full font-label-lg text-label-lg flex items-center justify-center gap-2 active:scale-95 transition-transform">
+<span class="material-symbols-outlined">share</span>
+                Share Alert
+            </button>
+<button class="flex-1 h-14 bg-surface-container-highest/20 text-on-surface border border-white/10 rounded-full font-label-lg text-label-lg flex items-center justify-center gap-2 active:scale-95 transition-transform">
+<span class="material-symbols-outlined">bookmark</span>
+                Save
+            </button>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center h-20 px-4 pb-2 bg-surface-container dark:bg-surface-container-lowest shadow-md rounded-t-xl z-50">
+<div class="flex flex-col items-center justify-center bg-secondary-container dark:bg-secondary-fixed-dim text-on-secondary-container dark:text-on-secondary-fixed rounded-full px-5 py-1 transition-all active:scale-90 duration-200">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">radar</span>
+<span class="font-label-md text-label-md">Scan</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-5 py-1 hover:bg-surface-variant/50 dark:hover:bg-surface-container-high transition-all active:scale-90 duration-200">
+<span class="material-symbols-outlined">library_books</span>
+<span class="font-label-md text-label-md">Library</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-5 py-1 hover:bg-surface-variant/50 dark:hover:bg-surface-container-high transition-all active:scale-90 duration-200">
+<span class="material-symbols-outlined">history</span>
+<span class="font-label-md text-label-md">History</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-5 py-1 hover:bg-surface-variant/50 dark:hover:bg-surface-container-high transition-all active:scale-90 duration-200">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-md text-label-md">Settings</span>
+</div>
+</nav>
+</body></html>

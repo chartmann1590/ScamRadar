@@ -1,0 +1,88 @@
+{
+  "urgencyKeywords": [
+    "urgent", "immediately", "within 24 hours", "act now", "expires today",
+    "last chance", "final notice", "time sensitive", "don't delay", "hurry",
+    "limited time", "before it's too late", "right away", "asap", "expire",
+    "suspend", "suspended", "deactivated", "closure", "closed", "terminate",
+    "terminated", "last warning", "final warning", "immediate action required"
+  ],
+  "paymentKeywords": [
+    "wire transfer", "gift card", "bitcoin", "cryptocurrency", "crypto",
+    "western union", "moneygram", "prepaid card", "venmo", "zelle",
+    "apple pay", "google pay", "cash app", "bank transfer", "wire money",
+    "send money", "payment required", "processing fee", "transaction fee",
+    "clearance fee", "customs fee", "redelivery fee", "shipping fee",
+    "activation fee", "release fee", "tax payment", "irs payment"
+  ],
+  "impersonationPatterns": [
+    {"entity": "IRS", "aliases": ["irs", "internal revenue", "tax bureau", "tax authority"]},
+    {"entity": "USPS", "aliases": ["usps", "postal service", "united states postal", "us postal"]},
+    {"entity": "FedEx", "aliases": ["fedex", "federal express"]},
+    {"entity": "UPS", "aliases": ["ups", "united parcel"]},
+    {"entity": "Amazon", "aliases": ["amazon", "amazon prime", "amazon.com"]},
+    {"entity": "Netflix", "aliases": ["netflix", "netflix.com"]},
+    {"entity": "PayPal", "aliases": ["paypal", "pay pal"]},
+    {"entity": "Apple", "aliases": ["apple", "apple id", "icloud", "apple support"]},
+    {"entity": "Microsoft", "aliases": ["microsoft", "windows", "microsoft support", "ms support"]},
+    {"entity": "Google", "aliases": ["google", "gmail", "google account"]},
+    {"entity": "Bank of America", "aliases": ["bank of america", "bofa", "boa"]},
+    {"entity": "Chase", "aliases": ["chase", "chase bank", "jpmorgan"]},
+    {"entity": "Wells Fargo", "aliases": ["wells fargo"]},
+    {"entity": "Social Security", "aliases": ["social security", "ssa", "ssn"]},
+    {"entity": "DMV", "aliases": ["dmv", "department of motor"]},
+    {"entity": "Best Buy", "aliases": ["best buy", "bestbuy"]},
+    {"entity": "Target", "aliases": ["target", "target.com"]},
+    {"entity": "Walmart", "aliases": ["walmart", "walmart.com"]}
+  ],
+  "suspiciousUrlPatterns": [
+    "bit.ly", "tinyurl", "t.co", "goo.gl", "ow.ly", "is.gd", "buff.ly",
+    "adf.ly", "shorte.st", "bc.vc", "cutt.ly", "rb.gy", "shorturl.at",
+    ".tk", ".ml", ".ga", ".cf", ".gq",
+    "secure-", "verify-", "update-", "login-", "account-",
+    "-secure", "-verify", "-update", "-login", "-account",
+    "amaz0n", "app1e", "g00gle", "netf1ix", "paypa1",
+    "paypal.security", "amazon.security", "apple.security",
+    "account-verify", "secure-login", "update-info"
+  ],
+  "personalInfoRequests": [
+    "social security", "ssn", "social security number",
+    "password", "pin number", "passcode",
+    "date of birth", "dob", "birth date",
+    "mother's maiden name", "maiden name",
+    "bank account number", "routing number", "account number",
+    "credit card number", "cvv", "cvc", "security code",
+    "driver's license", "license number",
+    "passport number", "passport",
+    "login credentials", "username and password"
+  ],
+  "romanceScamPatterns": [
+    "i love you", "my love", "darling", "sweetheart", "soulmate",
+    "deployed overseas", "military", "peacekeeping", "oil rig",
+    "widowed", "single parent", "orphan",
+    "can't video chat", "camera is broken", "no internet for video",
+    "inheritance", "gold", "diamonds", "consignment box",
+    "coming to visit", "flight ticket", "visa fee", "customs",
+    "stranded", "robbed", "hospital", "medical emergency",
+    "i need your help", "send me money", "financial help"
+  ],
+  "investmentScamPatterns": [
+    "guaranteed return", "risk-free", "no risk", "100% profit",
+    "double your money", "turn $100 into", "passive income",
+    "trading bot", "ai trading", "automated trading",
+    "forex", "binary options", "penny stocks",
+    "initial coin offering", "ico", "token sale", "presale",
+    "pump and dump", "to the moon", "hodl",
+    "el salvador bitcoin", "crypto opportunity",
+    "limited spots", "exclusive group", "vip access"
+  ],
+  "familyEmergencyPatterns": [
+    "your son", "your daughter", "your grandson", "your granddaughter",
+    "your husband", "your wife", "your brother", "your sister",
+    "in jail", "in prison", "arrested", "bail", "bail money",
+    "in hospital", "in an accident", "in the emergency room",
+    "kidnapped", "held hostage", "ransom",
+    "stranded", "stuck in", "lost their wallet",
+    "need money urgently", "don't tell mom", "don't tell dad",
+    "please don't call", "text only", "don't call my phone"
+  ]
+}

@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary": "#006c49",
+                        "surface-container-high": "#e8e7f3",
+                        "outline-variant": "#c4c5d8",
+                        "on-secondary-fixed-variant": "#005236",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-fixed": "#001158",
+                        "surface-dim": "#dad9e5",
+                        "inverse-primary": "#b9c3ff",
+                        "tertiary-fixed": "#ffddb8",
+                        "on-tertiary-fixed": "#2a1700",
+                        "inverse-on-surface": "#f1effc",
+                        "on-tertiary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "surface-tint": "#2b4edf",
+                        "on-primary": "#ffffff",
+                        "on-secondary-container": "#00714d",
+                        "primary": "#0033c6",
+                        "on-primary-fixed-variant": "#0032c3",
+                        "surface-container-low": "#f4f2ff",
+                        "outline": "#747686",
+                        "primary-fixed-dim": "#b9c3ff",
+                        "tertiary-container": "#875400",
+                        "on-surface": "#1a1b24",
+                        "surface": "#fbf8ff",
+                        "on-primary-container": "#d3d8ff",
+                        "on-error-container": "#93000a",
+                        "secondary-container": "#6cf8bb",
+                        "inverse-surface": "#2f3039",
+                        "surface-container": "#eeedf9",
+                        "on-secondary-fixed": "#002113",
+                        "secondary-fixed-dim": "#4edea3",
+                        "primary-container": "#2d4fe0",
+                        "on-background": "#1a1b24",
+                        "surface-variant": "#e2e1ed",
+                        "surface-bright": "#fbf8ff",
+                        "error": "#ba1a1a",
+                        "error-container": "#ffdad6",
+                        "secondary-fixed": "#6ffbbe",
+                        "tertiary": "#663f00",
+                        "on-tertiary-container": "#ffd29f",
+                        "primary-fixed": "#dee1ff",
+                        "tertiary-fixed-dim": "#ffb95f",
+                        "background": "#fbf8ff",
+                        "on-surface-variant": "#444655",
+                        "on-tertiary-fixed-variant": "#653e00",
+                        "on-secondary": "#ffffff",
+                        "surface-container-highest": "#e2e1ed"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-md": "16px",
+                        "stack-sm": "8px",
+                        "touch-target": "48px",
+                        "stack-lg": "24px",
+                        "stack-xl": "32px",
+                        "margin-main": "20px",
+                        "gutter-grid": "16px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "label-md": ["Inter"],
+                        "title-lg": ["Inter"],
+                        "headline-sm": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "label-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.5px", "fontWeight": "600"}],
+                        "title-lg": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "headline-lg-mobile": ["28px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.1px", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            background-color: #0B1220; /* Brand Override for Dark Mode Canvas */
+            color: #f1effc;
+        }
+        .custom-glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .timeline-line::before {
+            content: '';
+            position: absolute;
+            left: 20px;
+            top: 40px;
+            bottom: -24px;
+            width: 2px;
+            background: linear-gradient(to bottom, #2b4edf 0%, transparent 100%);
+        }
+        .timeline-item:last-child .timeline-line::before {
+            display: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-body-md text-body-md antialiased overflow-x-hidden min-h-screen">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-surface dark:bg-surface-dim flex items-center h-16 px-margin-main w-full max-w-[360px] mx-auto transition-colors">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary dark:text-primary-fixed-dim" style="font-variation-settings: 'FILL' 1;">shield_with_heart</span>
+<h1 class="font-headline-sm text-headline-sm font-bold text-primary dark:text-primary-fixed-dim">ScamRadar</h1>
+</div>
+<div class="ml-auto">
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container-low dark:hover:bg-surface-container-high transition-colors active:scale-95 duration-100">
+<span class="material-symbols-outlined text-on-surface-variant dark:text-outline">search</span>
+</button>
+</div>
+</header>
+<!-- Main Canvas -->
+<main class="pt-20 pb-28 px-margin-main max-w-[360px] mx-auto">
+<!-- Header & Filter Chips -->
+<section class="mb-stack-lg">
+<h2 class="font-headline-md text-headline-md mb-stack-md text-on-surface dark:text-inverse-on-surface">Scan History</h2>
+<div class="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
+<button class="flex-shrink-0 px-4 py-2 rounded-full bg-primary text-on-primary font-label-lg text-label-lg active:scale-95 transition-transform">
+                    All
+                </button>
+<button class="flex-shrink-0 px-4 py-2 rounded-full bg-surface-container dark:bg-surface-container-highest text-on-surface-variant dark:text-on-surface font-label-lg text-label-lg active:scale-95 transition-transform">
+                    Threats
+                </button>
+<button class="flex-shrink-0 px-4 py-2 rounded-full bg-surface-container dark:bg-surface-container-highest text-on-surface-variant dark:text-on-surface font-label-lg text-label-lg active:scale-95 transition-transform">
+                    Safe
+                </button>
+<button class="flex-shrink-0 px-4 py-2 rounded-full bg-surface-container dark:bg-surface-container-highest text-on-surface-variant dark:text-on-surface font-label-lg text-label-lg active:scale-95 transition-transform">
+                    Manual
+                </button>
+</div>
+</section>
+<!-- Timeline List -->
+<section class="flex flex-col gap-stack-lg">
+<!-- Timeline Date Label -->
+<div class="flex items-center gap-4">
+<span class="font-label-md text-label-md uppercase tracking-widest text-outline">Today, Oct 24</span>
+<div class="h-[1px] flex-grow bg-outline-variant/30"></div>
+</div>
+<!-- Timeline Item 1 (Danger) -->
+<div class="relative timeline-item timeline-line">
+<div class="flex gap-4">
+<div class="z-10 w-10 h-10 rounded-full bg-error-container flex items-center justify-center text-error">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">warning</span>
+</div>
+<div class="flex-grow custom-glass p-4 rounded-xl">
+<div class="flex justify-between items-start mb-1">
+<h3 class="font-title-lg text-title-lg text-error">Suspicious SMS Blocked</h3>
+<span class="font-label-md text-label-md text-outline">14:22</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant dark:text-outline-variant mb-3">
+                            Phishing attempt disguised as a delivery notification from "PostService".
+                        </p>
+<div class="flex gap-2">
+<span class="bg-error/10 text-error text-[10px] uppercase font-bold px-2 py-0.5 rounded border border-error/20">High Risk</span>
+<span class="bg-surface-container-high/10 text-outline-variant text-[10px] uppercase font-bold px-2 py-0.5 rounded border border-outline-variant/20">Automated</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Timeline Item 2 (Safe) -->
+<div class="relative timeline-item timeline-line">
+<div class="flex gap-4">
+<div class="z-10 w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+</div>
+<div class="flex-grow custom-glass p-4 rounded-xl">
+<div class="flex justify-between items-start mb-1">
+<h3 class="font-title-lg text-title-lg text-on-surface dark:text-inverse-on-surface">Full System Scan</h3>
+<span class="font-label-md text-label-md text-outline">11:05</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant dark:text-outline-variant">
+                            4,120 files analyzed. No threats found on device.
+                        </p>
+</div>
+</div>
+</div>
+<!-- Timeline Date Label -->
+<div class="flex items-center gap-4 mt-4">
+<span class="font-label-md text-label-md uppercase tracking-widest text-outline">Yesterday, Oct 23</span>
+<div class="h-[1px] flex-grow bg-outline-variant/30"></div>
+</div>
+<!-- Timeline Item 3 (Warning) -->
+<div class="relative timeline-item timeline-line">
+<div class="flex gap-4">
+<div class="z-10 w-10 h-10 rounded-full bg-tertiary-container flex items-center justify-center text-on-tertiary-container">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">link_off</span>
+</div>
+<div class="flex-grow custom-glass p-4 rounded-xl">
+<div class="flex justify-between items-start mb-1">
+<h3 class="font-title-lg text-title-lg text-on-tertiary-container">Unsafe Link Detected</h3>
+<span class="font-label-md text-label-md text-outline">18:45</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant dark:text-outline-variant mb-3">
+                            You were prevented from visiting "secure-login-bank.xyz" in Chrome.
+                        </p>
+<img class="w-full h-24 object-cover rounded-lg opacity-60 grayscale hover:grayscale-0 transition-all duration-500" data-alt="A macro photograph of a dark computer screen showing a blurry warning symbol in a deep glowing orange. The atmosphere is tense and technical, featuring sharp digital artifacts and a shallow depth of field. The lighting is low-key, with the orange glow reflecting off a glossy black surface, creating a modern cyber-security aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBbQJ9Qyly0Qx6eejr3YVuLLIv7oD3B1oOesj6_jlHJV_wa7xA0t7aNt-YDktzV3MDsxJ_2hf-06CWFGWew5P9EJso6oSvMta3NpOCPsDu6MbG8NXLmGOv1mgsP32er-nHPJNVA2m9pMg7DMXQQbblW-AcQ0w01H41iJK93QjJzx9SU8-wMXfruqujnY_3eUeIJD5WjhZ3haebVYy_dLAPtcT00f3rGktmvuuZHopw6Nl-ybL1MH_sx6P9UXj-QP7PMCGYjEU30Gp0"/>
+</div>
+</div>
+</div>
+<!-- Timeline Item 4 (Manual) -->
+<div class="relative timeline-item">
+<div class="flex gap-4">
+<div class="z-10 w-10 h-10 rounded-full bg-surface-container-highest flex items-center justify-center text-outline">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">content_paste_search</span>
+</div>
+<div class="flex-grow custom-glass p-4 rounded-xl">
+<div class="flex justify-between items-start mb-1">
+<h3 class="font-title-lg text-title-lg text-on-surface dark:text-inverse-on-surface">Manual URL Check</h3>
+<span class="font-label-md text-label-md text-outline">09:12</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant dark:text-outline-variant italic">
+                            "https://amazon.shopp-deals.com/verify..."
+                        </p>
+<p class="mt-2 font-label-md text-label-md text-error flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">report</span> Malicious domain flagged.
+                        </p>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center h-20 px-4 pb-2 bg-surface-container dark:bg-surface-container-lowest shadow-md z-50 rounded-t-xl transition-colors">
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-5 py-1 hover:bg-surface-variant/50 dark:hover:bg-surface-container-high transition-all active:scale-90 duration-200">
+<span class="material-symbols-outlined mb-1">radar</span>
+<span class="font-label-md text-label-md">Scan</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-5 py-1 hover:bg-surface-variant/50 dark:hover:bg-surface-container-high transition-all active:scale-90 duration-200">
+<span class="material-symbols-outlined mb-1">library_books</span>
+<span class="font-label-md text-label-md">Library</span>
+</button>
+<button class="flex flex-col items-center justify-center bg-secondary-container dark:bg-secondary-fixed-dim text-on-secondary-container dark:text-on-secondary-fixed rounded-full px-5 py-1 active:scale-90 duration-200">
+<span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 1;">history</span>
+<span class="font-label-md text-label-md">History</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-5 py-1 hover:bg-surface-variant/50 dark:hover:bg-surface-container-high transition-all active:scale-90 duration-200">
+<span class="material-symbols-outlined mb-1">settings</span>
+<span class="font-label-md text-label-md">Settings</span>
+</button>
+</nav>
+<script>
+        // Simple micro-interaction for chips
+        const chips = document.querySelectorAll('button.rounded-full');
+        chips.forEach(chip => {
+            chip.addEventListener('click', () => {
+                chips.forEach(c => {
+                    c.classList.remove('bg-primary', 'text-on-primary');
+                    c.classList.add('bg-surface-container', 'dark:bg-surface-container-highest', 'text-on-surface-variant', 'dark:text-on-surface');
+                });
+                chip.classList.add('bg-primary', 'text-on-primary');
+                chip.classList.remove('bg-surface-container', 'dark:bg-surface-container-highest', 'text-on-surface-variant', 'dark:text-on-surface');
+            });
+        });
+    </script>
+</body></html>

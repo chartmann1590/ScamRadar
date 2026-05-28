@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ScamRadar - Library</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        /* Custom scrollbar for a cleaner technical look */
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2f3039;
+            border-radius: 10px;
+        }
+        body {
+            background-color: #0B1220; /* Specifically requested dark background */
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary": "#006c49",
+                        "surface-container-high": "#e8e7f3",
+                        "outline-variant": "#c4c5d8",
+                        "on-secondary-fixed-variant": "#005236",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-fixed": "#001158",
+                        "surface-dim": "#dad9e5",
+                        "inverse-primary": "#b9c3ff",
+                        "tertiary-fixed": "#ffddb8",
+                        "on-tertiary-fixed": "#2a1700",
+                        "inverse-on-surface": "#f1effc",
+                        "on-tertiary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "surface-tint": "#2b4edf",
+                        "on-primary": "#ffffff",
+                        "on-secondary-container": "#00714d",
+                        "primary": "#0033c6",
+                        "on-primary-fixed-variant": "#0032c3",
+                        "surface-container-low": "#f4f2ff",
+                        "outline": "#747686",
+                        "primary-fixed-dim": "#b9c3ff",
+                        "tertiary-container": "#875400",
+                        "on-surface": "#1a1b24",
+                        "surface": "#fbf8ff",
+                        "on-primary-container": "#d3d8ff",
+                        "on-error-container": "#93000a",
+                        "secondary-container": "#6cf8bb",
+                        "inverse-surface": "#2f3039",
+                        "surface-container": "#eeedf9",
+                        "on-secondary-fixed": "#002113",
+                        "secondary-fixed-dim": "#4edea3",
+                        "primary-container": "#2d4fe0",
+                        "on-background": "#1a1b24",
+                        "surface-variant": "#e2e1ed",
+                        "surface-bright": "#fbf8ff",
+                        "error": "#ba1a1a",
+                        "error-container": "#ffdad6",
+                        "secondary-fixed": "#6ffbbe",
+                        "tertiary": "#663f00",
+                        "on-tertiary-container": "#ffd29f",
+                        "primary-fixed": "#dee1ff",
+                        "tertiary-fixed-dim": "#ffb95f",
+                        "background": "#fbf8ff",
+                        "on-surface-variant": "#444655",
+                        "on-tertiary-fixed-variant": "#653e00",
+                        "on-secondary": "#ffffff",
+                        "surface-container-highest": "#e2e1ed"
+                    },
+                    "spacing": {
+                        "stack-md": "16px",
+                        "stack-sm": "8px",
+                        "touch-target": "48px",
+                        "stack-lg": "24px",
+                        "stack-xl": "32px",
+                        "margin-main": "20px",
+                        "gutter-grid": "16px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "label-md": ["Inter"],
+                        "title-lg": ["Inter"],
+                        "headline-sm": ["Inter"],
+                        "label-lg": ["Inter"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-body-md text-on-surface antialiased min-h-screen">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-[#0B1220]/80 backdrop-blur-md">
+<div class="flex items-center h-16 px-margin-main w-full max-w-[360px] mx-auto">
+<span class="material-symbols-outlined text-primary-fixed-dim mr-3">shield_with_heart</span>
+<h1 class="font-headline-sm text-headline-sm font-bold text-primary-fixed-dim">ScamRadar</h1>
+</div>
+</header>
+<main class="pt-20 pb-32 px-margin-main max-w-[360px] mx-auto">
+<!-- Search & Filters -->
+<section class="mb-stack-lg">
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="w-full h-12 bg-inverse-surface/30 border border-outline/30 rounded-xl pl-12 pr-4 text-on-surface placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary-fixed-dim transition-all" placeholder="Search scams..." type="text"/>
+</div>
+<div class="flex gap-2 mt-4 overflow-x-auto pb-2 no-scrollbar">
+<button class="bg-primary-container text-on-primary-container px-4 py-1.5 rounded-full font-label-md text-label-md whitespace-nowrap">All Scams</button>
+<button class="bg-inverse-surface/30 text-on-surface-variant border border-outline/20 px-4 py-1.5 rounded-full font-label-md text-label-md whitespace-nowrap hover:bg-inverse-surface/50 transition-colors">Phishing</button>
+<button class="bg-inverse-surface/30 text-on-surface-variant border border-outline/20 px-4 py-1.5 rounded-full font-label-md text-label-md whitespace-nowrap hover:bg-inverse-surface/50 transition-colors">Financial</button>
+<button class="bg-inverse-surface/30 text-on-surface-variant border border-outline/20 px-4 py-1.5 rounded-full font-label-md text-label-md whitespace-nowrap hover:bg-inverse-surface/50 transition-colors">Social</button>
+</div>
+</section>
+<!-- Library Grid -->
+<div class="grid grid-cols-2 gap-4">
+<!-- Card 1 -->
+<div class="bg-inverse-surface/20 rounded-xl border border-outline/10 overflow-hidden flex flex-col group active:scale-95 duration-200 cursor-pointer">
+<div class="h-24 overflow-hidden relative">
+<img class="w-full h-full object-cover" data-alt="A macro photograph of a dark computer keyboard with one key glowing in a bright neon blue. The scene is captured in a futuristic cyberpunk aesthetic with deep shadows and high-contrast lighting. The mood is mysterious and vigilant, highlighting digital security themes in a dark mode interface environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCBI_zzQLZP3UhfDpH846eSQ-pXQyJ68cJcOQqXuyj1xBcItNvYF0XRDD_wwqPV44wat5Ny1KK1Hd-CUMCVRnCFuO6LVIH7FAzYr273En19BMaL60Dx3yf2rnw_2wwCiF0ScrBmgzRbKZiOWOYFCrH668EeCoCjynprAu6jNp-Ee7icpT44qfUq4p5h4R0rTyCW3pl_Ta3GYkEd6YbI_RR0uiAKDyb9FkOZU4Z-i9NShMrAu4RLjZXRQcZrcGlwXEb9FRs5eANwNSo"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+<span class="absolute bottom-2 left-2 bg-error/90 text-white text-[10px] px-2 py-0.5 rounded font-bold uppercase tracking-wider">High Risk</span>
+</div>
+<div class="p-3">
+<h3 class="font-title-lg text-body-lg text-on-surface leading-tight mb-1">Deepfake Voice</h3>
+<p class="text-on-surface-variant text-[12px] leading-snug">AI-generated impersonation tactics.</p>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-inverse-surface/20 rounded-xl border border-outline/10 overflow-hidden flex flex-col group active:scale-95 duration-200 cursor-pointer">
+<div class="h-24 overflow-hidden relative">
+<img class="w-full h-full object-cover" data-alt="An abstract visualization of a secure network mesh glowing in vibrant green and teal against a pitch-black background. Thin, precise lines connect nodes across a 3D space, suggesting complex encryption. The lighting is cold and technical, reinforcing a sense of authoritative digital protection and transparency." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAHev1xqq8vMfXYH3MJ5eEVGfo6aRouK6FDFYPXz5HkAW4jSWWC_BJE4DFFJ_op2RSytX5YLCzeocydxIbJO8z9g1n0rI-DgFk0bIZK2q5LCXtSjPnsjP_anRalb9nwfB5vpGHgTo6FkDN7Pem8Rz7TABtYmIwdce6XYkECL6K7ZQ1Mvri136WwwYTqjl12CAH6Jzg9_s6362_viGekkIhAn8QGQZGJO0vOIYDEdaEH49-7D6pFR9dtrlvaPnbvM5133DKEAbVq_0E"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+<span class="absolute bottom-2 left-2 bg-tertiary-container/90 text-on-tertiary-container text-[10px] px-2 py-0.5 rounded font-bold uppercase tracking-wider">New</span>
+</div>
+<div class="p-3">
+<h3 class="font-title-lg text-body-lg text-on-surface leading-tight mb-1">Tax Phishing</h3>
+<p class="text-on-surface-variant text-[12px] leading-snug">Fake IRS and government links.</p>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="bg-inverse-surface/20 rounded-xl border border-outline/10 overflow-hidden flex flex-col group active:scale-95 duration-200 cursor-pointer">
+<div class="h-24 overflow-hidden relative">
+<img class="w-full h-full object-cover" data-alt="A professional close-up of a digital tablet screen showing complex financial charts and crypto data in a dark environment. The lighting is moody with soft blue backlighting, creating a sophisticated and serious tone. The composition is clean and focused on technical data points, symbolizing crypto safety." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAjrMUMe_WiPSCeFyhuYbcpv7-eleZ8YX269qojZpGH1iXwNnQwa4JHqL9JKwvehwc1C-_JinVOtAiEfHUZckOBJNkh66wiSUW8h1TPj4VgaLHWR9QlEjp5NID2jkt92KWVags7vsOrzc-xrXunOPk8ueXZWuVMwDqNgrEtolX_tB7qdj4kzw6mv6kYzgpIF22nwpV1f8MVhDyjZXStwvNL8ikcb2EmnygOxL4fUxvD0-hBIgImCxywu30Epp57H9hQOfKKm6u7oWs"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+</div>
+<div class="p-3">
+<h3 class="font-title-lg text-body-lg text-on-surface leading-tight mb-1">Crypto Drainers</h3>
+<p class="text-on-surface-variant text-[12px] leading-snug">Wallet-draining smart contracts.</p>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="bg-inverse-surface/20 rounded-xl border border-outline/10 overflow-hidden flex flex-col group active:scale-95 duration-200 cursor-pointer">
+<div class="h-24 overflow-hidden relative">
+<img class="w-full h-full object-cover" data-alt="A soft-focus image of a smartphone sitting on a dark wooden surface with a single incoming notification bubble glowing. The ambient lighting is warm but dim, focusing entirely on the device. The visual style is serene and grounded, emphasizing the everyday nature of digital vigilance." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDQV2oHA3Um0EmM9iyVjMHuecpQWydPJoIX9NIe0uGOMPoCxU06k5KwnfYMn8rsijLHroX1-eEyR0BjEapBgL9a4cQRrCKwv6iIw2XctzHABMa7gBRmfHe8Hhfrob_i-ruIuKORPOSQI_O6ZuRDJqSdqBeH0zm2QdLrOtaAKnC44EHJrE2a6jq_DNwjGNZpEG5KQt4jbsvZU5keWcWraI9ZukxkMyaA7y87Q2q6liKlUHFZ8Au8ARukuvpXY495yic_qwFhPzGnhB8"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+</div>
+<div class="p-3">
+<h3 class="font-title-lg text-body-lg text-on-surface leading-tight mb-1">Package Scams</h3>
+<p class="text-on-surface-variant text-[12px] leading-snug">SMS links for fake deliveries.</p>
+</div>
+</div>
+<!-- Card 5 -->
+<div class="bg-inverse-surface/20 rounded-xl border border-outline/10 overflow-hidden flex flex-col group active:scale-95 duration-200 cursor-pointer">
+<div class="h-24 overflow-hidden relative">
+<img class="w-full h-full object-cover" data-alt="A futuristic laboratory setting with blue laser lines scanning a glass surface. The atmosphere is quiet, vigilant, and highly advanced. The color palette is dominated by deep navy and electric blue, conveying a sense of systematic reliability and high-clarity information architecture." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBtDkO2kVJRP48_U7-KWBsef_KlODJPFqouMHivF3nCPLTP-OlzeGIlsDJkz7m6iSy8hFAihpQxCl_5iDNp_agpV0YlNcXmQvhAp8CddddEQcC3UgljEGZtb9ka1ihpdASM1F7DHMMpK663IIj1wFsQZIghKN8PqNnMkOhPyLhKcoj-eSysjUYOFEq2CvznKCLYAl4wF6DvC8kK6ROZ4KIEf0Oo-dwHPxwTwkT3VARaLbYMZj3wR8NvNw-TLhHaPv8dIzba2XnJWLE"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+</div>
+<div class="p-3">
+<h3 class="font-title-lg text-body-lg text-on-surface leading-tight mb-1">QR Jacking</h3>
+<p class="text-on-surface-variant text-[12px] leading-snug">Malicious QR code overlays.</p>
+</div>
+</div>
+<!-- Card 6 -->
+<div class="bg-inverse-surface/20 rounded-xl border border-outline/10 overflow-hidden flex flex-col group active:scale-95 duration-200 cursor-pointer">
+<div class="h-24 overflow-hidden relative">
+<img class="w-full h-full object-cover" data-alt="A digital art representation of an invisible shield reflecting a barrage of red geometric sparks. The background is a deep, dark blue void. The lighting is high-contrast and dramatic, highlighting the strength of the protection layer. The mood is one of quiet confidence and physical grounding." src="https://lh3.googleusercontent.com/aida-public/AB6AXuALcc9nZOzNej8QnCag6WG3KSjXtNI6UjWn_RLxWJZC_pzxuJIn3Wjt6CZgXkv4mxxQjJS9mr9mpEAPk0zCE7L4SW26FqlrS5Eu25s1dl5_7RJ7DYm3oVugSAjV1sx4OgselyEiWIvTkDNWUxJQr00xxAwdVDcSBDXG7X_O89ECT0x93QJEyzfa6xaKYFeVU0UHZTqeUoZDeSazRcbyTWB2ETfeDTAcSYqWob94A0ZqgM-LR02t72o2qm5mg8HpzBrXUnKyRMU8uos"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+</div>
+<div class="p-3">
+<h3 class="font-title-lg text-body-lg text-on-surface leading-tight mb-1">Romance Scams</h3>
+<p class="text-on-surface-variant text-[12px] leading-snug">Emotional manipulation tactics.</p>
+</div>
+</div>
+</div>
+<!-- Featured Guide (Bento Style Wide) -->
+<div class="mt-stack-lg bg-primary-container text-on-primary-container p-6 rounded-3xl relative overflow-hidden active:scale-95 duration-200 cursor-pointer">
+<div class="relative z-10">
+<h2 class="font-headline-sm text-headline-sm mb-2">Identify a Scam in 3 Seconds</h2>
+<p class="text-on-primary-container/80 text-body-md font-body-md mb-4 max-w-[200px]">Our expert guide to the most common red flags appearing this month.</p>
+<div class="inline-flex items-center gap-2 bg-white/20 px-4 py-2 rounded-full font-label-lg text-label-lg backdrop-blur-sm">
+                    Read Guide
+                    <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</div>
+</div>
+<span class="material-symbols-outlined absolute -right-4 -bottom-4 text-[120px] opacity-10 rotate-12 select-none">verified_user</span>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center h-20 px-4 pb-2 bg-inverse-surface/90 backdrop-blur-xl z-50 rounded-t-xl shadow-md">
+<button class="flex flex-col items-center justify-center text-outline-variant px-5 py-1 hover:bg-surface-variant/50 transition-all active:scale-90 duration-200">
+<span class="material-symbols-outlined">radar</span>
+<span class="font-label-md text-label-md mt-1">Scan</span>
+</button>
+<button class="flex flex-col items-center justify-center bg-secondary-fixed-dim text-on-secondary-fixed rounded-full px-5 py-1 hover:bg-surface-variant/50 transition-all active:scale-90 duration-200">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">library_books</span>
+<span class="font-label-md text-label-md mt-1">Library</span>
+</button>
+<button class="flex flex-col items-center justify-center text-outline-variant px-5 py-1 hover:bg-surface-variant/50 transition-all active:scale-90 duration-200">
+<span class="material-symbols-outlined">history</span>
+<span class="font-label-md text-label-md mt-1">History</span>
+</button>
+<button class="flex flex-col items-center justify-center text-outline-variant px-5 py-1 hover:bg-surface-variant/50 transition-all active:scale-90 duration-200">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-md text-label-md mt-1">Settings</span>
+</button>
+</nav>
+<script>
+        // Simple micro-interaction for active filter chips
+        const chips = document.querySelectorAll('button.whitespace-nowrap');
+        chips.forEach(chip => {
+            chip.addEventListener('click', () => {
+                chips.forEach(c => {
+                    c.classList.remove('bg-primary-container', 'text-on-primary-container');
+                    c.classList.add('bg-inverse-surface/30', 'text-on-surface-variant', 'border', 'border-outline/20');
+                });
+                chip.classList.remove('bg-inverse-surface/30', 'text-on-surface-variant', 'border', 'border-outline/20');
+                chip.classList.add('bg-primary-container', 'text-on-primary-container');
+            });
+        });
+
+        // Search highlight effect
+        const searchInput = document.querySelector('input');
+        searchInput.addEventListener('focus', () => {
+            searchInput.parentElement.classList.add('scale-[1.02]');
+        });
+        searchInput.addEventListener('blur', () => {
+            searchInput.parentElement.classList.remove('scale-[1.02]');
+        });
+    </script>
+</body></html>

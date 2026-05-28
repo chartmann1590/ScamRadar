@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ScamRadar - Scanning</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary": "#006c49",
+                        "surface-container-high": "#e8e7f3",
+                        "outline-variant": "#c4c5d8",
+                        "on-secondary-fixed-variant": "#005236",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-fixed": "#001158",
+                        "surface-dim": "#dad9e5",
+                        "inverse-primary": "#b9c3ff",
+                        "tertiary-fixed": "#ffddb8",
+                        "on-tertiary-fixed": "#2a1700",
+                        "inverse-on-surface": "#f1effc",
+                        "on-tertiary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "surface-tint": "#2b4edf",
+                        "on-primary": "#ffffff",
+                        "on-secondary-container": "#00714d",
+                        "primary": "#0033c6",
+                        "on-primary-fixed-variant": "#0032c3",
+                        "surface-container-low": "#f4f2ff",
+                        "outline": "#747686",
+                        "primary-fixed-dim": "#b9c3ff",
+                        "tertiary-container": "#875400",
+                        "on-surface": "#1a1b24",
+                        "surface": "#fbf8ff",
+                        "on-primary-container": "#d3d8ff",
+                        "on-error-container": "#93000a",
+                        "secondary-container": "#6cf8bb",
+                        "inverse-surface": "#2f3039",
+                        "surface-container": "#eeedf9",
+                        "on-secondary-fixed": "#002113",
+                        "secondary-fixed-dim": "#4edea3",
+                        "primary-container": "#2d4fe0",
+                        "on-background": "#1a1b24",
+                        "surface-variant": "#e2e1ed",
+                        "surface-bright": "#fbf8ff",
+                        "error": "#ba1a1a",
+                        "error-container": "#ffdad6",
+                        "secondary-fixed": "#6ffbbe",
+                        "tertiary": "#663f00",
+                        "on-tertiary-container": "#ffd29f",
+                        "primary-fixed": "#dee1ff",
+                        "tertiary-fixed-dim": "#ffb95f",
+                        "background": "#fbf8ff",
+                        "on-surface-variant": "#444655",
+                        "on-tertiary-fixed-variant": "#653e00",
+                        "on-secondary": "#ffffff",
+                        "surface-container-highest": "#e2e1ed"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-md": "16px",
+                        "stack-sm": "8px",
+                        "touch-target": "48px",
+                        "stack-lg": "24px",
+                        "stack-xl": "32px",
+                        "margin-main": "20px",
+                        "gutter-grid": "16px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "label-md": ["Inter"],
+                        "title-lg": ["Inter"],
+                        "headline-sm": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "label-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.5px", "fontWeight": "600"}],
+                        "title-lg": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "headline-lg-mobile": ["28px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.1px", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        @keyframes radar-pulse {
+            0% { transform: scale(0.95); opacity: 0.1; }
+            50% { transform: scale(1.1); opacity: 0.3; }
+            100% { transform: scale(0.95); opacity: 0.1; }
+        }
+
+        @keyframes radar-sweep {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .animate-radar-pulse {
+            animation: radar-pulse 3s ease-in-out infinite;
+        }
+
+        .animate-radar-sweep {
+            animation: radar-sweep 4s linear infinite;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col items-center">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-surface dark:bg-surface-dim flex items-center h-16 px-margin-main w-full max-w-[360px] mx-auto">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary dark:text-primary-fixed-dim" data-icon="shield_with_heart">shield_with_heart</span>
+<h1 class="font-headline-sm text-headline-sm font-bold text-primary dark:text-primary-fixed-dim">ScamRadar</h1>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-1 w-full max-w-[360px] pt-16 pb-20 px-margin-main flex flex-col items-center justify-center relative overflow-hidden">
+<!-- Radar Background Decorative Elements -->
+<div class="absolute inset-0 flex items-center justify-center pointer-events-none opacity-20">
+<div class="w-[500px] h-[500px] rounded-full border border-primary/20"></div>
+<div class="absolute w-[350px] h-[350px] rounded-full border border-primary/10"></div>
+</div>
+<!-- Central Radar Scanning Component -->
+<div class="relative w-72 h-72 flex items-center justify-center mb-stack-xl">
+<!-- Pulsing Concentric Rings -->
+<div class="absolute inset-0 rounded-full bg-primary/5 animate-radar-pulse"></div>
+<div class="absolute inset-4 rounded-full bg-primary/5 animate-radar-pulse" style="animation-delay: 0.5s;"></div>
+<div class="absolute inset-12 rounded-full bg-primary/5 animate-radar-pulse" style="animation-delay: 1s;"></div>
+<!-- Static Concentric Outlines -->
+<div class="absolute inset-0 rounded-full border border-primary/10"></div>
+<div class="absolute inset-16 rounded-full border border-primary/10"></div>
+<div class="absolute inset-28 rounded-full border border-primary/10"></div>
+<!-- Sweeping Gradient Ring -->
+<div class="absolute inset-0 rounded-full animate-radar-sweep" style="background: conic-gradient(from 0deg, transparent 0deg, transparent 270deg, rgba(0, 51, 198, 0.4) 360deg);">
+</div>
+<!-- Center Shield Icon Container -->
+<div class="relative z-10 w-24 h-24 rounded-full bg-primary flex items-center justify-center shadow-lg">
+<span class="material-symbols-outlined text-on-primary text-[40px]" data-icon="shield" style="font-variation-settings: 'FILL' 1;">shield</span>
+</div>
+</div>
+<!-- Scanning Status Texts -->
+<div class="text-center z-10 max-w-[280px]">
+<h2 class="font-headline-sm text-headline-sm text-on-surface mb-stack-sm">Analyzing on your device…</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Your message never leaves your phone.</p>
+</div>
+<!-- Action Area -->
+<div class="mt-auto w-full pt-stack-xl pb-stack-lg">
+<button class="w-full h-touch-target rounded-full bg-surface-container-high text-primary font-label-lg text-label-lg active:scale-95 transition-transform duration-100 flex items-center justify-center">
+                Cancel
+            </button>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center h-20 px-4 pb-2 bg-surface-container dark:bg-surface-container-lowest shadow-[0_-4px_12px_rgba(0,0,0,0.04)] rounded-t-xl z-50">
+<!-- Scan (Active) -->
+<a class="flex flex-col items-center justify-center bg-secondary-container dark:bg-secondary-fixed-dim text-on-secondary-container dark:text-on-secondary-fixed rounded-full px-5 py-1 transition-all active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="radar" style="font-variation-settings: 'FILL' 1;">radar</span>
+<span class="font-label-md text-label-md">Scan</span>
+</a>
+<!-- Library -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-5 py-1 hover:bg-surface-variant/50 transition-all active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="library_books">library_books</span>
+<span class="font-label-md text-label-md">Library</span>
+</a>
+<!-- History -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-5 py-1 hover:bg-surface-variant/50 transition-all active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="history">history</span>
+<span class="font-label-md text-label-md">History</span>
+</a>
+<!-- Settings -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-5 py-1 hover:bg-surface-variant/50 transition-all active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-label-md text-label-md">Settings</span>
+</a>
+</nav>
+<script>
+        // Micro-interaction: Randomize text during scan to simulate "thinking"
+        const statusText = document.querySelector('h2');
+        const phases = [
+            "Analyzing patterns…",
+            "Checking signatures…",
+            "Verifying on device…",
+            "Searching for fraud…",
+            "Analyzing on your device…"
+        ];
+        let phaseIndex = 0;
+
+        setInterval(() => {
+            phaseIndex = (phaseIndex + 1) % phases.length;
+            statusText.style.opacity = '0';
+            setTimeout(() => {
+                statusText.innerText = phases[phaseIndex];
+                statusText.style.opacity = '1';
+            }, 300);
+        }, 4000);
+
+        statusText.style.transition = 'opacity 0.3s ease-in-out';
+    </script>
+</body></html>

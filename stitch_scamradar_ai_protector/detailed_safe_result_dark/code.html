@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary": "#006c49",
+                    "surface-container-high": "#e8e7f3",
+                    "outline-variant": "#c4c5d8",
+                    "on-secondary-fixed-variant": "#005236",
+                    "surface-container-lowest": "#ffffff",
+                    "on-primary-fixed": "#001158",
+                    "surface-dim": "#dad9e5",
+                    "inverse-primary": "#b9c3ff",
+                    "tertiary-fixed": "#ffddb8",
+                    "on-tertiary-fixed": "#2a1700",
+                    "inverse-on-surface": "#f1effc",
+                    "on-tertiary": "#ffffff",
+                    "on-error": "#ffffff",
+                    "surface-tint": "#2b4edf",
+                    "on-primary": "#ffffff",
+                    "on-secondary-container": "#00714d",
+                    "primary": "#0033c6",
+                    "on-primary-fixed-variant": "#0032c3",
+                    "surface-container-low": "#f4f2ff",
+                    "outline": "#747686",
+                    "primary-fixed-dim": "#b9c3ff",
+                    "tertiary-container": "#875400",
+                    "on-surface": "#1a1b24",
+                    "surface": "#fbf8ff",
+                    "on-primary-container": "#d3d8ff",
+                    "on-error-container": "#93000a",
+                    "secondary-container": "#6cf8bb",
+                    "inverse-surface": "#2f3039",
+                    "surface-container": "#eeedf9",
+                    "on-secondary-fixed": "#002113",
+                    "secondary-fixed-dim": "#4edea3",
+                    "primary-container": "#2d4fe0",
+                    "on-background": "#1a1b24",
+                    "surface-variant": "#e2e1ed",
+                    "surface-bright": "#fbf8ff",
+                    "error": "#ba1a1a",
+                    "error-container": "#ffdad6",
+                    "secondary-fixed": "#6ffbbe",
+                    "tertiary": "#663f00",
+                    "on-tertiary-container": "#ffd29f",
+                    "primary-fixed": "#dee1ff",
+                    "tertiary-fixed-dim": "#ffb95f",
+                    "background": "#0B1220",
+                    "on-surface-variant": "#444655",
+                    "on-tertiary-fixed-variant": "#653e00",
+                    "on-secondary": "#ffffff",
+                    "surface-container-highest": "#e2e1ed"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "stack-md": "16px",
+                    "stack-sm": "8px",
+                    "touch-target": "48px",
+                    "stack-lg": "24px",
+                    "stack-xl": "32px",
+                    "margin-main": "20px",
+                    "gutter-grid": "16px"
+            },
+            "fontFamily": {
+                    "body-md": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "label-md": ["Inter"],
+                    "title-lg": ["Inter"],
+                    "headline-sm": ["Inter"],
+                    "headline-lg-mobile": ["Inter"],
+                    "label-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.5px", "fontWeight": "600"}],
+                    "title-lg": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.1px", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #0B1220;
+            color: #fbf8ff;
+            -webkit-font-smoothing: antialiased;
+        }
+        .emerald-glow {
+            box-shadow: 0 0 40px rgba(16, 185, 129, 0.15);
+        }
+        .scan-line {
+            background: linear-gradient(to right, transparent, #10B981, transparent);
+            height: 2px;
+            width: 100%;
+            position: absolute;
+            animation: scan 3s ease-in-out infinite;
+        }
+        @keyframes scan {
+            0%, 100% { top: 0%; opacity: 0; }
+            50% { top: 100%; opacity: 1; }
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="font-body-md text-body-md overflow-x-hidden">
+<!-- Top App Bar -->
+<header class="fixed top-0 w-full z-50 bg-[#0B1220]/80 backdrop-blur-md flex items-center h-16 px-margin-main w-full max-w-[360px] mx-auto left-0 right-0">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[#10B981]" style="font-variation-settings: 'FILL' 1;">shield_with_heart</span>
+<h1 class="font-headline-sm text-headline-sm font-bold text-[#fbf8ff]">ScamRadar</h1>
+</div>
+<div class="ml-auto">
+<button class="p-2 rounded-full hover:bg-white/10 active:scale-95 transition-all">
+<span class="material-symbols-outlined">help_outline</span>
+</button>
+</div>
+</header>
+<!-- Main Content -->
+<main class="pt-20 pb-28 px-margin-main max-w-[360px] mx-auto"><div class="mt-stack-lg flex flex-col items-center"><div class="w-20 h-20 rounded-full bg-[#10B981] flex items-center justify-center mb-4 emerald-glow">
+<span class="material-symbols-outlined text-white text-[40px]" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+</div>
+<div class="bg-[#10B981] px-6 py-2 rounded-full mb-3">
+<span class="font-headline-sm text-headline-sm text-white font-bold tracking-tight">LOOKS SAFE</span>
+</div>
+<div class="flex gap-4 mb-4">
+<div class="flex items-center gap-1.5 bg-[#10B981]/10 px-3 py-1 rounded-full border border-[#10B981]/20">
+<span class="w-2 h-2 rounded-full bg-[#10B981]"></span>
+<span class="font-label-md text-label-md text-[#10B981] uppercase tracking-wider">Safety Score: 98/100</span>
+</div>
+<div class="flex items-center gap-1.5 bg-surface-container-highest/10 px-3 py-1 rounded-full border border-white/10">
+<span class="font-label-md text-label-md text-outline-variant uppercase tracking-wider">Status: Verified</span>
+</div>
+</div>
+<p class="font-body-md text-body-md text-outline-variant text-center px-4">Our AI has verified this communication as high-trust with no detected threats.</p></div>
+<section class="mt-stack-xl">
+<h2 class="font-label-lg text-label-lg text-outline-variant mb-stack-sm uppercase tracking-wider">Original Message</h2>
+<div class="bg-surface-container-lowest/5 border border-white/10 rounded-xl p-4 relative overflow-hidden">
+<div class="absolute top-0 left-0 w-1 h-full bg-[#10B981]"></div>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed italic">
+                    "Hi Mom, I'm just letting you know I'm running a bit late for dinner tonight. See you at 7pm!"
+                </p>
+</div>
+<div class="mt-2 px-1 flex justify-between">
+<span class="font-label-md text-white/40">Today, 14:32</span>
+<button class="text-[#10B981] font-label-md">View Source</button>
+</div>
+</section>
+<section class="mt-stack-lg">
+<div class="bg-[#1A2235] rounded-xl p-5 border border-white/5">
+<h3 class="font-title-lg text-title-lg mb-4 flex items-center gap-2 text-[#10B981]">
+<span class="material-symbols-outlined">fact_check</span>
+                    Technical Verification
+                </h3>
+<ul class="space-y-4">
+<li class="flex gap-3">
+<span class="material-symbols-outlined text-[#10B981] font-bold mt-0.5">verified</span>
+<div>
+<p class="font-label-lg text-label-lg text-on-surface">Verified Sender</p>
+<p class="font-body-md text-body-md text-outline-variant">Sender identity matches known contacts or trusted institutions.</p>
+</div>
+</li>
+<li class="flex gap-3">
+<span class="material-symbols-outlined text-[#10B981] font-bold mt-0.5">lock</span>
+<div>
+<p class="font-label-lg text-label-lg text-on-surface">Secure Link</p>
+<p class="font-body-md text-body-md text-outline-variant">Any URLs present lead to legitimate, encrypted destinations.</p>
+</div>
+</li>
+<li class="flex gap-3">
+<span class="material-symbols-outlined text-[#10B981] font-bold mt-0.5">history_edu</span>
+<div>
+<p class="font-label-lg text-label-lg text-on-surface">High Trust History</p>
+<p class="font-body-md text-body-md text-outline-variant">Matches patterns of regular, safe communications for this user.</p>
+</div>
+</li>
+</ul>
+</div>
+</section>
+<section class="mt-stack-lg">
+<h2 class="font-label-lg text-label-lg text-outline-variant mb-stack-sm uppercase tracking-wider px-1">Recommended Actions</h2>
+<div class="flex flex-col gap-3 mb-8">
+<button class="w-full h-14 bg-[#10B981] text-white rounded-full font-label-lg text-label-lg flex items-center justify-center gap-2 active:scale-95 transition-transform shadow-lg">
+<span class="material-symbols-outlined">person_add</span>
+                Add to whitelist
+            </button>
+<button class="w-full h-14 bg-surface-container-highest/20 text-white border border-white/10 rounded-full font-label-lg text-label-lg flex items-center justify-center gap-2 active:scale-95 transition-transform">
+<span class="material-symbols-outlined">ios_share</span>
+                Share safety report
+            </button>
+</div>
+</section></main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center h-20 px-4 pb-2 bg-[#0B1220]/90 backdrop-blur-xl z-50 rounded-t-xl shadow-[0_-4px_24px_rgba(0,0,0,0.4)]">
+<button class="flex flex-col items-center justify-center bg-[#6cf8bb] text-[#00714d] rounded-full px-5 py-1 active:scale-90 duration-200">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">radar</span>
+<span class="font-label-md text-label-md">Scan</span>
+</button>
+<button class="flex flex-col items-center justify-center text-outline-variant px-5 py-1 hover:bg-white/5 transition-all active:scale-90 duration-200">
+<span class="material-symbols-outlined">library_books</span>
+<span class="font-label-md text-label-md">Library</span>
+</button>
+<button class="flex flex-col items-center justify-center text-outline-variant px-5 py-1 hover:bg-white/5 transition-all active:scale-90 duration-200">
+<span class="material-symbols-outlined">history</span>
+<span class="font-label-md text-label-md">History</span>
+</button>
+<button class="flex flex-col items-center justify-center text-outline-variant px-5 py-1 hover:bg-white/5 transition-all active:scale-90 duration-200">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-md text-label-md">Settings</span>
+</button>
+</nav>
+<!-- Micro-interaction overlay -->
+<div class="fixed inset-0 pointer-events-none z-0">
+<div class="absolute top-0 right-0 w-64 h-64 bg-[#10B981]/5 blur-[120px] rounded-full"></div>
+<div class="absolute bottom-0 left-0 w-80 h-80 bg-primary/5 blur-[120px] rounded-full"></div>
+</div>
+<script>
+        // Simple click interaction feedback
+        document.querySelectorAll('button').forEach(button => {
+            button.addEventListener('click', function(e) {
+                let ripple = document.createElement('div');
+                ripple.classList.add('absolute', 'bg-white/20', 'rounded-full', 'animate-ping');
+                ripple.style.width = '20px';
+                ripple.style.height = '20px';
+                ripple.style.left = e.clientX - 10 + 'px';
+                ripple.style.top = e.clientY - 10 + 'px';
+                document.body.appendChild(ripple);
+                setTimeout(() => ripple.remove(), 500);
+            });
+        });
+    </script>
+</body></html>

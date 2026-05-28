@@ -1,0 +1,124 @@
+{
+  "scam_fixtures": [
+    {
+      "id": 1,
+      "message": "URGENT: Your USPS package could not be delivered. Please click here to reschedule delivery and pay the $2.99 redelivery fee: http://usps-track-2847.com/redirect",
+      "expected_verdict": "LIKELY_SCAM",
+      "expected_scam_type": "PACKAGE_DELIVERY"
+    },
+    {
+      "id": 2,
+      "message": "Dear Customer, Your Netflix subscription has been suspended due to a billing error. Please update your payment information within 24 hours to avoid permanent account closure. Update now: http://netflix-secure-update.com/billing",
+      "expected_verdict": "LIKELY_SCAM",
+      "expected_scam_type": "PHISHING"
+    },
+    {
+      "id": 3,
+      "message": "This is the IRS. We have determined that you owe $4,872.63 in back taxes. An arrest warrant has been issued in your name. To resolve this matter immediately, call 1-800-555-0199 and pay via wire transfer or gift cards. Do not ignore this notice.",
+      "expected_verdict": "LIKELY_SCAM",
+      "expected_scam_type": "IRS_IMPERSONATION"
+    },
+    {
+      "id": 4,
+      "message": "Hey Mom, it's Jake. I'm in jail. I got into a car accident and they're holding me. I need $3,500 for bail. Please don't tell Dad, he'll freak out. Send the money via Western Union to the bail bondsman. I only have limited phone access so text me back.",
+      "expected_verdict": "LIKELY_SCAM",
+      "expected_scam_type": "FAMILY_EMERGENCY"
+    },
+    {
+      "id": 5,
+      "message": "Congratulations! You have been selected as the winner of the International Lottery Sweepstakes! Your winning prize is $2,500,000.00 USD. To claim your prize, please pay the processing and insurance fee of $500 via Bitcoin. Reply with your full name and address to begin the claim process.",
+      "expected_verdict": "LIKELY_SCAM",
+      "expected_scam_type": "LOTTERY"
+    },
+    {
+      "id": 6,
+      "message": "Hello darling, I saw your profile and I feel a deep connection. I am a civil engineer working overseas in Dubai. I have a big investment opportunity that I want to share with my soulmate. I can help you achieve financial freedom. Please reply and tell me about yourself. I can't do video calls because the internet here is very slow but I promise you are the one for me.",
+      "expected_verdict": "LIKELY_SCAM",
+      "expected_scam_type": "ROMANCE"
+    },
+    {
+      "id": 7,
+      "message": "ALERT: Your computer has been infected with a dangerous virus! Microsoft detected 3 critical threats on your device. Call Microsoft Support immediately at 1-888-555-0147 to remove the viruses before your data is permanently deleted. Do not restart your computer. Act now!",
+      "expected_verdict": "LIKELY_SCAM",
+      "expected_scam_type": "TECH_SUPPORT"
+    },
+    {
+      "id": 8,
+      "message": "Great news! Based on your resume, we'd like to offer you a Remote Data Entry position paying $45/hour. No experience necessary. To get started, we need you to purchase your equipment from our approved vendor. We'll send you a check to cover the cost — just deposit it and wire the vendor $1,200 for the equipment package.",
+      "expected_verdict": "LIKELY_SCAM",
+      "expected_scam_type": "JOB_OFFER"
+    },
+    {
+      "id": 9,
+      "message": "Invest in CryptoAI Pro — our AI trading bot guarantees 300% returns in 30 days with zero risk! Limited spots available in our exclusive VIP trading group. Send Bitcoin to bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh to join. Don't miss this once-in-a-lifetime opportunity!",
+      "expected_verdict": "LIKELY_SCAM",
+      "expected_scam_type": "CRYPTO"
+    },
+    {
+      "id": 10,
+      "message": "Your Amazon order #113-2348274-9382741 has been shipped and is on its way! Your package will arrive by Thursday. Track your package at amazon.com/your-orders. Thank you for shopping with Amazon.",
+      "expected_verdict": "SAFE",
+      "expected_scam_type": "NONE"
+    },
+    {
+      "id": 11,
+      "message": "Hey, are we still on for dinner tonight? I was thinking we could try that new Italian place on Main Street. Let me know what time works for you!",
+      "expected_verdict": "SAFE",
+      "expected_scam_type": "NONE"
+    },
+    {
+      "id": 12,
+      "message": "Your verification code is 847291. Do not share this code with anyone. This code expires in 10 minutes.",
+      "expected_verdict": "SAFE",
+      "expected_scam_type": "NONE"
+    },
+    {
+      "id": 13,
+      "message": "FedEx: Your shipment 7946 2837 4920 is out for delivery today. Expected delivery by 5 PM. No signature required. Track at fedex.com/tracking",
+      "expected_verdict": "SAFE",
+      "expected_scam_type": "NONE"
+    },
+    {
+      "id": 14,
+      "message": "We noticed unusual activity on your Bank of America account. Please verify your identity immediately by providing your Social Security Number, date of birth, and account password. Failure to verify within 24 hours will result in account suspension. Reply to this message with the requested information.",
+      "expected_verdict": "LIKELY_SCAM",
+      "expected_scam_type": "PHISHING"
+    },
+    {
+      "id": 15,
+      "message": "Your Apple ID was used to sign in to iCloud on a new device. If this wasn't you, go to appleid.apple.com to change your password immediately.",
+      "expected_verdict": "SUSPICIOUS",
+      "expected_scam_type": "PHISHING"
+    },
+    {
+      "id": 16,
+      "message": "Mom it's me I lost my phone using a friends phone im in the hospital I need you to send money for the bill please western union 2500 to Dr Martinez don't worry about me ill be fine just please send it fast",
+      "expected_verdict": "LIKELY_SCAM",
+      "expected_scam_type": "FAMILY_EMERGENCY"
+    },
+    {
+      "id": 17,
+      "message": "Reminder: Your dentist appointment is tomorrow at 2:00 PM at Smile Dental, 123 Oak Street. Please arrive 10 minutes early. Call 555-0123 to reschedule.",
+      "expected_verdict": "SAFE",
+      "expected_scam_type": "NONE"
+    },
+    {
+      "id": 18,
+      "message": "Welcome to Chase! Your new checking account has been opened. Your account number ending in 4521 is now active. Download the Chase Mobile app to get started.",
+      "expected_verdict": "SAFE",
+      "expected_scam_type": "NONE"
+    },
+    {
+      "id": 19,
+      "message": "Your PayPal account has been limited. We need you to confirm your identity to restore full access. Click here to verify: http://paypa1-secure-verify.com/login. You must complete this within 48 hours or your account will be permanently restricted.",
+      "expected_verdict": "LIKELY_SCAM",
+      "expected_scam_type": "PHISHING"
+    },
+    {
+      "id": 20,
+      "message": "Hi Sarah! Just wanted to check in and see how the kids are doing. Give me a call when you get a chance. Love, Aunt Martha",
+      "expected_verdict": "SAFE",
+      "expected_scam_type": "NONE"
+    }
+  ]
+}

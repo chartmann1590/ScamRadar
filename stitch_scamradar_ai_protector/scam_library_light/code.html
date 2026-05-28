@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary": "#006c49",
+                        "surface-container-high": "#e8e7f3",
+                        "outline-variant": "#c4c5d8",
+                        "on-secondary-fixed-variant": "#005236",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-fixed": "#001158",
+                        "surface-dim": "#dad9e5",
+                        "inverse-primary": "#b9c3ff",
+                        "tertiary-fixed": "#ffddb8",
+                        "on-tertiary-fixed": "#2a1700",
+                        "inverse-on-surface": "#f1effc",
+                        "on-tertiary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "surface-tint": "#2b4edf",
+                        "on-primary": "#ffffff",
+                        "on-secondary-container": "#00714d",
+                        "primary": "#0033c6",
+                        "on-primary-fixed-variant": "#0032c3",
+                        "surface-container-low": "#f4f2ff",
+                        "outline": "#747686",
+                        "primary-fixed-dim": "#b9c3ff",
+                        "tertiary-container": "#875400",
+                        "on-surface": "#1a1b24",
+                        "surface": "#fbf8ff",
+                        "on-primary-container": "#d3d8ff",
+                        "on-error-container": "#93000a",
+                        "secondary-container": "#6cf8bb",
+                        "inverse-surface": "#2f3039",
+                        "surface-container": "#eeedf9",
+                        "on-secondary-fixed": "#002113",
+                        "secondary-fixed-dim": "#4edea3",
+                        "primary-container": "#2d4fe0",
+                        "on-background": "#1a1b24",
+                        "surface-variant": "#e2e1ed",
+                        "surface-bright": "#fbf8ff",
+                        "error": "#ba1a1a",
+                        "error-container": "#ffdad6",
+                        "secondary-fixed": "#6ffbbe",
+                        "tertiary": "#663f00",
+                        "on-tertiary-container": "#ffd29f",
+                        "primary-fixed": "#dee1ff",
+                        "tertiary-fixed-dim": "#ffb95f",
+                        "background": "#fbf8ff",
+                        "on-surface-variant": "#444655",
+                        "on-tertiary-fixed-variant": "#653e00",
+                        "on-secondary": "#ffffff",
+                        "surface-container-highest": "#e2e1ed"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-md": "16px",
+                        "stack-sm": "8px",
+                        "touch-target": "48px",
+                        "stack-lg": "24px",
+                        "stack-xl": "32px",
+                        "margin-main": "20px",
+                        "gutter-grid": "16px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "label-md": ["Inter"],
+                        "title-lg": ["Inter"],
+                        "headline-sm": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "label-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.5px", "fontWeight": "600"}],
+                        "title-lg": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "headline-lg-mobile": ["28px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.1px", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Inter', sans-serif; }
+        .glass-card {
+            background: rgba(251, 248, 255, 0.8);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(116, 118, 134, 0.1);
+        }
+        .scam-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen pb-32">
+<!-- Top App Bar (Shared Component Logic) -->
+<header class="fixed top-0 w-full z-50 bg-surface flex items-center h-16 px-margin-main w-full max-w-[360px] mx-auto left-0 right-0">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-[28px]" data-icon="shield_with_heart" style="font-variation-settings: 'FILL' 1;">shield_with_heart</span>
+<h1 class="font-headline-sm text-headline-sm font-bold text-primary">ScamRadar</h1>
+</div>
+</header>
+<main class="pt-20 px-margin-main max-w-[360px] mx-auto">
+<!-- Search Section -->
+<section class="mb-stack-lg">
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant transition-colors group-focus-within:text-primary" data-icon="search">search</span>
+<input class="w-full h-12 pl-12 pr-4 bg-surface-container border-none rounded-xl font-body-md text-body-md focus:ring-2 focus:ring-primary transition-all" placeholder="Search scam library..." type="text"/>
+</div>
+</section>
+<!-- Filter Chips -->
+<section class="mb-stack-lg -mx-margin-main overflow-x-auto hide-scrollbar flex gap-2 px-margin-main">
+<button class="bg-primary text-on-primary px-5 py-2 rounded-full font-label-lg text-label-lg whitespace-nowrap active:scale-95 transition-transform">All</button>
+<button class="bg-surface-container-high text-on-surface-variant px-5 py-2 rounded-full font-label-lg text-label-lg whitespace-nowrap hover:bg-surface-variant transition-colors active:scale-95">Texts</button>
+<button class="bg-surface-container-high text-on-surface-variant px-5 py-2 rounded-full font-label-lg text-label-lg whitespace-nowrap hover:bg-surface-variant transition-colors active:scale-95">Calls</button>
+<button class="bg-surface-container-high text-on-surface-variant px-5 py-2 rounded-full font-label-lg text-label-lg whitespace-nowrap hover:bg-surface-variant transition-colors active:scale-95">Emails</button>
+<button class="bg-surface-container-high text-on-surface-variant px-5 py-2 rounded-full font-label-lg text-label-lg whitespace-nowrap hover:bg-surface-variant transition-colors active:scale-95">Romance</button>
+<button class="bg-surface-container-high text-on-surface-variant px-5 py-2 rounded-full font-label-lg text-label-lg whitespace-nowrap hover:bg-surface-variant transition-colors active:scale-95">Financial</button>
+</section>
+<!-- Bento-ish Grid of Scam Cards -->
+<div class="scam-grid">
+<!-- Card 1 -->
+<div class="glass-card rounded-3xl p-4 flex flex-col items-start shadow-sm border-l-4 border-error">
+<div class="w-12 h-12 rounded-2xl bg-error/10 flex items-center justify-center mb-3">
+<span class="material-symbols-outlined text-error text-[28px]" data-icon="record_voice_over" style="font-variation-settings: 'FILL' 1;">record_voice_over</span>
+</div>
+<h3 class="font-title-lg text-title-lg text-on-surface mb-1">Grandpa Voice</h3>
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-2 mb-4">AI clones of family voices asking for money.</p>
+<a class="mt-auto text-primary font-label-lg text-label-lg flex items-center gap-1 group active:opacity-70" href="#">
+                    See examples
+                    <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform" data-icon="arrow_forward">arrow_forward</span>
+</a>
+</div>
+<!-- Card 2 -->
+<div class="glass-card rounded-3xl p-4 flex flex-col items-start shadow-sm border-l-4 border-tertiary">
+<div class="w-12 h-12 rounded-2xl bg-tertiary/10 flex items-center justify-center mb-3">
+<span class="material-symbols-outlined text-tertiary text-[28px]" data-icon="package_2" style="font-variation-settings: 'FILL' 1;">package_2</span>
+</div>
+<h3 class="font-title-lg text-title-lg text-on-surface mb-1">Fake Delivery</h3>
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-2 mb-4">Missed package SMS with phishing links.</p>
+<a class="mt-auto text-primary font-label-lg text-label-lg flex items-center gap-1 group active:opacity-70" href="#">
+                    See examples
+                    <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform" data-icon="arrow_forward">arrow_forward</span>
+</a>
+</div>
+<!-- Card 3 -->
+<div class="glass-card rounded-3xl p-4 flex flex-col items-start shadow-sm border-l-4 border-secondary">
+<div class="w-12 h-12 rounded-2xl bg-secondary/10 flex items-center justify-center mb-3">
+<span class="material-symbols-outlined text-secondary text-[28px]" data-icon="volunteer_activism" style="font-variation-settings: 'FILL' 1;">volunteer_activism</span>
+</div>
+<h3 class="font-title-lg text-title-lg text-on-surface mb-1">Love Interest</h3>
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-2 mb-4">Long-term grooming for financial "emergencies".</p>
+<a class="mt-auto text-primary font-label-lg text-label-lg flex items-center gap-1 group active:opacity-70" href="#">
+                    See examples
+                    <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform" data-icon="arrow_forward">arrow_forward</span>
+</a>
+</div>
+<!-- Card 4 -->
+<div class="glass-card rounded-3xl p-4 flex flex-col items-start shadow-sm border-l-4 border-primary">
+<div class="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center mb-3">
+<span class="material-symbols-outlined text-primary text-[28px]" data-icon="account_balance" style="font-variation-settings: 'FILL' 1;">account_balance</span>
+</div>
+<h3 class="font-title-lg text-title-lg text-on-surface mb-1">Bank Alert</h3>
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-2 mb-4">Spoofed bank texts about unauthorized access.</p>
+<a class="mt-auto text-primary font-label-lg text-label-lg flex items-center gap-1 group active:opacity-70" href="#">
+                    See examples
+                    <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform" data-icon="arrow_forward">arrow_forward</span>
+</a>
+</div>
+<!-- Card 5 -->
+<div class="glass-card rounded-3xl p-4 flex flex-col items-start shadow-sm border-l-4 border-error">
+<div class="w-12 h-12 rounded-2xl bg-error/10 flex items-center justify-center mb-3">
+<span class="material-symbols-outlined text-error text-[28px]" data-icon="mail" style="font-variation-settings: 'FILL' 1;">mail</span>
+</div>
+<h3 class="font-title-lg text-title-lg text-on-surface mb-1">IRS Threat</h3>
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-2 mb-4">Aggressive emails claiming unpaid tax debts.</p>
+<a class="mt-auto text-primary font-label-lg text-label-lg flex items-center gap-1 group active:opacity-70" href="#">
+                    See examples
+                    <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform" data-icon="arrow_forward">arrow_forward</span>
+</a>
+</div>
+<!-- Card 6 -->
+<div class="glass-card rounded-3xl p-4 flex flex-col items-start shadow-sm border-l-4 border-secondary">
+<div class="w-12 h-12 rounded-2xl bg-secondary/10 flex items-center justify-center mb-3">
+<span class="material-symbols-outlined text-secondary text-[28px]" data-icon="verified" style="font-variation-settings: 'FILL' 1;">verified</span>
+</div>
+<h3 class="font-title-lg text-title-lg text-on-surface mb-1">Sweepstakes</h3>
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-2 mb-4">You've won! Just pay "shipping" to claim prize.</p>
+<a class="mt-auto text-primary font-label-lg text-label-lg flex items-center gap-1 group active:opacity-70" href="#">
+                    See examples
+                    <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform" data-icon="arrow_forward">arrow_forward</span>
+</a>
+</div>
+</div>
+<!-- Featured Resource -->
+<section class="mt-stack-lg mb-8">
+<div class="relative overflow-hidden rounded-3xl aspect-[16/9] flex items-end p-6 bg-primary-container">
+<img alt="Cyber security concept" class="absolute inset-0 w-full h-full object-cover mix-blend-overlay opacity-30" data-alt="A cinematic, high-key photograph of a modern office space with a focused professional looking at a laptop. The lighting is soft and natural, emphasizing a bright light-mode aesthetic with clean white surfaces. The scene uses a professional palette of deep blues and crisp whites, reflecting a mood of serene technological vigilance and calm confidence." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBxQ2FdJaERC2CTN6Co2kVaOKFORtMxxuDeHzvvCgN3NAVB1B98mPRdFkCV8AMiUi_QJ5wVk-bZ_qZ2wUxrNs1dfLC0RmqiPLDKQxLhVSPAWEQl1POYA39KcvnpFEogQKN7Xf-2NHmBwZVuIRrWNqJRlKxVJYCM6DSAt6TeQ1Tz6D0pWU7N692D7pn5hQQVJG70qxyvu8ef5k0Cg6uwQyFgM_yqtFnDD4JoTDBlmmL7BRlQfP4dje5_ovpKX_Qz15JhTNwo1_VC-o0"/>
+<div class="relative z-10">
+<span class="inline-block bg-primary text-on-primary px-3 py-1 rounded-full text-label-md font-label-md mb-2">Editor's Choice</span>
+<h2 class="font-headline-sm text-headline-sm text-on-primary-container mb-1">New AI Scam Trends</h2>
+<p class="font-body-md text-body-md text-on-primary-container/80">Learn how scammers are using ChatGPT to write perfect emails.</p>
+</div>
+</div>
+</section>
+</main>
+<!-- Bottom Navigation Bar (Shared Component Logic) -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center h-20 px-4 pb-2 bg-surface-container shadow-md rounded-t-xl z-50">
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-5 py-1 hover:bg-surface-variant/50 transition-all active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="radar">radar</span>
+<span class="font-label-md text-label-md">Scan</span>
+</a>
+<!-- ACTIVE TAB: Library -->
+<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-5 py-1 active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="library_books" style="font-variation-settings: 'FILL' 1;">library_books</span>
+<span class="font-label-md text-label-md">Library</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-5 py-1 hover:bg-surface-variant/50 transition-all active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="history">history</span>
+<span class="font-label-md text-label-md">History</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-5 py-1 hover:bg-surface-variant/50 transition-all active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-label-md text-label-md">Settings</span>
+</a>
+</nav>
+<script>
+        // Micro-interaction for filter chips
+        const chips = document.querySelectorAll('section.overflow-x-auto button');
+        chips.forEach(chip => {
+            chip.addEventListener('click', () => {
+                chips.forEach(c => {
+                    c.classList.remove('bg-primary', 'text-on-primary');
+                    c.classList.add('bg-surface-container-high', 'text-on-surface-variant');
+                });
+                chip.classList.remove('bg-surface-container-high', 'text-on-surface-variant');
+                chip.classList.add('bg-primary', 'text-on-primary');
+            });
+        });
+    </script>
+</body></html>

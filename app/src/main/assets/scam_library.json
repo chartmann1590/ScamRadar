@@ -1,0 +1,282 @@
+[
+  {
+    "id": 1,
+    "name": "Phishing Email",
+    "description": "Emails impersonating banks or services to steal login credentials and personal information",
+    "category": "Phishing",
+    "severity": "high",
+    "detailedDescription": "Phishing emails are fraudulent messages designed to look like they come from trusted sources such as banks, payment processors, or popular services. They typically contain links to fake websites that capture your login credentials, credit card numbers, or other sensitive information.",
+    "exampleIndicators": [
+      "Generic greeting like 'Dear Customer' instead of your name",
+      "Urgent language: 'Your account will be suspended'",
+      "Mismatched sender email domain (e.g., support@bank-security-update123.com)",
+      "Links that don't match the claimed organization (hover to check)",
+      "Requests for password, SSN, or credit card via email",
+      "Poor grammar and spelling errors",
+      "Threats of account closure if you don't act immediately"
+    ],
+    "howToSpot": [
+      "Check the sender's actual email address, not just the display name",
+      "Hover over links before clicking to see the real URL",
+      "Legitimate companies never ask for passwords via email",
+      "Look for your name — real companies address you personally",
+      "Check for HTTPS and correct domain in any URL"
+    ]
+  },
+  {
+    "id": 2,
+    "name": "USPS/FedEx Smishing",
+    "description": "Fake package delivery text messages requesting redelivery fees or personal information",
+    "category": "Delivery",
+    "severity": "high",
+    "detailedDescription": "Smishing (SMS phishing) scams impersonate delivery services like USPS, FedEx, UPS, and DHL. They claim a package couldn't be delivered and ask you to click a link to reschedule or pay a small fee. The link leads to a phishing site that steals your personal and payment information.",
+    "exampleIndicators": [
+      "Text from an unknown number about a package you're not expecting",
+      "Short links (bit.ly, tinyurl) instead of official USPS/FedEx URLs",
+      "Requests for a 'redelivery fee' or 'customs charge'",
+      "USPS never sends texts with links — they use tracking numbers only",
+      "Misspelled company names or slightly wrong URLs",
+      "Pressure to act within hours"
+    ],
+    "howToSpot": [
+      "Track packages directly on the carrier's official website or app",
+      "USPS, FedEx, and UPS never charge redelivery fees via text",
+      "Check if you're actually expecting a package",
+      "Never click links in unexpected delivery texts",
+      "Real delivery notifications include your tracking number"
+    ]
+  },
+  {
+    "id": 3,
+    "name": "IRS Impersonation",
+    "description": "Fake tax debt or refund messages pretending to be from the IRS or tax authorities",
+    "category": "Impersonation",
+    "severity": "high",
+    "detailedDescription": "Scammers impersonate the IRS, state tax agencies, or tax preparation services. They claim you owe back taxes, face arrest, or have a pending refund. They demand immediate payment via gift cards, wire transfer, or cryptocurrency. The real IRS will never initiate contact via phone, email, or text.",
+    "exampleIndicators": [
+      "The IRS initiates contact by postal mail, never by phone, email, or text",
+      "Demands for immediate payment via gift cards, wire transfer, or crypto",
+      "Threats of arrest, deportation, or license revocation",
+      "Requests for credit card or debit card numbers over the phone",
+      "Demands that you pay without the opportunity to question or appeal",
+      "Claims you'll be arrested if you don't pay right now"
+    ],
+    "howToSpot": [
+      "The IRS always sends written notices through the mail first",
+      "The IRS never demands immediate payment over the phone",
+      "The IRS never asks for gift cards, wire transfers, or cryptocurrency",
+      "The IRS never threatens to bring in police to arrest you",
+      "When in doubt, call the IRS directly at 1-800-829-1040"
+    ]
+  },
+  {
+    "id": 4,
+    "name": "AI Voice Cloning",
+    "description": "Deepfake voice of a family member in an 'emergency' situation requesting money",
+    "category": "Voice",
+    "severity": "critical",
+    "detailedDescription": "Using AI voice cloning technology, scammers can replicate a family member's voice from just a few seconds of audio found on social media. They then call pretending to be that person in an emergency — in jail, in an accident, kidnapped — and urgently request money for bail, medical bills, or ransom.",
+    "exampleIndicators": [
+      "A call from an unknown number sounding like a loved one in distress",
+      "Urgent request for money via wire transfer, gift cards, or crypto",
+      "The caller asks you not to hang up or contact anyone else",
+      "The call comes at an unusual hour to catch you off guard",
+      "Unnatural pauses or robotic cadence in the voice",
+      "The person can't answer specific personal questions only they would know"
+    ],
+    "howToSpot": [
+      "Ask a question only the real person would know the answer to",
+      "Hang up and call the person's actual phone number directly",
+      "Don't trust caller ID — it can be spoofed",
+      "Be suspicious of any request for immediate money transfer",
+      "Verify the story with another family member"
+    ]
+  },
+  {
+    "id": 5,
+    "name": "Romance Scam",
+    "description": "Fake online relationship that builds trust before requesting money",
+    "category": "Impersonation",
+    "severity": "high",
+    "detailedDescription": "Romance scammers create fake dating profiles or social media accounts to build emotional relationships with victims over weeks or months. Once trust is established, they fabricate emergencies, business troubles, or travel expenses and ask for money. AI-generated text makes these scams more convincing than ever.",
+    "exampleIndicators": [
+      "Quick profession of love before meeting in person",
+      "Always has an excuse for why they can't video chat or meet",
+      "Claims to be working overseas (military, oil rig, peacekeeping)",
+      "Asks for money for travel, medical emergencies, or customs fees",
+      "Requests payment via gift cards, wire transfer, or cryptocurrency",
+      "Photos look professional or are stolen from modeling accounts",
+      "Story changes or becomes more elaborate over time"
+    ],
+    "howToSpot": [
+      "Never send money to someone you haven't met in person",
+      "Do a reverse image search on their profile photos",
+      "Be wary of overly perfect profiles and rapid emotional escalation",
+      "Insist on a video call early in the relationship",
+      "Tell a trusted friend about the relationship for a reality check"
+    ]
+  },
+  {
+    "id": 6,
+    "name": "Crypto Investment",
+    "description": "Guaranteed return investment fraud through fake cryptocurrency platforms",
+    "category": "Investment",
+    "severity": "high",
+    "detailedDescription": "Crypto investment scams promise guaranteed high returns on cryptocurrency investments. They use fake trading platforms, social media ads, and celebrity deepfakes to appear legitimate. Victims can see their 'profits' growing on the fake platform but cannot withdraw funds without paying additional 'fees' or 'taxes.'",
+    "exampleIndicators": [
+      "Guaranteed returns with zero risk",
+      "Pressure to invest immediately before the 'opportunity closes'",
+      "Celebrity endorsements that are fabricated or deepfaked",
+      "Unregistered trading platforms or apps",
+      "You can deposit but withdrawals require more money",
+      "Social media messages from strangers about crypto opportunities",
+      "Complex jargon designed to confuse and impress"
+    ],
+    "howToSpot": [
+      "No legitimate investment offers guaranteed returns",
+      "Verify the platform is registered with financial regulators",
+      "Be skeptical of any investment promoted on social media",
+      "Never invest based on a message from someone you don't know",
+      "If you can't withdraw your money, it's a scam"
+    ]
+  },
+  {
+    "id": 7,
+    "name": "Tech Support Scam",
+    "description": "Fake pop-ups or calls claiming your computer is infected and requires paid support",
+    "category": "Phishing",
+    "severity": "medium",
+    "detailedDescription": "Tech support scammers display fake virus warnings on websites, send fake emails, or call directly claiming to be from Microsoft, Apple, or Google. They say your device is infected and offer to 'fix' it for a fee. They may request remote access to your device, install malware, or charge for unnecessary 'repairs.'",
+    "exampleIndicators": [
+      "Pop-up that says your computer is infected and you must call a number",
+      "A phone call from someone claiming to be from Microsoft or Apple",
+      "Requests for remote access to your computer",
+      "Demands for payment via gift cards or wire transfer",
+      "The warning won't let you close your browser normally",
+      "Claims your IP address has been flagged for illegal activity"
+    ],
+    "howToSpot": [
+      "Microsoft, Apple, and Google never make unsolicited support calls",
+      "Legitimate virus warnings come from your installed antivirus software, not web pages",
+      "Never give remote access to someone who contacted you",
+      "Close the browser using Task Manager or Force Quit if a pop-up won't close",
+      "Never call phone numbers shown in browser pop-ups"
+    ]
+  },
+  {
+    "id": 8,
+    "name": "Job Offer Scam",
+    "description": "Fake employment opportunities requiring upfront payment or personal information",
+    "category": "Phishing",
+    "severity": "medium",
+    "detailedDescription": "Job offer scams post fake listings on job boards or send unsolicited offers for high-paying remote work. They may ask for personal information for a 'background check,' require you to purchase equipment from their 'vendor,' or send you a fake check to deposit and return a portion as 'setup fees.'",
+    "exampleIndicators": [
+      "Offered a job without an interview or with minimal contact",
+      "Salary is much higher than market rate for the role",
+      "Asked to pay for equipment, training, or background checks upfront",
+      "Sent a check and asked to deposit it and return some funds",
+      "Communication only through messaging apps (WhatsApp, Telegram)",
+      "Request for SSN, bank info, or copy of ID before you've been hired",
+      "The company has no real online presence or reviews"
+    ],
+    "howToSpot": [
+      "Research the company independently — check their real website",
+      "Legitimate employers never ask you to pay to get hired",
+      "Never deposit a check from someone you don't know",
+      "Be suspicious of unsolicited job offers, especially via text",
+      "Verify the recruiter's identity on LinkedIn"
+    ]
+  },
+  {
+    "id": 9,
+    "name": "Lottery/Sweepstakes",
+    "description": "'You've won' messages requiring a fee to claim your prize",
+    "category": "Phishing",
+    "severity": "medium",
+    "detailedDescription": "Lottery and sweepstakes scams tell you you've won a prize in a contest you never entered. To claim it, you must pay 'taxes,' 'shipping,' 'insurance,' or 'processing fees' upfront. The prize never arrives. These scams come via email, text, phone, and even physical mail.",
+    "exampleIndicators": [
+      "You won a lottery you never entered",
+      "Asked to pay fees or taxes before receiving your prize",
+      "Request for bank account info to 'deposit your winnings'",
+      "The message comes from a free email service (Gmail, Yahoo)",
+      "Poor grammar and generic greetings",
+      "Pressure to act quickly before the 'claim period' expires"
+    ],
+    "howToSpot": [
+      "You cannot win a lottery you didn't enter",
+      "Real lotteries never ask winners to pay fees upfront",
+      "Never give bank details to claim a prize",
+      "If it sounds too good to be true, it is",
+      "Legitimate sweepstakes don't require purchase or payment to claim"
+    ]
+  },
+  {
+    "id": 10,
+    "name": "Streaming Billing Scam",
+    "description": "Fake billing update emails impersonating Netflix, Spotify, and other streaming services",
+    "category": "Phishing",
+    "severity": "medium",
+    "detailedDescription": "These phishing emails impersonate popular streaming services like Netflix, Hulu, Spotify, and Disney+. They claim your payment failed, your account will be suspended, or you need to update your billing information. The link leads to a fake login page that captures your credentials and credit card details.",
+    "exampleIndicators": [
+      "Email saying your payment failed or account will be suspended",
+      "Links that don't go to the actual service's domain",
+      "Requests to 'verify' or 'update' payment information via email link",
+      "Sender email doesn't match the official service domain",
+      "Generic greeting instead of your account name",
+      "Threat of immediate account cancellation"
+    ],
+    "howToSpot": [
+      "Go directly to the service's website or app — don't click email links",
+      "Check your account status in the official app",
+      "Netflix and other services will never ask for payment info via email link",
+      "Verify the sender's email domain carefully",
+      "Check your billing status in the actual app or website"
+    ]
+  },
+  {
+    "id": 11,
+    "name": "Family Emergency",
+    "description": "'Your relative is in trouble' messages demanding immediate payment",
+    "category": "Impersonation",
+    "severity": "critical",
+    "detailedDescription": "Family emergency scams use urgency and fear to manipulate victims. A message or call claims a family member is in jail, in the hospital, stranded, or in danger and needs money immediately. AI-generated text and voice cloning make these increasingly convincing. The scammer often asks you not to contact other family members.",
+    "exampleIndicators": [
+      "A message claiming a family member is in jail or the hospital",
+      "Urgent request for bail money, medical bills, or travel expenses",
+      "Asks you not to tell anyone else in the family",
+      "Request for payment via wire transfer, gift cards, or crypto",
+      "The person can't answer personal questions correctly",
+      "Message comes from an unknown number"
+    ],
+    "howToSpot": [
+      "Hang up and call the family member's actual phone number directly",
+      "Ask a question only the real person would know",
+      "Contact another family member to verify the story",
+      "Never send money based on a text or call you can't independently verify",
+      "Be suspicious of any request for secrecy"
+    ]
+  },
+  {
+    "id": 12,
+    "name": "Identity Theft",
+    "description": "Requests for SSN, passwords, or personal information via text or email",
+    "category": "Phishing",
+    "severity": "critical",
+    "detailedDescription": "Identity theft scams attempt to collect your personal information — Social Security number, date of birth, bank account numbers, passwords — by impersonating banks, government agencies, employers, or utility companies. With AI, these messages are increasingly personalized and difficult to distinguish from legitimate communications.",
+    "exampleIndicators": [
+      "Requests for your Social Security number via text, email, or call",
+      "Asks to 'verify your identity' by providing personal details",
+      "Claims your bank account has been compromised",
+      "Requests for copies of your driver's license or passport",
+      "Asks you to confirm your password or PIN",
+      "Messages containing partial information about you to seem legitimate"
+    ],
+    "howToSpot": [
+      "Banks never ask for your password or PIN via email or text",
+      "Government agencies don't request SSN via email or text",
+      "Never provide personal information in response to unsolicited contact",
+      "If concerned, call the organization directly using a verified number",
+      "Enable two-factor authentication on all important accounts"
+    ]
+  }
+]
