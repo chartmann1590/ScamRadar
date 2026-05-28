@@ -9,6 +9,9 @@
 [![Android](https://img.shields.io/badge/Platform-Android-green.svg)](https://developer.android.com)
 [![Kotlin](https://img.shields.io/badge/Language-Kotlin-purple.svg)](https://kotlinlang.org)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Download](https://img.shields.io/badge/Download-Latest_Release-blue.svg)](https://github.com/chartmann1590/ScamRadar/releases/latest)
+
+[Download APK](https://github.com/chartmann1590/ScamRadar/releases/latest) · [Download AAB](https://github.com/chartmann1590/ScamRadar/releases/latest) · Google Play coming soon
 
 </div>
 
@@ -165,6 +168,14 @@ app/src/main/java/com/scamradar/app/
 
 ---
 
+## Support ScamRadar
+
+If ScamRadar has helped you or someone you care about, consider buying me a coffee:
+
+[![Buy Me A Coffee](https://img.shields.io/badge/Buy_Me_A_Coffee-Support-orange.svg)](https://www.buymeacoffee.com/charleshartmann)
+
+---
+
 ## License
 
 This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
@@ -175,6 +186,6 @@ This project is licensed under the MIT License — see the [LICENSE](LICENSE) fi
 
 **Don't get scammed. Get ScamRadar.**
 
-[Website](https://chartmann1590.github.io/ScamRadar/) · [Privacy Policy](https://chartmann1590.github.io/ScamRadar/privacy) · [Report a Bug](https://github.com/chartmann1590/ScamRadar/issues)
+[Download](https://github.com/chartmann1590/ScamRadar/releases/latest) · [Website](https://chartmann1590.github.io/ScamRadar/) · [Privacy Policy](https://chartmann1590.github.io/ScamRadar/privacy) · [Report a Bug](https://github.com/chartmann1590/ScamRadar/issues) · [Support &#x2615;](https://www.buymeacoffee.com/charleshartmann)
 
 </div>
