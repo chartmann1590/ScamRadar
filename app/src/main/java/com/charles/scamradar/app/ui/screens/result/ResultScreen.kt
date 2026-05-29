@@ -72,6 +72,7 @@ import androidx.compose.ui.unit.dp
 import com.charles.scamradar.app.analytics.Analytics
 import com.charles.scamradar.app.data.model.ClassifierTier
 import com.charles.scamradar.app.data.model.RedFlag
+import com.charles.scamradar.app.data.model.ScamType
 import com.charles.scamradar.app.data.model.ScanResult
 import com.charles.scamradar.app.data.model.Verdict
 import com.charles.scamradar.app.share.buildShareText
@@ -155,12 +156,12 @@ fun ResultScreen(
             ) {
                 VerdictHero(scanResult)
 
+                WhatThisMeansCard(scanResult)
+
                 HighlightedMessageCard(scanResult)
 
                 when (scanResult.verdict) {
-                    Verdict.SAFE -> {
-                        SafeReassuranceCard(scanResult)
-                    }
+                    Verdict.SAFE -> { }
                     Verdict.SUSPICIOUS, Verdict.LIKELY_SCAM -> {
                         if (scanResult.redFlags.isNotEmpty()) {
                             RedFlagsCard(scanResult.redFlags)
@@ -404,17 +405,89 @@ private fun VerdictHero(scanResult: ScanResult) {
 }
 
 @Composable
-private fun SafeReassuranceCard(scanResult: ScanResult) {
+private fun WhatThisMeansCard(scanResult: ScanResult) {
     SectionCard(title = "What this means") {
-        val message = scanResult.recommendedAction.ifBlank {
-            "No strong scam indicators were found in this message. Stay alert — verify any unexpected requests for money, credentials, or personal info through official channels you trust."
+        val verdictLine = when (scanResult.verdict) {
+            Verdict.SAFE ->
+                "No strong scam indicators were detected in this content."
+            Verdict.SUSPICIOUS ->
+                "Some warning signs were detected. Treat this content with caution and verify the sender through a channel you trust."
+            Verdict.LIKELY_SCAM ->
+                "Strong scam indicators were detected. This is very likely a scam attempt — do not act on it."
         }
         Text(
-            text = message,
+            text = verdictLine,
             style = MaterialTheme.typography.bodyLarge,
             color = MaterialTheme.colorScheme.onSurface
         )
+
+        val description = remember(scanResult.originalMessage, scanResult.scamType) {
+            describeScannedContent(scanResult)
+        }
+        if (description.isNotBlank()) {
+            Text(
+                text = description,
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        }
+
+        if (scanResult.verdict == Verdict.SAFE && scanResult.recommendedAction.isNotBlank()) {
+            Text(
+                text = scanResult.recommendedAction,
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        }
     }
+}
+
+private fun describeScannedContent(scanResult: ScanResult): String {
+    val message = scanResult.originalMessage
+    if (message.isBlank()) return "You scanned an empty message."
+
+    val words = message.trim().split(Regex("\\s+")).filter { it.isNotEmpty() }
+    val wordCount = words.size
+    val lengthLabel = when {
+        wordCount < 20 -> "a short message"
+        wordCount < 80 -> "a medium-length message"
+        else -> "a long message"
+    }
+
+    val hasLink = Regex("https?://|www\\.", RegexOption.IGNORE_CASE).containsMatchIn(message)
+    val hasPhone = Regex("\\+?\\d[\\d\\s()-]{7,}").containsMatchIn(message)
+    val hasMoney = Regex("[\$€£]\\s?\\d|\\d+\\s?(usd|gbp|eur|dollars|pounds|euros)", RegexOption.IGNORE_CASE)
+        .containsMatchIn(message)
+    val features = buildList {
+        if (hasLink) add("a link")
+        if (hasPhone) add("a phone number")
+        if (hasMoney) add("money amounts")
+    }
+
+    val base = if (features.isEmpty()) {
+        "You scanned $lengthLabel ($wordCount words)."
+    } else {
+        "You scanned $lengthLabel ($wordCount words) containing ${features.joinToString(", ")}."
+    }
+
+    val typeHint = if (scanResult.verdict == Verdict.SAFE) {
+        ""
+    } else when (scanResult.scamType) {
+        ScamType.PHISHING -> " It matches patterns common in phishing attempts that try to capture logins or personal info."
+        ScamType.ROMANCE -> " It matches patterns common in romance scams that build trust before asking for money."
+        ScamType.IRS_IMPERSONATION -> " It matches patterns used by IRS / tax-agency impersonators."
+        ScamType.CRYPTO -> " It matches patterns common in cryptocurrency scams."
+        ScamType.FAMILY_EMERGENCY -> " It matches the \"family emergency\" / grandparent scam pattern."
+        ScamType.PACKAGE_DELIVERY -> " It matches patterns used in fake package-delivery scams."
+        ScamType.JOB_OFFER -> " It matches patterns used in fake job-offer scams."
+        ScamType.TECH_SUPPORT -> " It matches patterns used by fake tech-support scams."
+        ScamType.LOTTERY -> " It matches patterns used in lottery / prize scams."
+        ScamType.INVESTMENT -> " It matches patterns used in investment scams."
+        ScamType.OTHER -> " It matches general scam patterns."
+        ScamType.NONE -> ""
+    }
+
+    return base + typeHint
 }
 
 @Composable

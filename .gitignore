@@ -11,3 +11,8 @@ local.properties
 app/google-services.json
 .kotlin
 app/build/
+PLAN.md
+/pixel-screen.png
+/pixel-screen-fixed.png
+/result-screen.png
+/scam_screen.png
