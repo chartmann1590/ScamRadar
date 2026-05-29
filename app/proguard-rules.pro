@@ -6,7 +6,7 @@
 # Gson
 -keepattributes Signature
 -keepattributes *Annotation*
--keep class com.scamradar.app.data.model.** { *; }
+-keep class com.charles.scamradar.app.data.model.** { *; }
 
 # Room
 -keep class * extends androidx.room.RoomDatabase

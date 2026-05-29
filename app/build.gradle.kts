@@ -12,8 +12,12 @@ val keystorePasswordEnv: String? = System.getenv("KEYSTORE_PASSWORD")
 val keyAliasEnv: String? = System.getenv("KEY_ALIAS")
 val keyPasswordEnv: String? = System.getenv("KEY_PASSWORD")
 
+val admobAppId: String = System.getenv("ADMOB_APP_ID") ?: "ca-app-pub-8382831211800454~6124350400"
+val admobBannerId: String = System.getenv("ADMOB_BANNER_ID") ?: "ca-app-pub-3940256099942544/6300978111"
+val admobInterstitialId: String = System.getenv("ADMOB_INTERSTITIAL_ID") ?: "ca-app-pub-3940256099942544/1033173712"
+
 android {
-    namespace = "com.scamradar.app"
+    namespace = "com.charles.scamradar.app"
     compileSdk = 35
 
     signingConfigs {
@@ -28,7 +32,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.scamradar.app"
+        applicationId = "com.charles.scamradar.app"
         minSdk = 26
         targetSdk = 35
         versionCode = 1
@@ -56,12 +60,17 @@ android {
             "MODEL_SIZE_BYTES",
             "2588147712L"
         )
+
+        buildConfigField("String", "ADMOB_APP_ID", "\"$admobAppId\"")
+        buildConfigField("String", "ADMOB_BANNER_ID", "\"$admobBannerId\"")
+        buildConfigField("String", "ADMOB_INTERSTITIAL_ID", "\"$admobInterstitialId\"")
     }
 
     buildTypes {
         debug {
             isMinifyEnabled = false
             buildConfigField("Boolean", "USE_TEST_ADS", "true")
+            manifestPlaceholders["admobAppId"] = "ca-app-pub-3940256099942544~3347511713"
         }
         release {
             isMinifyEnabled = true
@@ -72,6 +81,7 @@ android {
             )
             signingConfig = signingConfigs.getByName("release")
             buildConfigField("Boolean", "USE_TEST_ADS", "false")
+            manifestPlaceholders["admobAppId"] = admobAppId
         }
     }
 

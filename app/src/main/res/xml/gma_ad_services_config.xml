@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ad-services-config>
+    <topics-api allowAllToAccess="true" />
+    <attribution-api allowAllToAccess="true" />
+    <custom-audiences-api allowAllToAccess="true" />
+    <protected-signals-api allowAllToAccess="true" />
+    <ad-selection-api allowAllToAccess="true" />
+</ad-services-config>

@@ -30,7 +30,7 @@ That's the gap. There is no free, no-account, **on-device-only**, AI-scam-specia
 | **Brand name** | **ScamRadar** |
 | **Play Store title** | `ScamRadar: AI Scam & Phishing Detector` (50/50 chars) |
 | **Tagline** | *"Paste it. Check it. Don't get scammed."* |
-| **Package name** | `com.scamradar.app` |
+| **Package name** | `com.charles.scamradar.app` |
 | **One-line positioning** | The free, private, on-device AI that tells you in 3 seconds whether that text, email, or voicemail is a scam — and exactly why. |
 
 **Why this name:** "Scam" is the highest-intent search keyword in the category; per 2026 Google Play ASO research, the title is the single most heavily weighted ranking signal, and Brand-Name: Primary-Keyword is the proven pattern. "Radar" connotes *detection* (not blocking, which carries permission baggage), is short, brandable, memorable, and leaves room to expand into "VoiceRadar" / "EmailRadar" sub-features later.
@@ -165,7 +165,7 @@ Each phase ends in a runnable APK. Don't move on until the prior phase runs.
 
 | # | Phase | Deliverable |
 |---|---|---|
-| 1 | **Project skeleton** | New Android Studio project (Kotlin, Compose, min SDK 26), package `com.scamradar.app`. Empty single-activity app launches to a "Hello" screen. |
+| 1 | **Project skeleton** | New Android Studio project (Kotlin, Compose, min SDK 26), package `com.charles.scamradar.app`. Empty single-activity app launches to a "Hello" screen. |
 | 2 | **Theme + nav shell** | Material 3 theme matching the palette in §7. Bottom nav (Scan / Library / History / Settings) with empty Composables. Light + dark theme work. |
 | 3 | **Text-scan happy path** | Paste box → "Analyze" button → calls a `ScamClassifier` interface with a **stub** implementation (returns hard-coded `LIKELY_SCAM` after 1s delay) → result screen renders verdict + red flags + recommendation. Verify UI/UX end-to-end before wiring real AI. |
 | 3a | **Lite classifier (heuristic)** | `LiteClassifier` implementing `ScamClassifier`: regex + keyword list + URL reputation against a bundled JSON of ~5,000 known-scam patterns. This is the default classifier — works on every device, ships in APK, makes the app immediately useful before the model downloads. |
@@ -459,7 +459,7 @@ The **share verdict card** is the only growth feature that matters in v1. Every 
 
 When the build agent reports done, I will check the following against the built artifact:
 
-1. **Brand & metadata**: title, short desc, long desc match §9 exactly; package name = `com.scamradar.app`; min SDK 26 / target SDK 35.
+1. **Brand & metadata**: title, short desc, long desc match §9 exactly; package name = `com.charles.scamradar.app`; min SDK 26 / target SDK 35.
 2. **App launches** on a high-end device (≥4 GB RAM, e.g. Pixel 7+ or Galaxy S22+) and on a low-end device (e.g. 3 GB RAM emulator). Onboarding device check correctly routes high-end to download offer and low-end to Lite-default.
 2a. **Onboarding model download**: starts, shows progress, survives backgrounding, survives a forced network drop and resumes, completes with SHA-256 verification, model lands at `filesDir/models/gemma-4-E2B-it.litertlm`. "Skip for now" path routes to Lite mode and home screen.
 2b. **Classifier routing**: with model present + hash valid → scans use `GemmaClassifier`; with model absent or hash invalid → scans use `LiteClassifier`. Settings → Storage → Delete model reverts to Lite without restart.

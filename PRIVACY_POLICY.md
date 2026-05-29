@@ -1,6 +1,6 @@
 # ScamRadar Privacy Policy
 
-**Last updated: May 28, 2026 (rev. 2)**
+**Last updated: May 28, 2026 (rev. 3)**
 
 ---
 
@@ -47,6 +47,11 @@ All analytics data is anonymous and cannot be linked to you personally. We never
 ### Advertising Data
 
 ScamRadar uses **Google AdMob** to display advertisements. AdMob may collect device identifiers and usage data to serve personalized or non-personalized ads. This is governed by [Google's Privacy Policy](https://policies.google.com/privacy).
+
+We display two ad formats:
+
+- **Banner ad** — anchored to the bottom of the app and visible on most screens.
+- **Interstitial ad** — a full-screen ad shown briefly between completing a scan and viewing the result.
 
 You may see a consent prompt regarding ad personalization as required by applicable law (e.g., GDPR, CCPA).
 
@@ -95,6 +100,7 @@ All runtime permissions are requested in-context with a plain-language explanati
 
 ### Google AdMob
 - Serves advertisements within the app
+- Ad formats used: a banner anchored at the bottom of the app, and an interstitial shown between scan completion and the result screen
 - May collect device advertising identifiers
 - Privacy policy: [https://policies.google.com/privacy](https://policies.google.com/privacy)
 
@@ -183,4 +189,4 @@ As declared in our Google Play Data Safety form:
 
 ---
 
-*This privacy policy is effective as of May 28, 2026 (rev. 2).*
+*This privacy policy is effective as of May 28, 2026 (rev. 3).*
