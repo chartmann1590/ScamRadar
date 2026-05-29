@@ -4,6 +4,10 @@ on:
   push:
     tags: ['v*']
   workflow_dispatch:
+  workflow_run:
+    workflows: ['Unit Tests']
+    types: [completed]
+    branches: [main]
 
 permissions:
   contents: write
@@ -11,6 +15,7 @@ permissions:
 jobs:
   release:
     runs-on: ubuntu-latest
+    if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
 
     steps:
       - uses: actions/checkout@v4
