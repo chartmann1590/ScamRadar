@@ -1,0 +1,82 @@
+Paste it. Check it. Don't get scammed.
+
+ScamRadar is a free, on-device AI that tells you in 3 seconds whether a suspicious text message, email, or voicemail is a scam — and explains exactly why.
+
+AI-generated scams jumped 1,210% in 2025. Deepfake voice phishing is up 1,633%. Humans now spot AI deepfakes less than 30% of the time. You deserve a second opinion that's faster than you.
+
+WHY SCAMRADAR
+
+• 100% on-device — your messages never leave your phone
+• No account, no sign-up, no email required
+• Free forever — the scanner is not paywalled
+• Built for the new wave of AI scams, not retrofitted spam filters
+• Explains the red flags in plain English
+
+WHAT YOU CAN DO
+
+✓ Text Scan
+Paste any suspicious message. Get an instant verdict — Looks Safe, Suspicious, or Likely Scam — with a confidence score and the red-flag phrases highlighted.
+
+✓ Email Screenshot Scan
+Share a screenshot of a sketchy email. Built-in OCR pulls out the text and runs it through the same scam classifier.
+
+✓ Voicemail Scan
+Import or record a voicemail. On-device speech recognition transcribes the audio and looks for AI voice-cloning indicators.
+
+✓ Scam Library
+Browse the 12 most common scam patterns of 2026 — phishing, USPS/FedEx smishing, IRS, AI voice cloning, romance, crypto investment, tech support, fake job offers, and more — with real annotated examples.
+
+✓ Scan History
+Your last 50 scans, stored only on your device. Search, filter, re-scan. Delete anytime. Never synced anywhere.
+
+✓ Share Verdict Card
+One-tap export of a verdict card as an image — perfect for warning family, friends, or your group chat.
+
+HOW IT WORKS
+
+1. Paste a suspicious text, share a screenshot, or import a voicemail.
+2. On-device AI (Gemma) analyzes the content privately, right on your phone.
+3. Get a clear verdict, highlighted red flags, and recommended next steps.
+
+Your messages never leave your phone. We literally cannot read what you paste, because we never receive it.
+
+LITE MODE
+
+On devices with less than 4 GB of RAM, or before the AI model finishes downloading, ScamRadar runs in Lite mode — a fast heuristic classifier that checks regex, keyword matches, and URL reputation against 5,000+ known scam patterns. Still 100% private, still free, no download required.
+
+WHO IT'S FOR
+
+• Anyone who gets weird texts and wants a second opinion
+• Adult children helping older parents stay safe online
+• Small business owners who receive fake invoice emails
+• Anyone whose phone is buzzing with "USPS / Amazon / IRS / your bank" texts
+
+PRIVACY-FIRST
+
+• No cloud processing — all analysis happens on your device
+• No account, no email, no personal info collected
+• No message logging — scan content is never sent anywhere
+• Local history only — stored on-device, deletable, never synced
+• Anonymous analytics only (button taps, no message content)
+
+Read the full Privacy Policy at the link below.
+
+PERMISSIONS
+
+ScamRadar asks for the minimum permissions needed:
+
+• Microphone — only when you tap "Record voicemail"
+• Storage / Photos — only when you choose a screenshot or audio file
+• Internet — only for downloading the optional AI model and (if enabled) Firebase Analytics
+
+We do not request SMS, contacts, call log, or accessibility permissions. ScamRadar does not auto-scan your messages. You always paste in, then we check.
+
+OPEN, TRANSPARENT, AND FREE
+
+ScamRadar is built for the people. The scanner is free forever. There is no paid tier you have to unlock to get accurate detection. If ScamRadar has helped you or someone you care about, you can support development with a coffee — but you never have to.
+
+Don't get scammed. Get ScamRadar.
+
+— — —
+
+Tags: scam detector, phishing checker, AI text checker, fake message detector, deepfake voice detector, scam text checker, anti-phishing, scam shield, fraud detection, smishing

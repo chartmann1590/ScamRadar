@@ -1,0 +1,32 @@
+PLAY STORE METADATA
+
+App Title: ScamRadar: AI Scam Detector
+Default language: English (US)
+Application type: Application
+Category: Tools  (alt: Communication)
+Tags: Security, Productivity, Privacy
+
+Content Rating: Everyone
+Target Audience and Content: 13+
+Ads: Contains ads (AdMob)
+In-app purchases: No
+
+Contact email: charles.h.hartmann1@gmail.com
+Website: https://chartmann1590.github.io/ScamRadar/
+Privacy Policy: https://chartmann1590.github.io/ScamRadar/privacy
+
+Countries: All countries supported
+
+Pricing: Free
+
+Pre-launch checklist:
+- Signed AAB uploaded
+- Privacy Policy URL live
+- Content rating questionnaire completed
+- Data safety form: declares no personal/message data collected
+- Target SDK 35
+- 64-bit ABI: yes (Kotlin builds for arm64-v8a, x86_64)
+- Screenshots: 8 phone, 8 7-inch tablet, 8 10-inch tablet
+- Feature graphic: feature-graphic/feature_graphic_1024x500.png
+- App icon: icon/icon_512.png
+- Promo video URL: (paste the YouTube URL once uploaded)

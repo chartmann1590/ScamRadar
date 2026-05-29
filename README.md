@@ -1,5 +1,7 @@
 <div align="center">
 
+<img src="play-store/icon/icon_512.png" width="120" alt="ScamRadar icon">
+
 # ScamRadar
 
 ### AI Scam & Phishing Detector
@@ -12,6 +14,14 @@
 [![Download](https://img.shields.io/badge/Download-Latest_Release-blue.svg)](https://github.com/chartmann1590/ScamRadar/releases/latest)
 
 [Download APK](https://github.com/chartmann1590/ScamRadar/releases/latest) · [Download AAB](https://github.com/chartmann1590/ScamRadar/releases/latest) · Google Play coming soon
+
+![ScamRadar feature graphic](play-store/feature-graphic/feature_graphic_1024x500.png)
+
+### Watch the 40-second demo
+
+[![Watch the ScamRadar demo video](docs/assets/promo_poster.png)](https://chartmann1590.github.io/ScamRadar/#watch)
+
+> [Watch the video on the website](https://chartmann1590.github.io/ScamRadar/#watch) · [Download the MP4](play-store/video/scamradar_promo.mp4) · [Captions (.srt)](play-store/video/scamradar_promo.srt)
 
 </div>
 
@@ -91,17 +101,21 @@ On devices with less than 4 GB RAM, or before the AI model finishes downloading,
 
 ## Screenshots
 
+Captured live on a Pixel 8 Pro running the actual app.
+
 <div align="center">
 
-| Home | Scanning | Scam Result | Safe Result |
-|------|----------|-------------|-------------|
-| ![Home Screen](stitch_scamradar_ai_protector/home_light/screen.png) | ![Scanning](stitch_scamradar_ai_protector/scanning_light/screen.png) | ![Scam Result](stitch_scamradar_ai_protector/result_scam_light/screen.png) | ![Safe Result](stitch_scamradar_ai_protector/result_safe_light/screen.png) |
+| Paste it. Check it. | On-device. Private. | Clear verdict. | What to do next. |
+|---------------------|---------------------|----------------|------------------|
+| ![Home](play-store/screenshots/phone/phone_01.png) | ![Scanning](play-store/screenshots/phone/phone_02.png) | ![Suspicious](play-store/screenshots/phone/phone_03.png) | ![Detail](play-store/screenshots/phone/phone_04.png) |
 
-| Library | History | Scam Detail | Dark Mode |
-|---------|---------|-------------|-----------|
-| ![Library](stitch_scamradar_ai_protector/scam_library_light/screen.png) | ![History](stitch_scamradar_ai_protector/history_light/screen.png) | ![Detail](stitch_scamradar_ai_protector/detailed_scam_result_light/screen.png) | ![Dark Home](stitch_scamradar_ai_protector/home_dark/screen.png) |
+| Peace of mind. | Learn the patterns. | Track your scans. | Free. Offline. |
+|----------------|---------------------|-------------------|----------------|
+| ![Looks Safe](play-store/screenshots/phone/phone_05.png) | ![Library](play-store/screenshots/phone/phone_06.png) | ![History](play-store/screenshots/phone/phone_07.png) | ![Settings](play-store/screenshots/phone/phone_08.png) |
 
 </div>
+
+> Want the unframed device captures? See [`play-store/screenshots/raw/`](play-store/screenshots/raw/). Tablet sizes for the Play Store live alongside in [`tablet-7in/`](play-store/screenshots/tablet-7in/) and [`tablet-10in/`](play-store/screenshots/tablet-10in/).
 
 ---
 

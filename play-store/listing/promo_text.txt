@@ -1,0 +1,25 @@
+PROMO COPY — short reusable variants
+
+WHAT'S NEW (release notes — 500 char max)
+  • First public release of ScamRadar
+  • On-device AI scam detector for texts, emails, and voicemails
+  • 12 trending scam patterns, with real examples
+  • Lite mode for any device, AI mode for 4 GB+ RAM
+  • Free forever. No account. No upload.
+
+TWEET (280 chars)
+  Got a sketchy text? Paste it into ScamRadar — on-device AI tells you in
+  3 seconds whether it's a scam and shows the red-flag phrases. 100% free,
+  no account, never leaves your phone. https://chartmann1590.github.io/ScamRadar/
+
+REDDIT (r/scams)
+  I built a free Android app that scans suspicious texts, emails, and
+  voicemails entirely on your phone (no cloud, no account). It flags
+  AI-generated scams, USPS smishing, IRS impersonation, romance scams,
+  and more — with red-flag phrases highlighted. Open source-ish writeup
+  on the GitHub. Would love feedback.
+
+ELEVATOR PITCH (10 seconds)
+  "ScamRadar is a free Android app that tells you in 3 seconds whether
+   that weird text, email, or voicemail is a scam — and explains why.
+   Everything runs on your phone. We never see your messages."

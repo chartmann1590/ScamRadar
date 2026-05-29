@@ -1,0 +1,49 @@
+PLAY STORE DATA SAFETY FORM
+
+The Data Safety form below mirrors what ScamRadar actually does. Use these
+exact answers when filling out the Play Console form.
+
+DOES YOUR APP COLLECT OR SHARE ANY USER DATA?
+  Yes — anonymous analytics only.
+
+DOES YOUR APP USE ENCRYPTION IN TRANSIT?
+  Yes (Firebase + AdMob use HTTPS).
+
+DO YOU PROVIDE A WAY FOR USERS TO REQUEST DATA DELETION?
+  Yes — users can clear scan history from Settings, and uninstalling the
+  app removes all on-device data. No server-side data is associated with
+  the user.
+
+DATA TYPES COLLECTED:
+
+  App activity → App interactions (anonymous analytics events)
+    Collected: Yes
+    Shared:    No
+    Optional:  Yes (Firebase Analytics can be disabled at OS level)
+    Purpose:   Analytics, App functionality
+
+  Device or other IDs → Optional / required for ad serving (AdMob)
+    Collected: Yes (advertising ID)
+    Shared:    Yes (with Google/AdMob)
+    Optional:  Yes (user can opt-out via Android Settings → Ads)
+    Purpose:   Advertising or marketing
+
+DATA TYPES *NOT* COLLECTED:
+
+  - Personal info (name, email, address, phone number)
+  - Messages or message content (scan input)
+  - Photos or videos
+  - Audio files (voicemail recordings)
+  - Files and documents
+  - Contacts
+  - Calendar
+  - Location
+  - Financial info
+  - Health & fitness
+  - Web browsing history
+  - SMS messages
+
+KEY GUARANTEE TO SURFACE IN YOUR LISTING
+
+  "Your messages, screenshots, and voicemails are processed entirely on your
+   device. They are never uploaded, never logged, and never seen by us."

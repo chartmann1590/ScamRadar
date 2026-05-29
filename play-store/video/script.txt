@@ -1,0 +1,42 @@
+SCAMRADAR — 40-second promo
+
+Voice: Microsoft Zira Desktop (en-US, neutral pace)
+Music: none (TTS-only for transparency; add background music in YouTube
+       Studio if desired)
+Target: 1920 x 1080 (16:9), 30 fps
+
+SCENE 1 (open)
+LINE: "Got a text you can't tell is real?"
+VISUAL: Phone showing a USPS scam message, deep-blue brand background
+
+SCENE 2 (problem)
+LINE: "AI scams jumped twelve hundred percent in twenty twenty five."
+VISUAL: Big stat overlay on dark background, radar rings behind
+
+SCENE 3 (intro)
+LINE: "Meet ScamRadar — the free AI scam detector for your phone."
+VISUAL: App icon big + wordmark, tagline below
+
+SCENE 4 (demo paste)
+LINE: "Paste any sketchy message and get a clear answer in three seconds."
+VISUAL: Home screen with Paste & Check button highlighted
+
+SCENE 5 (verdicts)
+LINE: "Suspicious. Likely scam. Or, peace of mind."
+VISUAL: Suspicious result on left, Looks Safe on right
+
+SCENE 6 (privacy)
+LINE: "Everything stays on your phone. We never see your messages."
+VISUAL: Lock + shield + 100% on-device
+
+SCENE 7 (depth)
+LINE: "Learn the top scam patterns. Track your scans. Share verdicts."
+VISUAL: Library + History combo
+
+SCENE 8 (trust chips)
+LINE: "Free forever. No account. No upload."
+VISUAL: Three brand-colored chips
+
+SCENE 9 (CTA)
+LINE: "Don't get scammed. Get ScamRadar."
+VISUAL: Big logo + "ScamRadar" wordmark + download text

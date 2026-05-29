@@ -1,0 +1,35 @@
+1
+00:00:00,000 --> 00:00:03,204
+Got a text you can't tell is real?
+
+2
+00:00:03,344 --> 00:00:08,352
+AI scams jumped twelve hundred percent in 2025.
+
+3
+00:00:08,492 --> 00:00:14,126
+Meet ScamRadar — the free AI scam detector for your phone.
+
+4
+00:00:14,266 --> 00:00:19,760
+Paste any sketchy message, and get a clear answer in three seconds.
+
+5
+00:00:19,900 --> 00:00:26,484
+Suspicious. Likely scam. Or, peace of mind.
+
+6
+00:00:26,624 --> 00:00:32,028
+Everything stays on your phone. We never see your messages.
+
+7
+00:00:32,168 --> 00:00:39,161
+Learn the top scam patterns. Track your scans. Share verdicts.
+
+8
+00:00:39,301 --> 00:00:44,795
+Free forever. No account. No upload.
+
+9
+00:00:44,935 --> 00:00:49,099
+Don't get scammed. Get ScamRadar.

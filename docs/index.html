@@ -8,6 +8,11 @@
     <meta property="og:title" content="ScamRadar — AI Scam & Phishing Detector">
     <meta property="og:description" content="Paste it. Check it. Don't get scammed. Free on-device AI scam detector for Android.">
     <meta property="og:type" content="website">
+    <meta property="og:image" content="assets/feature.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="assets/feature.png">
+    <link rel="icon" type="image/png" href="assets/icon.png">
+    <link rel="apple-touch-icon" href="assets/icon.png">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -65,6 +70,84 @@
         }
 
         .logo svg { width: 28px; height: 28px; }
+        .logo img { width: 32px; height: 32px; border-radius: 7px; }
+
+        /* Video section */
+        .video-section {
+            padding: 40px 0 80px;
+        }
+        .video-wrap {
+            position: relative;
+            max-width: 960px;
+            margin: 0 auto;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(45, 79, 224, 0.20),
+                        0 8px 20px rgba(0, 0, 0, 0.08);
+            background: #0B1220;
+            aspect-ratio: 16 / 9;
+        }
+        .video-wrap video {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+        .video-caption {
+            text-align: center;
+            margin-top: 16px;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        /* Screenshots gallery */
+        #screenshots {
+            background: linear-gradient(180deg, rgba(45,79,224,0.04) 0%, transparent 100%);
+        }
+        .screenshot-scroll {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+        @media (max-width: 1100px) {
+            .screenshot-scroll {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media (max-width: 600px) {
+            .screenshot-scroll {
+                grid-template-columns: 1fr 1fr;
+                gap: 12px;
+            }
+        }
+        .screenshot {
+            border-radius: 18px;
+            overflow: hidden;
+            border: 1px solid rgba(0,0,0,0.06);
+            box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+            background: var(--surface);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .screenshot:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 28px rgba(0,0,0,0.10);
+        }
+        .screenshot img {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+        .feature-banner {
+            max-width: 1024px;
+            margin: 0 auto 56px;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 12px 36px rgba(45, 79, 224, 0.16);
+        }
+        .feature-banner img {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
 
         nav ul {
             list-style: none;
@@ -506,17 +589,14 @@
 <nav>
     <div class="container">
         <a href="#" class="logo">
-            <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect width="28" height="28" rx="6" fill="#2D4FE0"/>
-                <path d="M14 6C9.58 6 6 9.58 6 14s3.58 8 8 8 8-3.58 8-8-3.58-8-8-8zm0 2c3.31 0 6 2.69 6 6 0 .34-.03.67-.08 1h-2.42c-.36-1.15-1.42-2-2.5-2s-2.14.85-2.5 2H8.08C8.03 14.67 8 14.34 8 14c0-3.31 2.69-6 6-6zm-5.92 7h3.84c.36 1.15 1.42 2 2.58 2 .34 0 .66-.06.96-.16L14 22c-3.31 0-6-2.69-6-6 0-.34.03-.67.08-1z" fill="white" opacity="0.9"/>
-            </svg>
+            <img src="assets/icon.png" alt="ScamRadar icon">
             ScamRadar
         </a>
         <ul>
+            <li><a href="#watch">Watch</a></li>
             <li><a href="#features">Features</a></li>
-            <li><a href="#how-it-works">How It Works</a></li>
+            <li><a href="#screenshots">Screenshots</a></li>
             <li><a href="#privacy">Privacy</a></li>
-            <li><a href="#compare">Compare</a></li>
             <li><a href="privacy.html">Privacy Policy</a></li>
         </ul>
     </div>
@@ -538,6 +618,23 @@
             </a>
         </div>
         <p style="margin-top:16px;font-size:14px;color:var(--text-secondary)">Also available as an Android App Bundle (.aab). Google Play coming soon.</p>
+    </div>
+</section>
+
+<section class="video-section" id="watch">
+    <div class="container">
+        <div class="video-wrap">
+            <video
+                src="assets/promo.mp4"
+                poster="assets/promo_poster.png"
+                controls
+                playsinline
+                preload="metadata">
+                Your browser doesn't support HTML5 video.
+                <a href="assets/promo.mp4">Download the promo video</a>.
+            </video>
+        </div>
+        <p class="video-caption">40 seconds of ScamRadar in action — texts, emails, voicemails. On-device. Private. Free.</p>
     </div>
 </section>
 
@@ -597,6 +694,26 @@
                 <h3>Scan History</h3>
                 <p>Your last 50 scans, stored locally on your device. Filter by verdict, delete anytime, and never synced anywhere. Your history, your control.</p>
             </div>
+        </div>
+    </div>
+</section>
+
+<section id="screenshots">
+    <div class="container">
+        <div class="feature-banner">
+            <img src="assets/feature.png" alt="ScamRadar — Paste it. Check it. Don't get scammed." loading="lazy">
+        </div>
+        <h2>See it in action</h2>
+        <p class="subtitle">Eight screens from the real app — captured live on a Pixel 8 Pro. No mockups, no stock photos.</p>
+        <div class="screenshot-scroll">
+            <div class="screenshot"><img src="assets/screenshots/01.png" alt="Home — paste any scam, get an answer in 3 seconds" loading="lazy"></div>
+            <div class="screenshot"><img src="assets/screenshots/02.png" alt="Analyzing on-device — nothing ever uploaded" loading="lazy"></div>
+            <div class="screenshot"><img src="assets/screenshots/03.png" alt="Suspicious verdict — plain English explanation" loading="lazy"></div>
+            <div class="screenshot"><img src="assets/screenshots/04.png" alt="What to do next — step-by-step actions" loading="lazy"></div>
+            <div class="screenshot"><img src="assets/screenshots/05.png" alt="Looks Safe — peace of mind for real messages" loading="lazy"></div>
+            <div class="screenshot"><img src="assets/screenshots/06.png" alt="Scam Library — 12 top scam patterns of 2026" loading="lazy"></div>
+            <div class="screenshot"><img src="assets/screenshots/07.png" alt="Scan History — your last 50 scans, local only" loading="lazy"></div>
+            <div class="screenshot"><img src="assets/screenshots/08.png" alt="Settings — free forever, works offline" loading="lazy"></div>
         </div>
     </div>
 </section>
