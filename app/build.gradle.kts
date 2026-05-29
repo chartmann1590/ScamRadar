@@ -12,7 +12,7 @@ val keystorePasswordEnv: String? = System.getenv("KEYSTORE_PASSWORD")
 val keyAliasEnv: String? = System.getenv("KEY_ALIAS")
 val keyPasswordEnv: String? = System.getenv("KEY_PASSWORD")
 
-val admobAppId: String = System.getenv("ADMOB_APP_ID") ?: "ca-app-pub-8382831211800454~6124350400"
+val admobAppId: String = System.getenv("ADMOB_APP_ID") ?: "ca-app-pub-3940256099942544~3347511713"
 val admobBannerId: String = System.getenv("ADMOB_BANNER_ID") ?: "ca-app-pub-3940256099942544/6300978111"
 val admobInterstitialId: String = System.getenv("ADMOB_INTERSTITIAL_ID") ?: "ca-app-pub-3940256099942544/1033173712"
 
@@ -127,8 +127,7 @@ dependencies {
     implementation("androidx.navigation:navigation-compose:2.8.5")
 
     implementation("androidx.datastore:datastore-preferences:1.1.1")
-    implementation("androidx.room:room-runtime:2.6.1")
-    implementation("androidx.room:room-ktx:2.6.1")
+
 
     implementation("com.google.mlkit:text-recognition:16.0.1")
 
@@ -140,11 +139,22 @@ dependencies {
     implementation("com.google.firebase:firebase-analytics")
     implementation("com.google.firebase:firebase-crashlytics")
     implementation("com.google.firebase:firebase-perf")
+    implementation("com.google.firebase:firebase-firestore-ktx")
+    implementation("com.google.firebase:firebase-auth-ktx")
+    implementation("com.google.firebase:firebase-appcheck-playintegrity")
 
     implementation("com.google.code.gson:gson:2.11.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.9.0")
     implementation("androidx.work:work-runtime-ktx:2.10.0")
-    implementation("com.google.ai.edge.litertlm:litertlm-android:latest.release")
+    implementation("com.google.ai.edge.litertlm:litertlm-android:0.12.0")
+
+    implementation("androidx.glance:glance-appwidget:1.1.1")
+    implementation("androidx.glance:glance-material3:1.1.1")
+
+    implementation("androidx.webkit:webkit:1.12.1")
+
+    implementation("com.google.zxing:core:3.5.3")
+    implementation("com.journeyapps:zxing-android-embedded:4.3.0")
 
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
