@@ -20,7 +20,20 @@ object ModelManager {
     }
 
     fun isModelDownloaded(context: Context): Boolean {
-        return getModelFile(context).exists() && getModelFile(context).length() > 0
+        return isModelComplete(context)
+    }
+
+    fun isModelComplete(context: Context): Boolean {
+        val file = getModelFile(context)
+        if (!file.exists()) return false
+        val expectedSize = BuildConfig.MODEL_SIZE_BYTES
+        if (expectedSize > 0L && file.length() < expectedSize) return false
+        return verifyModelHash(context)
+    }
+
+    fun isPartialModelPresent(context: Context): Boolean {
+        val file = getModelFile(context)
+        return file.exists() && !isModelComplete(context)
     }
 
     fun deleteModel(context: Context): Boolean {
@@ -59,9 +72,12 @@ object ModelManager {
     }
 
     fun verifyModelOnStartup(context: Context) {
-        if (!isModelDownloaded(context)) return
-        if (BuildConfig.MODEL_SHA256.isEmpty()) return
-        if (!verifyModelHash(context)) {
+        val file = getModelFile(context)
+        if (!file.exists()) return
+        val expectedSize = BuildConfig.MODEL_SIZE_BYTES
+        val undersized = expectedSize > 0L && file.length() < expectedSize
+        val badHash = BuildConfig.MODEL_SHA256.isNotEmpty() && !verifyModelHash(context)
+        if (undersized || badHash) {
             deleteModel(context)
         }
     }

@@ -1,0 +1,53 @@
+{
+  "weekStarting": "2026-05-25",
+  "items": [
+    {
+      "id": "fake-delivery-2026-05",
+      "title": "Fake delivery notice",
+      "tagline": "USPS / FedEx imposters with QR codes",
+      "summary": "Texts claim a package is on hold and need a tiny $0.30 fee. The link leads to a clone of the carrier's site that harvests cards.",
+      "tells": [
+        "Sender is a random short number, not the carrier's official short code",
+        "URL is a lookalike like usps-track-pkg[dot]top",
+        "Asks for full card details including CVV"
+      ],
+      "color": "#EF4444"
+    },
+    {
+      "id": "ai-cloned-voice-2026-05",
+      "title": "AI-cloned voice from family",
+      "tagline": "\"Mom, I'm in trouble\" but it isn't them",
+      "summary": "Scammers harvest 3-second audio clips from social media to clone voices. They call panicked, claim arrest or hospital, ask for gift cards.",
+      "tells": [
+        "Caller ID can be spoofed — call them back on a number you saved",
+        "They beg you not to tell anyone in the family",
+        "Payment requested is gift cards, crypto, or wire transfer"
+      ],
+      "color": "#F59E0B"
+    },
+    {
+      "id": "irs-tax-2026-05",
+      "title": "Tax-season impersonators",
+      "tagline": "Robocalls and texts pretending to be IRS",
+      "summary": "IRS never threatens immediate arrest by phone, never asks for gift cards. Real notices come by mail first.",
+      "tells": [
+        "Threatens arrest within 24 hours",
+        "Demands gift cards, crypto, or wire",
+        "Caller refuses to send written confirmation"
+      ],
+      "color": "#F59E0B"
+    },
+    {
+      "id": "investment-pig-butchering-2026-05",
+      "title": "Romance + crypto \"pig butchering\"",
+      "tagline": "Long-game scams via dating apps and Telegram",
+      "summary": "Builds trust over weeks then pitches a private crypto platform with guaranteed returns. Early withdrawals work; large ones lock you out.",
+      "tells": [
+        "Met online recently, can never video call",
+        "Pushes an obscure trading platform you can't find in app stores",
+        "Pressures you to invest more after a small \"win\""
+      ],
+      "color": "#EF4444"
+    }
+  ]
+}

@@ -70,6 +70,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.charles.scamradar.app.analytics.Analytics
+import com.charles.scamradar.app.data.datastore.UserPrefs
 import com.charles.scamradar.app.data.model.ClassifierTier
 import com.charles.scamradar.app.data.model.RedFlag
 import com.charles.scamradar.app.data.model.ScamType
@@ -78,6 +79,8 @@ import com.charles.scamradar.app.data.model.Verdict
 import com.charles.scamradar.app.share.buildShareText
 import com.charles.scamradar.app.share.shareCardImage
 import com.charles.scamradar.app.share.shareText
+import com.charles.scamradar.app.ui.screens.result.sharecard.ShareCardSelector
+import com.charles.scamradar.app.ui.screens.result.sharecard.ShareCardTheme
 import kotlinx.coroutines.launch
 
 private val Danger = Color(0xFFEF4444)
@@ -89,11 +92,14 @@ private val Safe = Color(0xFF10B981)
 fun ResultScreen(
     scanResult: ScanResult,
     onScanAgain: () -> Unit,
-    onBack: () -> Unit
+    onBack: () -> Unit,
+    userPrefs: UserPrefs? = null,
+    careMode: Boolean = false
 ) {
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
     var sharePickerOpen by remember { mutableStateOf(false) }
+    var selectedCardTheme by remember { mutableStateOf(ShareCardTheme.Minimal) }
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
 
     val shareCardGraphicsLayer = rememberGraphicsLayer()
@@ -156,9 +162,21 @@ fun ResultScreen(
             ) {
                 VerdictHero(scanResult)
 
+                if (careMode && scanResult.verdict != Verdict.SAFE) {
+                    NumberedActionCard(scanResult)
+                    if (userPrefs != null) ShareWithFamilyButton(scanResult, userPrefs)
+                }
+
+                scanResult.urlMetadata?.let { metadata ->
+                    ScreenshotPreviewSection(metadata)
+                    LinkMicroscopeCard(metadata)
+                }
+
                 WhatThisMeansCard(scanResult)
 
-                HighlightedMessageCard(scanResult)
+                if (scanResult.urlMetadata == null) {
+                    HighlightedMessageCard(scanResult)
+                }
 
                 when (scanResult.verdict) {
                     Verdict.SAFE -> { }
@@ -166,13 +184,17 @@ fun ResultScreen(
                         if (scanResult.redFlags.isNotEmpty()) {
                             RedFlagsCard(scanResult.redFlags)
                         }
-                        NumberedActionCard(scanResult)
+                        if (!careMode) {
+                            NumberedActionCard(scanResult)
+                        }
                         if (scanResult.aiGeneratedIndicators.isNotEmpty()) {
                             SimpleListCard(
                                 title = "AI-generated indicators",
                                 items = scanResult.aiGeneratedIndicators
                             )
                         }
+                        ReportAnonymouslyButton(scanResult)
+                        if (!careMode && userPrefs != null) ShareWithFamilyButton(scanResult, userPrefs)
                     }
                 }
 
@@ -192,13 +214,12 @@ fun ResultScreen(
                 Box(
                     modifier = Modifier
                         .width(shareCardWidthDp)
-                        .background(Color(0xFF0B1220))
                         .drawWithContent {
                             shareCardGraphicsLayer.record { this@drawWithContent.drawContent() }
                             drawLayer(shareCardGraphicsLayer)
                         }
                 ) {
-                    ShareCard(result = scanResult)
+                    ShareCardSelector(theme = selectedCardTheme, result = scanResult)
                 }
             }
         }
@@ -223,6 +244,43 @@ fun ResultScreen(
                     fontWeight = FontWeight.SemiBold,
                     color = MaterialTheme.colorScheme.onSurface
                 )
+                Spacer(modifier = Modifier.height(4.dp))
+
+                Text(
+                    text = "Card style",
+                    style = MaterialTheme.typography.labelLarge,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    ShareCardTheme.values().forEach { theme ->
+                        val isSelected = theme == selectedCardTheme
+                        Surface(
+                            onClick = { selectedCardTheme = theme },
+                            color = if (isSelected) MaterialTheme.colorScheme.primaryContainer
+                            else MaterialTheme.colorScheme.surfaceContainerLow,
+                            shape = RoundedCornerShape(12.dp),
+                            modifier = Modifier.weight(1f)
+                        ) {
+                            Text(
+                                text = when (theme) {
+                                    ShareCardTheme.Minimal -> "Minimal"
+                                    ShareCardTheme.BoldAlert -> "Bold"
+                                    ShareCardTheme.Educational -> "Learn"
+                                },
+                                style = MaterialTheme.typography.labelMedium,
+                                fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
+                                color = if (isSelected) MaterialTheme.colorScheme.onPrimaryContainer
+                                else MaterialTheme.colorScheme.onSurface,
+                                modifier = Modifier.padding(vertical = 10.dp, horizontal = 8.dp),
+                                textAlign = androidx.compose.ui.text.style.TextAlign.Center
+                            )
+                        }
+                    }
+                }
+
                 Spacer(modifier = Modifier.height(4.dp))
                 ShareOptionRow(
                     icon = Icons.Default.TextFields,

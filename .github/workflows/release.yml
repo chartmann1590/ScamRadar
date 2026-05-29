@@ -29,6 +29,9 @@ jobs:
 
       - name: Validate release secrets
         env:
+          TEST_ADMOB_APP_ID: ca-app-pub-3940256099942544~3347511713
+          TEST_ADMOB_BANNER_ID: ca-app-pub-3940256099942544/6300978111
+          TEST_ADMOB_INTERSTITIAL_ID: ca-app-pub-3940256099942544/1033173712
           GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
           KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
           KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
@@ -46,6 +49,9 @@ jobs:
           test -n "$ADMOB_APP_ID"
           test -n "$ADMOB_BANNER_ID"
           test -n "$ADMOB_INTERSTITIAL_ID"
+          test "$ADMOB_APP_ID" != "$TEST_ADMOB_APP_ID"
+          test "$ADMOB_BANNER_ID" != "$TEST_ADMOB_BANNER_ID"
+          test "$ADMOB_INTERSTITIAL_ID" != "$TEST_ADMOB_INTERSTITIAL_ID"
 
       - name: Restore google-services.json
         run: printf '%s' "${{ secrets.GOOGLE_SERVICES_JSON }}" | base64 -d > app/google-services.json

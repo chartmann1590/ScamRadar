@@ -5,6 +5,7 @@ import com.google.android.gms.ads.MobileAds
 import com.google.firebase.FirebaseApp
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.firebase.perf.FirebasePerformance
+import com.charles.scamradar.app.community.AnonymousAuthBootstrapper
 import com.charles.scamradar.app.download.ModelManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -19,8 +20,12 @@ class ScamRadarApp : Application() {
         FirebasePerformance.getInstance().isPerformanceCollectionEnabled = true
         MobileAds.initialize(this) {}
 
-        CoroutineScope(SupervisorJob() + Dispatchers.IO).launch {
+        val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
+        scope.launch {
             runCatching { ModelManager.verifyModelOnStartup(applicationContext) }
+        }
+        scope.launch {
+            runCatching { AnonymousAuthBootstrapper.ensureSignedIn() }
         }
     }
 }

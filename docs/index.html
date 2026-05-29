@@ -606,7 +606,7 @@
     <div class="container">
         <div class="badge"><span></span> Free &bull; Private &bull; On-Device AI</div>
         <h1>Detect scams <span class="gradient">before they get you</span></h1>
-        <p>Paste any suspicious text, email, or voicemail. ScamRadar's on-device AI tells you in 3 seconds if it's a scam — and exactly why.</p>
+        <p>Paste any suspicious text, email, voicemail, or URL. ScamRadar's on-device AI tells you in 3 seconds if it's a scam — and exactly why.</p>
         <div class="cta-group">
             <a href="https://github.com/chartmann1590/ScamRadar/releases/latest" class="btn btn-primary">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
@@ -680,19 +680,74 @@
                 <p>Import or record a voicemail. On-device speech recognition transcribes the audio and flags voice-cloning indicators in the transcript.</p>
             </div>
             <div class="feature-card">
+                <div class="feature-icon purple">&#x1F517;</div>
+                <h3>URL Scanner</h3>
+                <p>Enter a suspicious URL and ScamRadar captures the page in a hardened off-screen WebView. OCR extracts the text, the classifier runs, and Google Safe Browsing checks for known threats — all on-device.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon red">&#x1F50D;</div>
+                <h3>Link Microscope</h3>
+                <p>Every scanned URL gets a diagnostic card showing domain anatomy, redirect chains, and risk signals — so you can see exactly why a link is dangerous.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon teal">&#x1F4E4;</div>
+                <h3>Share Verdict Card</h3>
+                <p>One-tap export of a verdict card as an image — choose from three themes (Minimal, Bold Alert, Educational). Perfect for warning family in group chats.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon blue">&#x2328;&#xFE0F;</div>
+                <h3>System Share Sheet</h3>
+                <p>Scan any text from any app without opening ScamRadar. Share text, screenshots, or links directly via Android's share sheet and get an instant overlay verdict.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon green">&#x1F4F1;</div>
+                <h3>Home Widget + Quick Tile</h3>
+                <p>A Material You home screen widget that adapts to your wallpaper colors, plus a Quick Settings tile — scan in one swipe from anywhere on your phone.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon amber">&#x2600;&#xFE0F;</div>
+                <h3>Daily Scam Brief</h3>
+                <p>A daily feed of trending scam alerts, new patterns, and safety tips in the Today tab — powered by Remote Config so content stays fresh without app updates.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon purple">&#x1F9E9;</div>
+                <h3>"Spot the Scam" Quiz</h3>
+                <p>Test your scam-detection skills with a daily interactive quiz. Build a streak, earn badges, and learn to spot scams on your own.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon teal">&#x1F3C6;</div>
+                <h3>Trust Score &amp; Achievements</h3>
+                <p>Track your scanning habits with local-only stats: total scans, streaks, scam types encountered, and achievement badges. Gamify your safety.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon red">&#x1F4E2;</div>
+                <h3>Community Reports</h3>
+                <p>Report scams anonymously to help others stay safe. Browse a trending feed of the latest scams reported by the community — sanitized on-device, no personal data ever leaves your phone.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon blue">&#x1F46A;</div>
+                <h3>Family Sync</h3>
+                <p>Connect with family using a simple code or QR. When someone in your family group scans a scam, everyone gets notified. Keep your loved ones safe.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon green">&#x1F9D1;&#x200D;&#x1F9D3;</div>
+                <h3>Family Care Mode</h3>
+                <p>A simplified, larger-text interface designed for elderly users. Optionally auto-share scam verdicts with the family group so you can watch out for your loved ones.</p>
+            </div>
+            <div class="feature-card">
                 <div class="feature-icon purple">&#x1F4DA;</div>
                 <h3>Scam Library</h3>
                 <p>Browse the 12 most common scam patterns of 2026 with real annotated examples. Learn to spot scams on your own — knowledge is the best defense.</p>
             </div>
             <div class="feature-card">
-                <div class="feature-icon teal">&#x1F4E4;</div>
-                <h3>Share Verdict Card</h3>
-                <p>One-tap export of a verdict card as an image. Perfect for warning family and friends in group chats. This is how scams get stopped.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon red">&#x1F4CB;</div>
+                <div class="feature-icon amber">&#x1F4CB;</div>
                 <h3>Scan History</h3>
                 <p>Your last 50 scans, stored locally on your device. Filter by verdict, delete anytime, and never synced anywhere. Your history, your control.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon teal">&#x1F310;</div>
+                <h3>Multilingual</h3>
+                <p>Available in English, Spanish, Portuguese, French, and German — with Hindi and Chinese coming soon. Scam protection for everyone.</p>
             </div>
         </div>
     </div>
@@ -726,7 +781,7 @@
             <div class="step">
                 <div class="step-number">1</div>
                 <h3>Paste it</h3>
-                <p>Paste a suspicious text, share a screenshot, or import a voicemail into ScamRadar.</p>
+                <p>Paste a suspicious text, share a screenshot, import a voicemail, or enter a URL into ScamRadar.</p>
             </div>
             <div class="arrow">&#x2192;</div>
             <div class="step">
@@ -752,7 +807,7 @@
             <div class="privacy-card">
                 <div class="icon">&#x1F512;</div>
                 <h3>100% On-Device</h3>
-                <p>All scam detection runs locally using Gemma 4 AI via LiteRT. Your messages are never uploaded to any server.</p>
+                <p>All scam detection runs locally using Gemma 4 AI via LiteRT. Your messages are never uploaded to any server. Community reports are fully anonymized before submission — no personal data or full message content ever leaves your device.</p>
             </div>
             <div class="privacy-card">
                 <div class="icon">&#x1F6AB;</div>
@@ -823,7 +878,32 @@
                 </tr>
                 <tr>
                     <td>Shareable verdict cards</td>
-                    <td><span class="check">&#x2713;</span> One tap</td>
+                    <td><span class="check">&#x2713;</span> 3 themes</td>
+                    <td><span class="cross">&#x2717;</span> Not available</td>
+                </tr>
+                <tr>
+                    <td>URL scanning</td>
+                    <td><span class="check">&#x2713;</span> On-device capture</td>
+                    <td><span class="cross">&#x2717;</span> Not available</td>
+                </tr>
+                <tr>
+                    <td>Family protection</td>
+                    <td><span class="check">&#x2713;</span> Sync + Care Mode</td>
+                    <td><span class="cross">&#x2717;</span> Not available</td>
+                </tr>
+                <tr>
+                    <td>Community reports</td>
+                    <td><span class="check">&#x2713;</span> Anonymous feed</td>
+                    <td><span class="cross">&#x2717;</span> Not available</td>
+                </tr>
+                <tr>
+                    <td>Multilingual</td>
+                    <td><span class="check">&#x2713;</span> 5+ languages</td>
+                    <td><span class="cross">&#x2717;</span> English only</td>
+                </tr>
+                <tr>
+                    <td>Home screen widget</td>
+                    <td><span class="check">&#x2713;</span> Material You</td>
                     <td><span class="cross">&#x2717;</span> Not available</td>
                 </tr>
                 <tr>

@@ -12,7 +12,9 @@ app/google-services.json
 .kotlin
 app/build/
 PLAN.md
-/pixel-screen.png
-/pixel-screen-fixed.png
-/result-screen.png
-/scam_screen.png
+SPRINT.md
+pixel-*.png
+pixel-*.xml
+result-screen.png
+scam_screen.png
+uidump*.xml

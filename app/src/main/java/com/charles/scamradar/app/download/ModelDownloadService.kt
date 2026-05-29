@@ -309,6 +309,12 @@ class ModelDownloadService : Service() {
         val partFile = File(externalModelsDir, "gemma-4-E2B-it.litertlm.part")
         val internalModelsDir = File(filesDir, "models").apply { mkdirs() }
         val finalFile = File(internalModelsDir, "gemma-4-E2B-it.litertlm")
+        val expectedSize = BuildConfig.MODEL_SIZE_BYTES
+
+        if (!partFile.exists() || (expectedSize > 0L && partFile.length() < expectedSize)) {
+            partFile.delete()
+            return failDownload()
+        }
 
         if (BuildConfig.MODEL_SHA256.isNotEmpty()) {
             notificationManager.notify(NOTIFICATION_ID, buildNotification(100, "Verifying download…"))

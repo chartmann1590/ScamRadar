@@ -55,9 +55,18 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import android.graphics.BitmapFactory
+import androidx.compose.foundation.Image
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.layout.ContentScale
 import com.charles.scamradar.app.data.db.AppDatabase
 import com.charles.scamradar.app.data.db.ScanHistoryEntity
+import com.charles.scamradar.app.data.model.ScanMode
+import com.charles.scamradar.app.data.model.UrlScanMetadata
 import com.charles.scamradar.app.data.model.Verdict
+import com.google.gson.Gson
+import java.io.File
 import kotlinx.coroutines.launch
 
 private val verdictColors = mapOf(
@@ -276,13 +285,21 @@ fun HistoryScreen(
     }
 }
 
+private fun ScanHistoryEntity.urlMetadata(): UrlScanMetadata? {
+    val json = urlMetadataJson ?: return null
+    return runCatching { Gson().fromJson(json, UrlScanMetadata::class.java) }.getOrNull()
+}
+
 @Composable
 private fun HistoryItemCard(
     item: ScanHistoryEntity,
     onClick: () -> Unit,
     onRescan: () -> Unit
 ) {
-    val preview = item.originalMessage.trim().ifEmpty { "(empty message)" }
+    val urlMeta = remember(item.id, item.urlMetadataJson) { item.urlMetadata() }
+    val isUrlScan = item.scanMode == ScanMode.URL.name && urlMeta != null
+    val preview = if (isUrlScan && urlMeta != null) urlMeta.finalUrl
+        else item.originalMessage.trim().ifEmpty { "(empty message)" }
     val scamTypeLabel = item.scamType
         ?.takeIf { it.isNotBlank() && it.uppercase() !in setOf("NONE", "UNKNOWN") }
         ?.replace('_', ' ')
@@ -342,11 +359,16 @@ private fun HistoryItemCard(
 
             Spacer(modifier = Modifier.height(8.dp))
 
+            if (isUrlScan && urlMeta != null) {
+                ScreenshotThumb(path = urlMeta.screenshotPath)
+                Spacer(modifier = Modifier.height(8.dp))
+            }
+
             Text(
                 text = preview,
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurface,
-                maxLines = 3,
+                maxLines = if (isUrlScan) 1 else 3,
                 overflow = TextOverflow.Ellipsis
             )
 
@@ -367,6 +389,33 @@ private fun HistoryItemCard(
                     Text("Rescan")
                 }
             }
+        }
+    }
+}
+
+@Composable
+private fun ScreenshotThumb(path: String) {
+    val bitmap: ImageBitmap? = remember(path) {
+        runCatching {
+            val file = File(path)
+            if (!file.exists()) return@runCatching null
+            BitmapFactory.decodeFile(file.absolutePath)?.asImageBitmap()
+        }.getOrNull()
+    }
+    if (bitmap != null) {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(120.dp)
+                .clip(RoundedCornerShape(8.dp))
+                .background(Color(0xFF0B1220))
+        ) {
+            Image(
+                bitmap = bitmap,
+                contentDescription = "Captured website screenshot",
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.Crop
+            )
         }
     }
 }

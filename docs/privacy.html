@@ -125,14 +125,14 @@
     <div class="container">
         <a href="index.html" class="back-link">&larr; Back to ScamRadar</a>
         <h1>Privacy Policy</h1>
-        <p>Last updated: May 28, 2026 (rev. 3)</p>
+        <p>Last updated: May 29, 2026 (rev. 4)</p>
     </div>
 </div>
 
 <div class="container content">
 
 <div class="highlight">
-    <strong>Our fundamental promise: your messages never leave your phone.</strong> All scam detection and analysis is performed locally on your device. Your text messages, emails, voicemails, and screenshots are never transmitted to any external server.
+    <strong>Our fundamental promise: your messages never leave your phone.</strong> All scam detection and analysis is performed locally on your device. Your text messages, emails, voicemails, and screenshots are never transmitted to any external server. Community reports are fully anonymized before submission — no personal data or full message content ever leaves your device.
 </div>
 
 <h2>Introduction</h2>
@@ -152,6 +152,7 @@
     <li>Contact list or address book data</li>
     <li>SMS messages or call logs</li>
     <li>Location data</li>
+    <li>Full message content in community reports (only sanitized, redacted summaries)</li>
 </ul>
 
 <h2>Anonymous Analytics</h2>
@@ -165,12 +166,32 @@
 </ul>
 <p>All analytics data is anonymous and cannot be linked to you personally. We <strong>never</strong> log, transmit, or store the content of any message you scan.</p>
 
+<h2>Community Scam Reports</h2>
+<p>ScamRadar allows users to anonymously report scams to a community feed:</p>
+<ul>
+    <li><strong>Anonymous authentication:</strong> Community features use Firebase Anonymous Auth to generate a random, non-identifying user ID. No email, phone number, or personal information is associated with this ID.</li>
+    <li><strong>Client-side sanitization:</strong> Before any report is submitted, the app strips all personal information, full message content, and identifying details. Only a sanitized scam type and redacted summary are sent.</li>
+    <li><strong>Firebase Firestore:</strong> Anonymous reports are stored in Firestore, a serverless database. Reports contain no personal data and cannot be traced back to you.</li>
+    <li><strong>Reporting is optional.</strong> You can use all scanning features without ever submitting a community report.</li>
+</ul>
+
+<h2>Family Sync</h2>
+<p>ScamRadar offers optional family protection features:</p>
+<ul>
+    <li><strong>Family groups:</strong> You can create or join a family group using a shareable code or QR code. Family group membership is stored anonymously in Firebase Firestore.</li>
+    <li><strong>Scan sharing:</strong> When enabled, scam verdicts can be shared with your family group. Only the verdict type (e.g., "Likely Scam") and a redacted summary are shared — never the full original message.</li>
+    <li><strong>Care Mode:</strong> An optional simplified interface for elderly users. Care Mode settings are stored locally on the device. Auto-share to family is opt-in and can be disabled at any time.</li>
+    <li><strong>Camera usage:</strong> Camera is used solely for scanning QR codes to join a family group. No photos or video are recorded or stored.</li>
+    <li><strong>Family data:</strong> Family group data in Firestore contains only anonymous IDs and redacted verdict summaries — no personal information, no full messages.</li>
+</ul>
+
 <h2>Advertising</h2>
 <p>ScamRadar uses <strong>Google AdMob</strong> to display advertisements. AdMob may collect device identifiers and usage data to serve personalized or non-personalized ads. This is governed by <a href="https://policies.google.com/privacy" target="_blank">Google's Privacy Policy</a>.</p>
-<p>We display two ad formats:</p>
+<p>We display three ad formats:</p>
 <ul>
-    <li><strong>Banner ad</strong> &mdash; anchored to the bottom of the app and visible on most screens.</li>
-    <li><strong>Interstitial ad</strong> &mdash; a full-screen ad shown briefly between completing a scan and viewing the result.</li>
+    <li><strong>Banner ad</strong> &mdash; anchored to the bottom of the app and visible on browse screens (Library, History, Settings).</li>
+    <li><strong>Interstitial ad</strong> &mdash; a full-screen ad shown after every 3rd scan result is viewed (never before or during a scan).</li>
+    <li><strong>Native ad</strong> &mdash; an in-feed ad styled to match the Scam Library grid layout.</li>
 </ul>
 <p>You may see a consent prompt regarding ad personalization as required by applicable law (e.g., GDPR, CCPA).</p>
 
@@ -180,7 +201,8 @@
 <ul>
     <li><strong>Scan history:</strong> Your last 50 scan results (verdict + redacted metadata) are stored locally using Room database. This data never leaves your device.</li>
     <li><strong>AI model file:</strong> The Gemma 4 model (~3.1 GB) is downloaded to your device's internal storage during onboarding. It is stored in the app's private directory and is deleted when you uninstall the app.</li>
-    <li><strong>User preferences:</strong> Theme preference (light/dark), onboarding completion status, and similar settings stored via DataStore.</li>
+    <li><strong>User preferences:</strong> Theme preference (light/dark), onboarding completion status, Care Mode settings, family group membership, streak data, and similar settings stored via DataStore.</li>
+    <li><strong>Achievement data:</strong> Trust score, quiz streaks, and achievement badges are stored locally and never synced to any server.</li>
 </ul>
 <p>You can delete your scan history at any time from within the app (History screen &rarr; Clear All) or by clearing app data in Android Settings.</p>
 
@@ -205,7 +227,7 @@
     <tbody>
         <tr>
             <td><code>INTERNET</code></td>
-            <td>AdMob ads, Firebase Analytics, model download</td>
+            <td>AdMob ads, Firebase Analytics, model download, community reports</td>
             <td>Automatic at install</td>
         </tr>
         <tr>
@@ -229,6 +251,11 @@
             <td>Only when you import an audio file</td>
         </tr>
         <tr>
+            <td><code>CAMERA</code></td>
+            <td>QR code scanning to join a family group</td>
+            <td>Only when you tap "Scan QR" in Family Join</td>
+        </tr>
+        <tr>
             <td><code>POST_NOTIFICATIONS</code></td>
             <td>Model download progress</td>
             <td>Only during model download</td>
@@ -241,7 +268,7 @@
     </tbody>
 </table>
 
-<p><strong>We never request:</strong> SMS access, contacts, location, camera, or call logs.</p>
+<p><strong>We never request:</strong> SMS access, contacts, location, or call logs.</p>
 <p>All runtime permissions are requested in-context with a plain-language explanation of why the permission is needed.</p>
 
 <h2>Third-Party Services</h2>
@@ -249,7 +276,7 @@
 <h3>Google AdMob</h3>
 <ul>
     <li>Serves advertisements within the app</li>
-    <li>Ad formats used: a banner anchored at the bottom of the app, and an interstitial shown between scan completion and the result screen</li>
+    <li>Ad formats used: banner, interstitial (after every 3rd scan), and native in-feed ads</li>
     <li>May collect device advertising identifiers</li>
     <li>Privacy policy: <a href="https://policies.google.com/privacy" target="_blank">https://policies.google.com/privacy</a></li>
 </ul>
@@ -262,11 +289,33 @@
     <li>Privacy policy: <a href="https://firebase.google.com/policies/analytics" target="_blank">https://firebase.google.com/policies/analytics</a></li>
 </ul>
 
+<h3>Firebase Firestore &amp; Anonymous Authentication</h3>
+<ul>
+    <li>Stores anonymous community scam reports and family group metadata</li>
+    <li>Uses Firebase Anonymous Auth for community features &mdash; generates a random, non-identifying user ID with no personal information</li>
+    <li>All data is sanitized client-side before writing to Firestore (no full messages, no personal data)</li>
+    <li>Privacy policy: <a href="https://firebase.google.com/policies/firestore" target="_blank">https://firebase.google.com/policies/firestore</a></li>
+</ul>
+
+<h3>Firebase App Check</h3>
+<ul>
+    <li>Uses Google Play Integrity to verify that requests come from a genuine, unmodified copy of the app</li>
+    <li>Protects community report endpoints from abuse</li>
+    <li>No personal data is transmitted through App Check</li>
+</ul>
+
 <h3>Google LiteRT / Gemma 4</h3>
 <ul>
     <li>On-device AI model running entirely locally</li>
     <li>No data is sent to Google or any server</li>
     <li>Model is downloaded from HuggingFace once during onboarding</li>
+</ul>
+
+<h3>Android WebKit / Safe Browsing</h3>
+<ul>
+    <li>Used for URL scanning feature: a hardened off-screen WebView captures page content for analysis</li>
+    <li>Google Safe Browsing checks URLs against known threat lists before any page is loaded</li>
+    <li>Page content is processed entirely on-device via OCR and never uploaded</li>
 </ul>
 
 <h2>Children's Privacy</h2>
@@ -311,14 +360,14 @@
 <h2>Google Play Data Safety</h2>
 <p>As declared in our Google Play Data Safety form:</p>
 <ul>
-    <li><strong>Data collected:</strong> Anonymous app interaction events (scan started/completed, feature usage), crash reports, and anonymous app performance traces (no message content)</li>
+    <li><strong>Data collected:</strong> Anonymous app interaction events (scan started/completed, feature usage), crash reports, and anonymous app performance traces (no message content). Anonymous community scam reports (sanitized, no personal data). Anonymous family group metadata (random IDs, redacted verdict summaries).</li>
     <li><strong>Data shared:</strong> None</li>
     <li><strong>Data encrypted in transit:</strong> Yes (Firebase default)</li>
     <li><strong>User can request deletion:</strong> Yes (in-app or by clearing app data)</li>
     <li><strong>Message content:</strong> Not collected, not shared, not stored on any server</li>
 </ul>
 
-<p style="margin-top: 40px; color: #94A3B8; font-size: 13px;">This privacy policy is effective as of May 28, 2026 (rev. 3).</p>
+    <p style="margin-top: 40px; color: #94A3B8; font-size: 13px;">This privacy policy is effective as of May 29, 2026 (rev. 4).</p>
 
 </div>
 

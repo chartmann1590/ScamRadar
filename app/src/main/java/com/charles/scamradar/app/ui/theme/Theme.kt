@@ -88,9 +88,11 @@ val DarkColorScheme = darkColorScheme(
 @Composable
 fun ScamRadarTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
+    careMode: Boolean = false,
     content: @Composable () -> Unit
 ) {
     val colorScheme = if (darkTheme) DarkColorScheme else LightColorScheme
+    val typography = if (careMode) CareTypography else ScamRadarTypography
 
     val view = LocalView.current
     if (!view.isInEditMode) {
@@ -103,7 +105,7 @@ fun ScamRadarTheme(
 
     MaterialTheme(
         colorScheme = colorScheme,
-        typography = ScamRadarTypography,
+        typography = typography,
         shapes = ScamRadarShapes,
         content = content
     )

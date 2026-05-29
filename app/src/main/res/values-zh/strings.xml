@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ScamRadar</string>
+    <string name="tagline">粘贴。检测。远离诈骗。</string>
+    <string name="paste_and_check">粘贴并检测</string>
+    <string name="scan_screenshot">扫描截图</string>
+    <string name="check_voicemail">检查语音留言</string>
+    <string name="type_manually">手动输入</string>
+    <string name="trending_scams">热门诈骗</string>
+    <string name="view_all">查看全部</string>
+    <string name="analyzing">正在您的设备上分析…</string>
+    <string name="privacy_reassurance">您的消息不会离开您的手机</string>
+    <string name="likely_scam">疑似诈骗</string>
+    <string name="suspicious">可疑</string>
+    <string name="looks_safe">看起来安全</string>
+    <string name="why_we_think_so">为什么我们这么认为</string>
+    <string name="what_to_do">该怎么办</string>
+    <string name="share_result">分享结果</string>
+    <string name="save">保存</string>
+    <string name="done">完成</string>
+    <string name="library_title">诈骗百科</string>
+    <string name="history_title">扫描历史</string>
+    <string name="settings_title">设置</string>
+    <string name="nav_scan">扫描</string>
+    <string name="nav_library">百科</string>
+    <string name="nav_history">历史</string>
+    <string name="nav_settings">设置</string>
+    <string name="welcome_title">欢迎使用 ScamRadar</string>
+    <string name="welcome_subtitle">免费、私密、本地运行的 AI，3 秒内告诉您短信、邮件或语音留言是否为诈骗。</string>
+    <string name="get_started">开始使用</string>
+    <string name="ready_to_scan">AI 检测已激活。欢迎使用 ScamRadar。</string>
+    <string name="no_history">暂无扫描记录</string>
+    <string name="red_flags">警示信号</string>
+    <string name="confidence">置信度</string>
+    <string name="scan_again">再次扫描</string>
+    <string name="analyze">分析</string>
+    <string name="widget_description">快速扫描和近期结果</string>
+    <string name="qs_tile_label">ScamRadar</string>
+    <string name="qs_tile_subtitle">点击扫描消息</string>
+</resources>

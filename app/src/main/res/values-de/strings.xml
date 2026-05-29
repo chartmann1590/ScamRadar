@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ScamRadar</string>
+    <string name="tagline">Einfügen. Prüfen. Nicht reinfallen.</string>
+    <string name="paste_and_check">Einfügen &amp; prüfen</string>
+    <string name="scan_screenshot">Screenshot prüfen</string>
+    <string name="check_voicemail">Sprachnachricht prüfen</string>
+    <string name="type_manually">Manuell eingeben</string>
+    <string name="trending_scams">Aktuelle Betrugsmaschen</string>
+    <string name="view_all">Alle anzeigen</string>
+    <string name="analyzing">Analyse auf deinem Gerät…</string>
+    <string name="privacy_reassurance">Deine Nachricht verlässt das Telefon nicht</string>
+    <string name="likely_scam">Wahrscheinlich Betrug</string>
+    <string name="suspicious">Verdächtig</string>
+    <string name="looks_safe">Sieht sicher aus</string>
+    <string name="why_we_think_so">Warum</string>
+    <string name="what_to_do">Was tun</string>
+    <string name="share_result">Ergebnis teilen</string>
+    <string name="save">Speichern</string>
+    <string name="done">Fertig</string>
+    <string name="library_title">Betrugsbibliothek</string>
+    <string name="history_title">Verlauf</string>
+    <string name="settings_title">Einstellungen</string>
+    <string name="nav_scan">Scannen</string>
+    <string name="nav_library">Bibliothek</string>
+    <string name="nav_history">Verlauf</string>
+    <string name="nav_settings">Einstellungen</string>
+    <string name="welcome_title">Willkommen bei ScamRadar</string>
+    <string name="welcome_subtitle">Die kostenlose, private KI, die dir in 3 Sekunden sagt, ob eine Nachricht, Mail oder Sprachnachricht Betrug ist.</string>
+    <string name="get_started">Loslegen</string>
+    <string name="ready_to_scan">KI-Erkennung aktiv. Willkommen bei ScamRadar.</string>
+    <string name="no_history">Noch keine Prüfungen</string>
+    <string name="red_flags">Warnzeichen</string>
+    <string name="confidence">Sicherheit</string>
+    <string name="scan_again">Weitere prüfen</string>
+    <string name="analyze">Analysieren</string>
+    <string name="widget_description">Schnelle Prüfung und neueste Ergebnisse</string>
+    <string name="qs_tile_label">ScamRadar</string>
+    <string name="qs_tile_subtitle">Tippen, um eine Nachricht zu prüfen</string>
+</resources>

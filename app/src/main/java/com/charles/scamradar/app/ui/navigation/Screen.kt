@@ -15,4 +15,18 @@ sealed class Screen(val route: String) {
     }
     data object History : Screen("history")
     data object Settings : Screen("settings")
+    data object Help : Screen("help")
+    data object AppTutorial : Screen("app_tutorial")
+    data object UrlScan : Screen("urlscan")
+    data object UrlScanning : Screen("urlscanning/{url}") {
+        fun createRoute(encodedUrl: String): String = "urlscanning/$encodedUrl"
+    }
+    data object Today : Screen("today")
+    data object TrustScore : Screen("trustscore")
+    data object FamilyOnboarding : Screen("family")
+    data object FamilyCreate : Screen("family/create")
+    data object FamilyJoin : Screen("family/join?code={code}") {
+        fun createRoute(code: String = ""): String = "family/join?code=$code"
+    }
+    data object FamilyActivity : Screen("family/activity")
 }

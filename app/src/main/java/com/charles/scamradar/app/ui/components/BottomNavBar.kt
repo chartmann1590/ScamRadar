@@ -12,10 +12,12 @@ import androidx.compose.material.icons.filled.History
 import androidx.compose.material.icons.filled.MenuBook
 import androidx.compose.material.icons.filled.Shield
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.WbSunny
 import androidx.compose.material.icons.outlined.History
 import androidx.compose.material.icons.outlined.MenuBook
 import androidx.compose.material.icons.outlined.Shield
 import androidx.compose.material.icons.outlined.Settings
+import androidx.compose.material.icons.outlined.WbSunny
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -35,6 +37,7 @@ private data class NavTab(
 
 private val tabs = listOf(
     NavTab("Scan", "scan", Icons.Filled.Shield, Icons.Outlined.Shield),
+    NavTab("Today", "today", Icons.Filled.WbSunny, Icons.Outlined.WbSunny),
     NavTab("Library", "library", Icons.Filled.MenuBook, Icons.Outlined.MenuBook),
     NavTab("History", "history", Icons.Filled.History, Icons.Outlined.History),
     NavTab("Settings", "settings", Icons.Filled.Settings, Icons.Outlined.Settings)

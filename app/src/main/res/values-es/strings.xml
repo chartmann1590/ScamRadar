@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ScamRadar</string>
+    <string name="tagline">Pega. Comprueba. No caigas en estafas.</string>
+    <string name="paste_and_check">Pegar y comprobar</string>
+    <string name="scan_screenshot">Escanear captura</string>
+    <string name="check_voicemail">Comprobar buzón de voz</string>
+    <string name="type_manually">Escribir manualmente</string>
+    <string name="trending_scams">Estafas en tendencia</string>
+    <string name="view_all">Ver todo</string>
+    <string name="analyzing">Analizando en tu dispositivo…</string>
+    <string name="privacy_reassurance">Tu mensaje no sale de tu teléfono</string>
+    <string name="likely_scam">Estafa probable</string>
+    <string name="suspicious">Sospechoso</string>
+    <string name="looks_safe">Parece seguro</string>
+    <string name="why_we_think_so">Por qué lo creemos</string>
+    <string name="what_to_do">Qué hacer</string>
+    <string name="share_result">Compartir resultado</string>
+    <string name="save">Guardar</string>
+    <string name="done">Listo</string>
+    <string name="library_title">Biblioteca de estafas</string>
+    <string name="history_title">Historial</string>
+    <string name="settings_title">Ajustes</string>
+    <string name="nav_scan">Escanear</string>
+    <string name="nav_library">Biblioteca</string>
+    <string name="nav_history">Historial</string>
+    <string name="nav_settings">Ajustes</string>
+    <string name="welcome_title">Bienvenido a ScamRadar</string>
+    <string name="welcome_subtitle">La IA gratuita y privada que en 3 segundos te dice si un mensaje, correo o buzón de voz es una estafa.</string>
+    <string name="get_started">Empezar</string>
+    <string name="ready_to_scan">Detección de IA activada. Bienvenido a ScamRadar.</string>
+    <string name="no_history">Aún no hay análisis</string>
+    <string name="red_flags">Señales de alerta</string>
+    <string name="confidence">Confianza</string>
+    <string name="scan_again">Analizar otro</string>
+    <string name="analyze">Analizar</string>
+    <string name="widget_description">Análisis rápido y veredictos recientes</string>
+    <string name="qs_tile_label">ScamRadar</string>
+    <string name="qs_tile_subtitle">Toca para analizar un mensaje</string>
+</resources>

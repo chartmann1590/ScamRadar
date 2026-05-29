@@ -18,8 +18,10 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.CloudDownload
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Help
 import androidx.compose.material.icons.filled.Language
 import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.School
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -53,14 +55,26 @@ import com.charles.scamradar.app.download.ModelManager
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.rememberCoroutineScope
+import com.charles.scamradar.app.data.datastore.UserPrefs.Companion.AUTO_SHARE_LIKELY_AND_SUSPICIOUS
+import com.charles.scamradar.app.data.datastore.UserPrefs.Companion.AUTO_SHARE_LIKELY_ONLY
 import kotlinx.coroutines.launch
 
 @Composable
-fun SettingsScreen(modifier: Modifier = Modifier) {
+fun SettingsScreen(
+    modifier: Modifier = Modifier,
+    onOpenFamily: () -> Unit = {},
+    onOpenTrustScore: () -> Unit = {},
+    onOpenHelp: () -> Unit = {},
+    onReplayTutorial: () -> Unit = {}
+) {
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
     val prefs = remember { UserPrefs(context) }
     val wifiOnly by prefs.wifiOnlyDownload.collectAsState(initial = true)
+    val careMode by prefs.careMode.collectAsState(initial = false)
+    val careModeAutoShare by prefs.careModeAutoShare.collectAsState(initial = false)
+    val careModeAutoShareThreshold by prefs.careModeAutoShareThreshold.collectAsState(initial = AUTO_SHARE_LIKELY_ONLY)
+    val familyCode by prefs.familyCode.collectAsState(initial = "")
 
     var modelRefreshKey by remember { mutableIntStateOf(0) }
     var darkMode by remember { mutableStateOf(0) }
@@ -69,6 +83,9 @@ fun SettingsScreen(modifier: Modifier = Modifier) {
         downloadProgress.state == DownloadState.PAUSED
     val modelDownloaded = remember(modelRefreshKey, downloadProgress.state) {
         ModelManager.isModelDownloaded(context)
+    }
+    val partialModelPresent = remember(modelRefreshKey, downloadProgress.state) {
+        ModelManager.isPartialModelPresent(context)
     }
     val modelSizeBytes = remember(modelRefreshKey, downloadProgress.state) {
         ModelManager.getModelFileSize(context)
@@ -119,20 +136,25 @@ fun SettingsScreen(modifier: Modifier = Modifier) {
                         text = when {
                             isDownloading -> "Downloading…"
                             modelDownloaded -> "Downloaded"
+                            partialModelPresent -> "Incomplete download"
                             else -> "Not downloaded"
                         },
                         style = MaterialTheme.typography.bodyLarge
                     )
                 }
 
-                if (modelDownloaded && !isDownloading) {
+                if ((modelDownloaded || partialModelPresent) && !isDownloading) {
                     Spacer(modifier = Modifier.height(8.dp))
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
                         modifier = Modifier.fillMaxWidth()
                     ) {
                         Text(
-                            text = "Model size: ${formatModelSize(modelSizeBytes)}",
+                            text = if (partialModelPresent) {
+                                "Downloaded ${formatModelSize(modelSizeBytes)} of ${formatModelSize(com.charles.scamradar.app.BuildConfig.MODEL_SIZE_BYTES)}. Re-download to use Gemma 4."
+                            } else {
+                                "Model size: ${formatModelSize(modelSizeBytes)}"
+                            },
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
@@ -168,7 +190,7 @@ fun SettingsScreen(modifier: Modifier = Modifier) {
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                if (modelDownloaded && !isDownloading) {
+                if ((modelDownloaded || partialModelPresent) && !isDownloading) {
                     OutlinedButton(
                         onClick = {
                             ModelManager.deleteModel(context)
@@ -206,6 +228,7 @@ fun SettingsScreen(modifier: Modifier = Modifier) {
                         text = when {
                             isDownloading -> "Downloading…"
                             modelDownloaded -> "Re-download model"
+                            partialModelPresent -> "Re-download full Gemma 4 model"
                             else -> "Download model"
                         }
                     )
@@ -236,6 +259,195 @@ fun SettingsScreen(modifier: Modifier = Modifier) {
                         onCheckedChange = { newValue ->
                             coroutineScope.launch { prefs.setWifiOnlyDownload(newValue) }
                         }
+                    )
+                }
+            }
+        }
+
+        Spacer(modifier = Modifier.height(12.dp))
+
+        Card(
+            modifier = Modifier.fillMaxWidth(),
+            shape = MaterialTheme.shapes.medium
+        ) {
+            Column(modifier = Modifier.padding(16.dp)) {
+                Text(
+                    text = "Help & tutorial",
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Bold
+                )
+                Spacer(modifier = Modifier.height(12.dp))
+                SettingsActionRow(
+                    icon = Icons.Default.Help,
+                    title = "Help center",
+                    subtitle = "Family, community reports, Care Mode, privacy, and scanning",
+                    onClick = onOpenHelp
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                SettingsActionRow(
+                    icon = Icons.Default.School,
+                    title = "Replay onboarding tutorial",
+                    subtitle = "Review the intro and model setup walkthrough anytime",
+                    onClick = onReplayTutorial
+                )
+            }
+        }
+
+        Spacer(modifier = Modifier.height(12.dp))
+
+        Card(
+            modifier = Modifier.fillMaxWidth(),
+            shape = MaterialTheme.shapes.medium
+        ) {
+            Column(modifier = Modifier.padding(16.dp)) {
+                Text(
+                    text = "Family",
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Bold
+                )
+                Spacer(modifier = Modifier.height(12.dp))
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable(onClick = onOpenFamily)
+                        .padding(vertical = 4.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(
+                            text = if (familyCode.isBlank()) "Set up a family pod" else "Family · $familyCode",
+                            style = MaterialTheme.typography.bodyLarge
+                        )
+                        Text(
+                            text = if (familyCode.isBlank())
+                                "Privately share scam alerts with up to 7 relatives"
+                            else
+                                "Tap to open family activity",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
+                    Text(
+                        text = "→",
+                        style = MaterialTheme.typography.titleMedium,
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(8.dp))
+                HorizontalDivider()
+                Spacer(modifier = Modifier.height(8.dp))
+
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(
+                            text = "Care Mode",
+                            style = MaterialTheme.typography.bodyLarge
+                        )
+                        Text(
+                            text = "Bigger text, simpler layout, no ads in results — for elderly relatives",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
+                    Switch(
+                        checked = careMode,
+                        onCheckedChange = { newValue ->
+                            coroutineScope.launch { prefs.setCareMode(newValue) }
+                        }
+                    )
+                }
+
+                if (careMode && familyCode.isNotBlank()) {
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Column(modifier = Modifier.weight(1f)) {
+                            Text(
+                                text = "Auto-share scams with family",
+                                style = MaterialTheme.typography.bodyMedium
+                            )
+                            Text(
+                                text = "Choose which Care Mode scan results are shared automatically.",
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        }
+                        Switch(
+                            checked = careModeAutoShare,
+                            onCheckedChange = { newValue ->
+                                coroutineScope.launch { prefs.setCareModeAutoShare(newValue) }
+                            }
+                        )
+                    }
+                    if (careModeAutoShare) {
+                        Spacer(modifier = Modifier.height(8.dp))
+                        val thresholdOptions = listOf(
+                            AUTO_SHARE_LIKELY_ONLY to "Likely scams only",
+                            AUTO_SHARE_LIKELY_AND_SUSPICIOUS to "Likely + suspicious"
+                        )
+                        thresholdOptions.forEach { (value, label) ->
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                modifier = Modifier.fillMaxWidth()
+                            ) {
+                                RadioButton(
+                                    selected = careModeAutoShareThreshold == value,
+                                    onClick = {
+                                        coroutineScope.launch {
+                                            prefs.setCareModeAutoShareThreshold(value)
+                                        }
+                                    },
+                                    colors = RadioButtonDefaults.colors(
+                                        selectedColor = MaterialTheme.colorScheme.primary
+                                    )
+                                )
+                                Text(
+                                    text = label,
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    modifier = Modifier.padding(start = 4.dp)
+                                )
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        Spacer(modifier = Modifier.height(12.dp))
+
+        Card(
+            modifier = Modifier.fillMaxWidth(),
+            shape = MaterialTheme.shapes.medium
+        ) {
+            Column(modifier = Modifier.padding(16.dp)) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable(onClick = onOpenTrustScore)
+                        .padding(vertical = 4.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(
+                            text = "Your stats & Trust Score",
+                            style = MaterialTheme.typography.bodyLarge
+                        )
+                        Text(
+                            text = "Streak, achievements, scans caught",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
+                    Text(
+                        text = "→",
+                        style = MaterialTheme.typography.titleMedium,
+                        color = MaterialTheme.colorScheme.primary
                     )
                 }
             }
@@ -436,6 +648,46 @@ private fun SettingsLinkRow(
     }
 }
 
+@Composable
+private fun SettingsActionRow(
+    icon: ImageVector,
+    title: String,
+    subtitle: String,
+    onClick: () -> Unit
+) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable(onClick = onClick)
+            .padding(vertical = 4.dp)
+    ) {
+        Icon(
+            imageVector = icon,
+            contentDescription = null,
+            tint = MaterialTheme.colorScheme.primary
+        )
+        Spacer(modifier = Modifier.width(8.dp))
+        Column(modifier = Modifier.weight(1f)) {
+            Text(
+                text = title,
+                style = MaterialTheme.typography.bodyLarge,
+                color = MaterialTheme.colorScheme.onSurface
+            )
+            Text(
+                text = subtitle,
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        }
+        Text(
+            text = ">",
+            style = MaterialTheme.typography.titleMedium,
+            color = MaterialTheme.colorScheme.primary
+        )
+    }
+}
+
 private fun openUrl(context: android.content.Context, url: String) {
     val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
     context.startActivity(intent)
@@ -443,10 +695,10 @@ private fun openUrl(context: android.content.Context, url: String) {
 
 private fun formatModelSize(bytes: Long): String {
     if (bytes <= 0L) return "0 MB"
-    val gb = bytes / (1024.0 * 1024.0 * 1024.0)
+    val gb = bytes / (1000.0 * 1000.0 * 1000.0)
     return if (gb >= 1.0) {
         String.format("%.2f GB", gb)
     } else {
-        String.format("%.0f MB", bytes / (1024.0 * 1024.0))
+        String.format("%.0f MB", bytes / (1000.0 * 1000.0))
     }
 }

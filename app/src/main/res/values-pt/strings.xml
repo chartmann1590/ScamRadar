@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ScamRadar</string>
+    <string name="tagline">Cole. Verifique. Não caia em golpes.</string>
+    <string name="paste_and_check">Colar e verificar</string>
+    <string name="scan_screenshot">Verificar captura de tela</string>
+    <string name="check_voicemail">Verificar mensagem de voz</string>
+    <string name="type_manually">Digitar manualmente</string>
+    <string name="trending_scams">Golpes em alta</string>
+    <string name="view_all">Ver tudo</string>
+    <string name="analyzing">Analisando no seu dispositivo…</string>
+    <string name="privacy_reassurance">Sua mensagem não sai do seu telefone</string>
+    <string name="likely_scam">Provável golpe</string>
+    <string name="suspicious">Suspeito</string>
+    <string name="looks_safe">Parece seguro</string>
+    <string name="why_we_think_so">Por quê</string>
+    <string name="what_to_do">O que fazer</string>
+    <string name="share_result">Compartilhar resultado</string>
+    <string name="save">Salvar</string>
+    <string name="done">Pronto</string>
+    <string name="library_title">Biblioteca de golpes</string>
+    <string name="history_title">Histórico</string>
+    <string name="settings_title">Configurações</string>
+    <string name="nav_scan">Verificar</string>
+    <string name="nav_library">Biblioteca</string>
+    <string name="nav_history">Histórico</string>
+    <string name="nav_settings">Configurações</string>
+    <string name="welcome_title">Bem-vindo ao ScamRadar</string>
+    <string name="welcome_subtitle">A IA gratuita e privada que em 3 segundos diz se um SMS, e-mail ou áudio é golpe.</string>
+    <string name="get_started">Começar</string>
+    <string name="ready_to_scan">Detecção por IA ativa. Bem-vindo ao ScamRadar.</string>
+    <string name="no_history">Sem verificações ainda</string>
+    <string name="red_flags">Sinais de alerta</string>
+    <string name="confidence">Confiança</string>
+    <string name="scan_again">Verificar outro</string>
+    <string name="analyze">Analisar</string>
+    <string name="widget_description">Verificação rápida e veredictos recentes</string>
+    <string name="qs_tile_label">ScamRadar</string>
+    <string name="qs_tile_subtitle">Toque para verificar uma mensagem</string>
+</resources>

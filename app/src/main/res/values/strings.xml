@@ -73,4 +73,7 @@
     <string name="recommended_action_safe">This message appears legitimate</string>
     <string name="enter_message_hint">Paste or type the suspicious message here…</string>
     <string name="analyze">Analyze</string>
+    <string name="widget_description">Quick scan and recent verdicts</string>
+    <string name="qs_tile_label">ScamRadar</string>
+    <string name="qs_tile_subtitle">Tap to scan a message</string>
 </resources>

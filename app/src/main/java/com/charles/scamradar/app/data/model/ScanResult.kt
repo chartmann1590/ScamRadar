@@ -7,6 +7,16 @@ enum class ScamType {
     TECH_SUPPORT, LOTTERY, INVESTMENT, OTHER, NONE
 }
 data class RedFlag(val phrase: String, val reason: String)
+
+/** Optional URL-scan metadata. Null for text/OCR/voice scans. */
+data class UrlScanMetadata(
+    val originalUrl: String,
+    val finalUrl: String,
+    val screenshotPath: String,
+    val redirectCount: Int,
+    val findings: List<String>
+)
+
 data class ScanResult(
     val verdict: Verdict,
     val confidence: Float,
@@ -16,7 +26,8 @@ data class ScanResult(
     val recommendedAction: String,
     val originalMessage: String,
     val timestamp: Long = System.currentTimeMillis(),
-    val classifierTier: ClassifierTier = ClassifierTier.STUB
+    val classifierTier: ClassifierTier = ClassifierTier.STUB,
+    val urlMetadata: UrlScanMetadata? = null
 )
 enum class ClassifierTier { STUB, LITE, GEMMA }
-enum class ScanMode { TEXT, OCR, VOICE }
+enum class ScanMode { TEXT, OCR, VOICE, URL }

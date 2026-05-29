@@ -1,0 +1,87 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    match /reports/{reportId} {
+      allow create: if request.auth != null
+        && request.resource.data.authorUid == request.auth.uid
+        && request.resource.data.verdict == "LIKELY_SCAM"
+        && request.resource.data.excerpt is string
+        && request.resource.data.excerpt.size() <= 280
+        && request.resource.data.keys().hasOnly([
+            "scamType", "verdict", "confidence",
+            "excerpt", "createdAt", "authorUid"
+          ])
+        && !(exists(/databases/$(database)/documents/abuse/$(request.auth.uid))
+             && get(/databases/$(database)/documents/abuse/$(request.auth.uid)).data.banned == true);
+      allow read, update, delete: if false;
+    }
+
+    match /trending/{scamType} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    match /abuse/{uid} {
+      allow read, write: if false;
+    }
+
+    match /families/{code} {
+      function isMember() {
+        return exists(/databases/$(database)/documents/families/$(code)/members/$(request.auth.uid));
+      }
+      function willBeMember() {
+        return existsAfter(/databases/$(database)/documents/families/$(code)/members/$(request.auth.uid));
+      }
+      function familyBaseFieldsUnchanged() {
+        return request.resource.data.createdAt == resource.data.createdAt
+          && request.resource.data.keys().hasOnly(["memberCount", "createdAt"]);
+      }
+      allow read: if request.auth != null && isMember();
+      allow create: if request.auth != null
+        && request.resource.data.memberCount == 1
+        && request.resource.data.keys().hasOnly(["memberCount", "createdAt"]);
+      allow update: if request.auth != null
+        && familyBaseFieldsUnchanged()
+        && (
+          (
+            willBeMember()
+            && resource.data.memberCount < 8
+            && request.resource.data.memberCount == resource.data.memberCount + 1
+          )
+          || (
+            isMember()
+            && request.resource.data.memberCount == resource.data.memberCount - 1
+          )
+        );
+      allow delete: if false;
+
+      match /members/{uid} {
+        allow read: if request.auth != null && isMember();
+        allow create: if request.auth != null
+          && request.auth.uid == uid
+          && existsAfter(/databases/$(database)/documents/families/$(code))
+          && getAfter(/databases/$(database)/documents/families/$(code)).data.memberCount <= 8
+          && request.resource.data.keys().hasOnly(["joinedAt", "memberLabel"])
+          && request.resource.data.memberLabel is string
+          && request.resource.data.memberLabel.size() <= 32;
+        allow delete: if request.auth != null && request.auth.uid == uid;
+        allow update: if false;
+      }
+
+      match /shares/{shareId} {
+        allow read: if request.auth != null && isMember();
+        allow create: if request.auth != null
+          && isMember()
+          && request.resource.data.keys().hasOnly([
+              "verdict", "scamType", "confidence",
+              "sanitizedExcerpt", "sharedByLabel", "sharedAt"
+            ])
+          && request.resource.data.verdict in ["LIKELY_SCAM", "SUSPICIOUS"]
+          && request.resource.data.sanitizedExcerpt is string
+          && request.resource.data.sanitizedExcerpt.size() <= 280;
+        allow update, delete: if false;
+      }
+    }
+  }
+}

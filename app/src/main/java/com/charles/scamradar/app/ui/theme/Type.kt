@@ -76,3 +76,19 @@ val ScamRadarTypography = Typography(
         letterSpacing = 0.5.sp
     )
 )
+
+private fun TextStyle.scaled(factor: Float): TextStyle = copy(
+    fontSize = fontSize * factor,
+    lineHeight = lineHeight * factor
+)
+
+val CareTypography = Typography(
+    headlineLarge = ScamRadarTypography.headlineLarge.scaled(1.3f),
+    headlineMedium = ScamRadarTypography.headlineMedium.scaled(1.3f),
+    headlineSmall = ScamRadarTypography.headlineSmall.scaled(1.3f),
+    titleLarge = ScamRadarTypography.titleLarge.scaled(1.3f),
+    bodyLarge = ScamRadarTypography.bodyLarge.scaled(1.3f),
+    bodyMedium = ScamRadarTypography.bodyMedium.scaled(1.3f),
+    labelLarge = ScamRadarTypography.labelLarge.scaled(1.3f),
+    labelMedium = ScamRadarTypography.labelMedium.scaled(1.3f)
+)

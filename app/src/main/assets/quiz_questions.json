@@ -1,0 +1,34 @@
+{
+  "questions": [
+    {
+      "id": "q1",
+      "scamMessage": "URGENT: USPS is unable to deliver your package due to incomplete address. Please verify at usps-track-pkg.top within 12hrs or it will be returned.",
+      "safeMessage": "Hi Mom, picked up the dry cleaning. Want me to grab milk on the way back?",
+      "explanation": "Real USPS will never text you a link to verify your address. The .top TLD and 'urgent' framing are classic phishing markers."
+    },
+    {
+      "id": "q2",
+      "scamMessage": "Hi this is Officer Daniels with IRS. There is a warrant for your arrest for unpaid taxes. Call 800-555-0199 within 30 minutes or police will be dispatched.",
+      "safeMessage": "Your appointment with Dr. Patel is confirmed for Thursday 3:15 PM at the downtown clinic. Reply C to confirm or R to reschedule.",
+      "explanation": "The IRS never calls about arrests, never threatens immediate police action, and always starts contact via mail."
+    },
+    {
+      "id": "q3",
+      "scamMessage": "Mom, my phone broke. This is my new number. I lost my wallet and need $300 to get home. Can you Zelle it now? I'll explain everything later.",
+      "safeMessage": "Hey, dinner Friday at 7? My place. Bringing dessert?",
+      "explanation": "The 'family emergency' scam — urgency, a new unknown number, and an irreversible payment method like Zelle. Always call the person directly."
+    },
+    {
+      "id": "q4",
+      "scamMessage": "Congrats! You've been selected for a $50,000 Mercedes giveaway. To claim, send your name, address, and a $25 processing fee via Cash App to @luxgifts2026.",
+      "safeMessage": "Your Amazon order #112-3344556 ships today. Track at the link in your account or in the Amazon app.",
+      "explanation": "Legitimate prizes never require an upfront fee. Cash App tags and 'processing fees' are major scam indicators."
+    },
+    {
+      "id": "q5",
+      "scamMessage": "Microsoft Security Alert: Your PC has been infected with 14 viruses. Call 1-855-273-1010 immediately to remove. DO NOT shut down your computer.",
+      "safeMessage": "Your software update finished installing. Restart when you're ready to apply the changes.",
+      "explanation": "Microsoft never displays support phone numbers in pop-ups. Tech-support scams use urgency + a phone number to push remote-control access."
+    }
+  ]
+}

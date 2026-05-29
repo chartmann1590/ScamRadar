@@ -47,30 +47,83 @@ AI-generated scams surged **1,210% in 2025**. Deepfake voice phishing is up **1,
 
 ## Features
 
-### Text Scan
+### Scanning
+
+**Text Scan**
 Paste any suspicious message and get an instant verdict: **Safe**, **Suspicious**, or **Likely Scam** — with a confidence score and highlighted red-flag phrases.
 
-### Email Screenshot Scan
+**Email Screenshot Scan**
 Share a screenshot of a suspicious email. Built-in OCR extracts the text and runs it through the same scam classifier.
 
-### Voicemail Scan
+**Voicemail Scan**
 Import or record a voicemail. On-device speech recognition transcribes the audio and flags voice-cloning indicators.
 
-### Scam Library
+**URL Scanner**
+Enter or paste a suspicious URL. A hardened off-screen WebView captures the full page, OCR extracts the visible text, and the scam classifier runs on it — all on-device, with Google Safe Browsing protection.
+
+**Link Microscope**
+Every scanned URL gets a diagnostic card showing the domain anatomy, redirect chain, and risk signals — so you can see *why* a link is dangerous before you ever tap it.
+
+### Quick Access
+
+**System Share Sheet**
+Scan any text from any app without opening ScamRadar. Share text, screenshots, or links directly to ScamRadar via Android's share sheet and get an instant overlay verdict.
+
+**Material You Home Widget**
+A one-tap scan widget that adapts to your wallpaper colors via Glance + Material You. Scan from your home screen.
+
+**Quick Settings Tile**
+Add ScamRadar to your quick settings pulldown for one-swipe access to scanning.
+
+### Engagement
+
+**Daily Scam Brief (Today Tab)**
+A daily feed of trending scam alerts, new patterns, and safety tips — powered by Firebase Remote Config so the content stays fresh without app updates.
+
+**"Spot the Scam" Daily Quiz**
+Test your scam-detection skills with a daily interactive quiz. Build a streak and compete with yourself.
+
+**Trust Score & Achievements**
+Track your scanning habits with local-only stats: total scans, streaks, scam types encountered, and achievement badges.
+
+### Community
+
+**Community Scam Reports + Trending Feed**
+Report scams anonymously to help others. Browse a trending feed of the latest scams reported by the community — powered by Firestore with client-side sanitization (no personal data or full messages ever leave your device).
+
+### Family Protection
+
+**Family Sync**
+Connect with family members using a simple family code or QR code. When someone in your family group scans a scam, everyone gets notified.
+
+**Family Care Mode**
+A simplified, larger-text interface designed for elderly users. Optionally auto-share scam verdicts with the family group so you can keep an eye out for your loved ones.
+
+### Sharing & Learning
+
+**Scam Library**
 Browse the 12 most common scam patterns of 2026 with real annotated examples. Learn to spot scams on your own.
 
-### Scan History
-Your last 50 scans, stored locally on your device. Delete anytime. Never synced anywhere.
+**Scan History**
+Your last 50 scans, stored locally on your device. Filter by verdict, delete anytime. Never synced anywhere.
 
-### Share Verdict Card
-One-tap export of a verdict card as an image — perfect for warning family and friends in group chats.
+**Share Verdict Card**
+One-tap export of a verdict card as an image — choose from three card themes (Minimal, Bold Alert, Educational). Perfect for warning family and friends in group chats.
+
+### Accessibility & Internationalization
+
+**Multilingual Support**
+ScamRadar is available in English, Spanish, Portuguese, French, and German — with Hindi and Chinese translations ready for follow-up.
+
+**Story Onboarding**
+A swipeable, illustrated onboarding flow that walks new users through how ScamRadar works, the privacy promise, and device setup.
 
 ---
 
 ## How It Works
 
 ```
-1. Paste   →  Paste a suspicious text, share a screenshot, or import a voicemail
+1. Input   →  Paste text, share a screenshot, import a voicemail, or enter a URL
 2. Check   →  On-device AI (Gemma 4) analyzes the content privately on your phone
 3. Verdict →  Get a clear verdict with highlighted red flags and recommended actions
 ```
@@ -88,10 +141,18 @@ One-tap export of a verdict card as an image — perfect for warning family and 
 | On-Device AI | Gemma 4 E2B-it via LiteRT-LM |
 | OCR | ML Kit Text Recognition v2 |
 | Speech-to-Text | Android SpeechRecognizer (on-device) |
+| URL Capture | Android WebKit WebView + Google Safe Browsing |
+| QR Codes | ZXing ("ZXing Android Embedded") |
+| Home Widget | Glance + glance-material3 (Material You) |
 | Storage | Room + DataStore |
+| Community Backend | Firebase Firestore (anonymous reports only) |
+| Auth | Firebase Anonymous Auth (community features) |
 | Analytics | Firebase Analytics (anonymous only) |
+| Crash Reporting | Firebase Crashlytics |
+| Performance | Firebase Performance Monitoring |
+| App Integrity | Firebase App Check (Play Integrity) |
 | Ads | Google AdMob |
-| Backend | **None** — this is the moat |
+| Backend | **None for scanning** — your messages never leave the device |
 
 ### ScamRadar Lite
 
@@ -123,11 +184,14 @@ Captured live on a Pixel 8 Pro running the actual app.
 
 ScamRadar is built with privacy as a core principle:
 
-- **No cloud processing** — all analysis happens on your device
+- **No cloud processing** — all scan analysis happens on your device
 - **No account needed** — we don't collect emails or personal info
 - **No message logging** — scan content is never sent to any server
 - **Local history only** — stored on-device, deletable, never synced
 - **Anonymous analytics** — only app interaction events (no message content)
+- **Anonymous community reports** — fully sanitized client-side before submission; no personal data or full messages
+- **Family data is anonymous** — family groups use random IDs and share only redacted verdict summaries
+- **Camera for QR only** — used solely for scanning family QR codes; no photos or video stored
 
 See our full [Privacy Policy](PRIVACY_POLICY.md).
 
@@ -158,17 +222,42 @@ Open the project in Android Studio and run on a device or emulator.
 ## Project Structure
 
 ```
-app/src/main/java/com/scamradar/app/
-├── classifier/          # Scam classification (Gemma + Lite heuristic)
-├── data/                # Room DB, DataStore, models
-├── download/            # Model download service & manager
-├── ocr/                 # ML Kit OCR processing
-├── speech/              # On-device speech recognition
+app/src/main/java/com/charles/scamradar/app/
+├── ads/                  # AdMob banner, interstitial, native ad loader
+├── analytics/            # Firebase Analytics event helpers
+├── classifier/           # Scam classification (Gemma, Lite heuristic, Stub)
+├── community/            # Community reports, sanitization, anonymous auth
+├── data/
+│   ├── db/               # Room DB (ScanHistoryDao, ScanHistoryEntity)
+│   ├── datastore/        # UserPrefs (DataStore)
+│   └── model/            # ScanResult models
+├── download/             # Model download service & manager
+├── engagement/           # Daily brief, quiz, Today models & repository
+├── family/               # Family code generation, sync, QR rendering
+├── ocr/                  # ML Kit OCR processing
+├── share/                # Share utilities
+├── speech/               # On-device speech recognition
+├── webcapture/           # URL page capture, Safe Browsing, feature extraction
+├── widget/               # Material You Glance home widget
+├── quicksettings/        # Quick Settings tile service
 └── ui/
-    ├── components/      # Shared UI components
-    ├── navigation/      # Nav graph & screen definitions
-    ├── screens/         # Home, Result, Library, History, Settings, Onboarding
-    └── theme/           # Material 3 theme, colors, shapes, typography
+    ├── components/       # Shared UI (BottomNavBar, PulsingShieldRings, ads)
+    ├── navigation/       # Nav graph, screen routes, deep links
+    ├── quickverdict/     # Share sheet overlay activity
+    ├── screens/
+    │   ├── home/         # Home / scan entry
+    │   ├── scanning/     # Scanning animation state
+    │   ├── result/       # Verdict, red flags, Link Microscope, share card, family share
+    │   ├── urlscan/      # URL scan input + scanning state
+    │   ├── library/      # Scam pattern library
+    │   ├── history/      # Scan history
+    │   ├── today/        # Daily brief + quiz
+    │   ├── stats/        # Trust score & achievements
+    │   ├── family/       # Family onboarding, create, join, activity
+    │   ├── settings/     # App settings (theme, Care Mode, model management)
+    │   ├── onboarding/   # Story onboarding + model download
+    │   └── help/         # Help & FAQ
+    └── theme/            # Material 3 theme, colors, shapes, typography
 ```
 
 ---
