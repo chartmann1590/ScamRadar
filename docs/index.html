@@ -333,6 +333,53 @@
             gap: 24px;
         }
 
+        .deep-dive-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+            gap: 32px;
+            margin-top: 36px;
+        }
+        .deep-dive-card {
+            margin: 0;
+            background: var(--surface);
+            border-radius: var(--radius);
+            overflow: hidden;
+            border: 1px solid rgba(0,0,0,0.06);
+            box-shadow: 0 6px 24px rgba(15,23,42,0.06);
+        }
+        .deep-dive-card video {
+            width: 100%;
+            display: block;
+            background: #0a0e2c;
+            aspect-ratio: 16 / 9;
+        }
+        .deep-dive-card figcaption {
+            padding: 20px 22px 24px;
+        }
+        .deep-dive-card figcaption h3 {
+            margin: 0 0 6px;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text);
+        }
+        .deep-dive-card figcaption p {
+            margin: 0;
+            font-size: 14.5px;
+            line-height: 1.55;
+            color: var(--text-secondary);
+        }
+        .deep-dive-foot {
+            margin-top: 28px;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        @media (max-width: 640px) {
+            .deep-dive-grid {
+                grid-template-columns: 1fr;
+                gap: 22px;
+            }
+        }
+
         .feature-card {
             background: var(--surface);
             border-radius: var(--radius);
@@ -594,6 +641,7 @@
         </a>
         <ul>
             <li><a href="#watch">Watch</a></li>
+            <li><a href="#deep-dive">Feature videos</a></li>
             <li><a href="#features">Features</a></li>
             <li><a href="#screenshots">Screenshots</a></li>
             <li><a href="#privacy">Privacy</a></li>
@@ -635,6 +683,64 @@
             </video>
         </div>
         <p class="video-caption">40 seconds of ScamRadar in action — texts, emails, voicemails. On-device. Private. Free.</p>
+    </div>
+</section>
+
+<section id="deep-dive" style="padding: 60px 0 40px;">
+    <div class="container">
+        <h2>Deep-dive videos</h2>
+        <p class="subtitle">Four short explainers — Live Shield, Family Setup, Care Mode, and Premium. Each ~40 seconds, with audio narration and captions.</p>
+        <div class="deep-dive-grid">
+            <figure class="deep-dive-card">
+                <video controls playsinline preload="metadata" poster="assets/videos/live_shield_poster.png">
+                    <source src="assets/videos/live_shield.mp4" type="video/mp4">
+                    <track kind="captions" srclang="en" label="English" src="assets/videos/live_shield.vtt" default>
+                    Your browser doesn't support HTML5 video.
+                    <a href="assets/videos/live_shield.mp4">Download the video</a>.
+                </video>
+                <figcaption>
+                    <h3>Live Shield &mdash; Always Watching</h3>
+                    <p>How ScamRadar's ambient on-device shield catches scams in your messaging apps the moment they arrive &mdash; with a two-stage Lite + Gemma AI pipeline.</p>
+                </figcaption>
+            </figure>
+            <figure class="deep-dive-card">
+                <video controls playsinline preload="metadata" poster="assets/videos/family_setup_poster.png">
+                    <source src="assets/videos/family_setup.mp4" type="video/mp4">
+                    <track kind="captions" srclang="en" label="English" src="assets/videos/family_setup.vtt" default>
+                    Your browser doesn't support HTML5 video.
+                    <a href="assets/videos/family_setup.mp4">Download the video</a>.
+                </video>
+                <figcaption>
+                    <h3>Set Up a Relative in 30 Seconds</h3>
+                    <p>One QR code &mdash; pod join, Care Mode, your number as emergency contact. Built so you can set up Mom's phone over a phone call.</p>
+                </figcaption>
+            </figure>
+            <figure class="deep-dive-card">
+                <video controls playsinline preload="metadata" poster="assets/videos/care_mode_poster.png">
+                    <source src="assets/videos/care_mode.mp4" type="video/mp4">
+                    <track kind="captions" srclang="en" label="English" src="assets/videos/care_mode.vtt" default>
+                    Your browser doesn't support HTML5 video.
+                    <a href="assets/videos/care_mode.mp4">Download the video</a>.
+                </video>
+                <figcaption>
+                    <h3>Care Mode &mdash; For the People Who Get Scammed Most</h3>
+                    <p>Bigger text. Two-button home. Spoken verdicts. A &ldquo;Call my family&rdquo; emergency button. One toggle changes everything.</p>
+                </figcaption>
+            </figure>
+            <figure class="deep-dive-card">
+                <video controls playsinline preload="metadata" poster="assets/videos/premium_poster.png">
+                    <source src="assets/videos/premium.mp4" type="video/mp4">
+                    <track kind="captions" srclang="en" label="English" src="assets/videos/premium.vtt" default>
+                    Your browser doesn't support HTML5 video.
+                    <a href="assets/videos/premium.mp4">Download the video</a>.
+                </video>
+                <figcaption>
+                    <h3>Premium &mdash; For the Moments After</h3>
+                    <p>Incident Report PDF, Evidence Locker ZIP, Family tier with weekly digest and anti-deepfake verification. The scanner stays free forever.</p>
+                </figcaption>
+            </figure>
+        </div>
+        <p class="deep-dive-foot">Captions auto-on. Download links and full transcripts in the <a href="https://github.com/chartmann1590/ScamRadar/tree/main/play-store/video/feature_videos">repository</a>.</p>
     </div>
 </section>
 

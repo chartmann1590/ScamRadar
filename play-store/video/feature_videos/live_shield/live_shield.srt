@@ -1,0 +1,23 @@
+1
+00:00:00,000 --> 00:00:05,928
+Your phone gets dozens of messages a day. Some of them are scams.
+
+2
+00:00:06,068 --> 00:00:13,612
+Live Shield reads incoming notifications on your phone, on device, and flags scams the moment they arrive.
+
+3
+00:00:13,752 --> 00:00:23,175
+A fast pattern check runs on every notification. The full AI model takes a second look at anything not confidently safe.
+
+4
+00:00:23,315 --> 00:00:33,483
+When ScamRadar catches one, you get a heads-up. Tap to review. Open the original. Move on.
+
+5
+00:00:33,623 --> 00:00:42,327
+Off by default. You choose which apps. Pause for an hour or a day. Always your call.
+
+6
+00:00:42,467 --> 00:00:48,041
+Live Shield. Always watching. Never reading.

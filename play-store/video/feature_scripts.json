@@ -1,0 +1,195 @@
+{
+  "videos": [
+    {
+      "id": "live_shield",
+      "title": "Live Shield — Always Watching",
+      "scenes": [
+        {
+          "line": "Your phone gets dozens of messages a day. Some of them are scams.",
+          "frame_type": "headline",
+          "headline": "Some are scams.",
+          "subtitle": "USPS. Bank. IRS. WhatsApp. Gmail.",
+          "bg": "dark_brand"
+        },
+        {
+          "line": "Live Shield reads incoming notifications on your phone, on device, and flags scams the moment they arrive.",
+          "frame_type": "screenshot",
+          "headline": "Live Shield",
+          "subtitle": "Reads inbound notifications. On your phone. Nothing uploaded.",
+          "screenshot": "raw_shield_settings.png"
+        },
+        {
+          "line": "A fast pattern check runs on every notification. The full AI model takes a second look at anything not confidently safe.",
+          "frame_type": "headline",
+          "headline": "Two-stage AI.",
+          "subtitle": "Lite filter first. Gemma confirms. Battery and privacy intact.",
+          "bg": "purple_brand"
+        },
+        {
+          "line": "When ScamRadar catches one, you get a heads-up. Tap to review. Open the original. Move on.",
+          "frame_type": "screenshot",
+          "headline": "Caught a likely scam.",
+          "subtitle": "Discreet alert. Your call.",
+          "screenshot": "scamradar_shield_caught.png"
+        },
+        {
+          "line": "Off by default. You choose which apps. Pause for an hour or a day. Always your call.",
+          "frame_type": "headline",
+          "headline": "You're in control.",
+          "subtitle": "Per-app toggles. Pause for 1h / 24h. Off by default.",
+          "bg": "dark_brand"
+        },
+        {
+          "line": "Live Shield. Always watching. Never reading.",
+          "frame_type": "cta",
+          "headline": "Always watching.",
+          "subtitle": "Never reading.",
+          "bg": "cta"
+        }
+      ]
+    },
+    {
+      "id": "family_setup",
+      "title": "Set Up a Relative in 30 Seconds",
+      "scenes": [
+        {
+          "line": "Setting up Mom's phone usually takes an hour. ScamRadar does it in one tap.",
+          "frame_type": "headline",
+          "headline": "One tap for Mom.",
+          "subtitle": "No more hour-long phone calls about Settings.",
+          "bg": "dark_brand"
+        },
+        {
+          "line": "On your phone, generate a QR code. Name them. Add your number. Done.",
+          "frame_type": "mockup_qr",
+          "headline": "You: build the QR.",
+          "subtitle": "Mom's pod join + Care Mode + your number — bundled."
+        },
+        {
+          "line": "Hand them the screen. They open ScamRadar and scan.",
+          "frame_type": "headline",
+          "headline": "They: scan the code.",
+          "subtitle": "Camera or in-app scanner — either works.",
+          "bg": "purple_brand"
+        },
+        {
+          "line": "Care Mode turns on. The pod joins. Your number becomes their emergency contact. One tap. Confirm. Done.",
+          "frame_type": "screenshot",
+          "headline": "Done.",
+          "subtitle": "Big text. Spoken verdicts. Family alerts. Set.",
+          "screenshot": "raw_senior_home.png"
+        },
+        {
+          "line": "Every scam she runs into shows up in your weekly digest. Every scam she catches helps the whole pod.",
+          "frame_type": "headline",
+          "headline": "You both stay protected.",
+          "subtitle": "Weekly digest on Monday morning. Family alerts as they happen.",
+          "bg": "dark_brand"
+        },
+        {
+          "line": "Help a relative in 30 seconds. Not an hour.",
+          "frame_type": "cta",
+          "headline": "30 seconds.",
+          "subtitle": "Not an hour.",
+          "bg": "cta"
+        }
+      ]
+    },
+    {
+      "id": "care_mode",
+      "title": "Care Mode — Built for the People Who Get Scammed Most",
+      "scenes": [
+        {
+          "line": "Sixty percent of scam losses come from people over sixty.",
+          "frame_type": "headline",
+          "headline": "60% over 60.",
+          "subtitle": "Scammers target seniors. We're built for them.",
+          "bg": "dark_brand"
+        },
+        {
+          "line": "Care Mode is one switch. Bigger text. Simpler flow. Spoken verdicts.",
+          "frame_type": "screenshot",
+          "headline": "Care Mode.",
+          "subtitle": "One toggle. Everything changes.",
+          "screenshot": "raw_family_section.png"
+        },
+        {
+          "line": "The home screen is just two buttons. Paste and check. Or call my family.",
+          "frame_type": "screenshot",
+          "headline": "Two buttons.",
+          "subtitle": "Paste & check. Call my family. That's it.",
+          "screenshot": "raw_senior_home.png"
+        },
+        {
+          "line": "When ScamRadar finds a scam, it doesn't just show a verdict. It reads it aloud.",
+          "frame_type": "headline",
+          "headline": "\"Stop. This looks like a scam.\"",
+          "subtitle": "Verdicts spoken at every result. Text-to-speech, on device.",
+          "bg": "warn_red"
+        },
+        {
+          "line": "And the family pod hears about it the moment they need to.",
+          "frame_type": "headline",
+          "headline": "Family alerts.",
+          "subtitle": "Auto-share with the pod. Care Mode handles the rest.",
+          "bg": "purple_brand"
+        },
+        {
+          "line": "Built for the people who get the most scam calls.",
+          "frame_type": "cta",
+          "headline": "For the ones who matter.",
+          "subtitle": "Care Mode by ScamRadar.",
+          "bg": "cta"
+        }
+      ]
+    },
+    {
+      "id": "premium",
+      "title": "Premium — For the Moments After",
+      "scenes": [
+        {
+          "line": "ScamRadar's scanner is free. Always will be.",
+          "frame_type": "headline",
+          "headline": "Scanning is free.",
+          "subtitle": "Texts. Voicemails. URLs. Live Shield. Free forever.",
+          "bg": "dark_brand"
+        },
+        {
+          "line": "Premium unlocks the stuff you only need after a bad day.",
+          "frame_type": "screenshot",
+          "headline": "Premium.",
+          "subtitle": "For the moments after.",
+          "screenshot": "raw_premium.png"
+        },
+        {
+          "line": "Get scammed? Export a one-page incident report PDF. Take it to your bank.",
+          "frame_type": "headline",
+          "headline": "Incident Report PDF.",
+          "subtitle": "Verdict. Redacted excerpt. Steps taken. For bank disputes.",
+          "bg": "purple_brand"
+        },
+        {
+          "line": "Or grab the whole evidence locker. Original message. Screenshots. Classifier output. Zipped and ready for police or your lawyer.",
+          "frame_type": "headline",
+          "headline": "Evidence Locker.",
+          "subtitle": "Original + redacted + screenshots + verdict. One ZIP.",
+          "bg": "dark_brand"
+        },
+        {
+          "line": "Family tier covers up to eight pod members. Weekly digest. Verified family link to fight deepfake voice calls.",
+          "frame_type": "headline",
+          "headline": "Family tier.",
+          "subtitle": "Covers 8. Weekly digest. Anti-deepfake verification.",
+          "bg": "purple_brand"
+        },
+        {
+          "line": "Subscribe inside the app. Or stay free forever. Your call.",
+          "frame_type": "cta",
+          "headline": "Subscribe — or stay free.",
+          "subtitle": "Your call.",
+          "bg": "cta"
+        }
+      ]
+    }
+  ]
+}
