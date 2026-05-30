@@ -116,6 +116,24 @@ android {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
+        jniLibs {
+            // 16 KB page-size compatible APK packaging (see
+            // https://developer.android.com/guide/practices/page-sizes).
+            // Required by Google Play for new uploads from Nov 1, 2025.
+            useLegacyPackaging = false
+        }
+    }
+
+    splits {
+        abi {
+            isEnable = true
+            reset()
+            // Modern Android (Pixel 6+, all Android 15 devices) is 64-bit only.
+            // Dropping 32-bit ABIs removes the legacy 4-KB-aligned native libs
+            // and halves the APK size.
+            include("arm64-v8a", "x86_64")
+            isUniversalApk = true
+        }
     }
 }
 
@@ -160,6 +178,9 @@ dependencies {
     implementation("com.google.firebase:firebase-messaging-ktx")
 
     implementation("com.android.billingclient:billing-ktx:7.1.1")
+
+    // On-device ASR via Sherpa-ONNX (16 KB-aligned native libs, fully offline)
+    implementation(files("libs/sherpa-onnx-1.13.2.aar"))
 
     implementation("com.google.code.gson:gson:2.11.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.9.0")

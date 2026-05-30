@@ -13,16 +13,21 @@ app/google-services.json
 app/build/
 PLAN.md
 SPRINT.md
-pixel-*.png
 pixel-*.xml
-result-screen.png
-scam_screen.png
 uidump*.xml
-# Test screenshots from device validation
-scamradar_*.png
-dev_section.png
-history_*.png
-perm_dialog.png
-post_*.png
-settings_*.png
-shield_screen.png
+# Device screenshots, UI dumps, and debug captures
+*.png
+!play-store/**/*.png
+!docs/assets/**/*.png
+!stitch_scamradar_ai_protector/**/*.png
+
+# Build artifacts and native libs at root
+/*.so
+/*.aar
+sherpa_releases.json
+vosk_release.json
+so_list.txt
+
+# Test media and scripts
+play-store/scripts/*.ps1
+play-store/video/test_voicemails/

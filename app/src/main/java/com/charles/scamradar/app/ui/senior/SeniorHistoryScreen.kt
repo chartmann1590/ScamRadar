@@ -38,6 +38,7 @@ import com.charles.scamradar.app.data.db.ScanHistoryEntity
 @Composable
 fun SeniorHistoryScreen(
     onBack: () -> Unit,
+    onOpenResult: (ScanHistoryEntity) -> Unit,
 ) {
     val context = LocalContext.current
     val db = remember { AppDatabase.getInstance(context) }
@@ -73,15 +74,16 @@ fun SeniorHistoryScreen(
                 verticalArrangement = Arrangement.spacedBy(12.dp),
             ) {
                 items(entries) { entry ->
-                    HistoryRow(entry)
+                    HistoryRow(entry, onClick = { onOpenResult(entry) })
                 }
             }
         }
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun HistoryRow(entry: ScanHistoryEntity) {
+private fun HistoryRow(entry: ScanHistoryEntity, onClick: () -> Unit) {
     val color = when (entry.verdict) {
         "LIKELY_SCAM" -> Color(0xFFB3261E)
         "SUSPICIOUS" -> Color(0xFFE07B00)
@@ -93,6 +95,7 @@ private fun HistoryRow(entry: ScanHistoryEntity) {
         else -> "SAFE"
     }
     Card(
+        onClick = onClick,
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(20.dp),
         colors = CardDefaults.cardColors(containerColor = color),
@@ -104,6 +107,12 @@ private fun HistoryRow(entry: ScanHistoryEntity) {
                 text = entry.originalMessage.take(140),
                 fontSize = 20.sp,
                 color = Color.White,
+            )
+            Spacer(Modifier.height(10.dp))
+            Text(
+                text = "Tap to read more",
+                fontSize = 16.sp,
+                color = Color.White.copy(alpha = 0.85f),
             )
         }
     }

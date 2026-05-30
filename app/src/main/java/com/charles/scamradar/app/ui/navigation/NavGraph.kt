@@ -97,7 +97,7 @@ fun ScamRadarNavHost(
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route ?: ""
     val showBottomBar = !seniorMode && currentRoute in bottomNavRoutes
-    val showBanner = !seniorMode && currentRoute.isNotEmpty() && currentRoute != Screen.Onboarding.route && !careMode
+    val showBanner = currentRoute.isNotEmpty() && currentRoute != Screen.Onboarding.route
 
     val classifierRouter = remember { ClassifierRouter(context) }
     val database = remember { AppDatabase.getInstance(context) }
@@ -555,6 +555,18 @@ fun ScamRadarNavHost(
                         val encoded = NavArgCodec.encode(message)
                         navController.navigate(Screen.Scanning.createRoute(encoded, ScanMode.TEXT.name))
                     },
+                    onScanScreenshot = { extractedText ->
+                        val prompt = """
+                            Source: screenshot OCR.
+                            Analyze the following text extracted from a screenshot. Treat OCR artifacts as possible noise, but evaluate the message for scams, phishing, impersonation, urgency, payment requests, and credential theft.
+
+                            Extracted screenshot text:
+                            $extractedText
+                        """.trimIndent()
+                        val encoded = NavArgCodec.encode(prompt)
+                        navController.navigate(Screen.Scanning.createRoute(encoded, ScanMode.OCR.name))
+                    },
+                    onOpenUrlScan = { navController.navigate(Screen.UrlScan.route) },
                     onOpenHistory = { navController.navigate(Screen.SeniorHistory.route) },
                 )
             }
@@ -576,7 +588,14 @@ fun ScamRadarNavHost(
             }
 
             composable(Screen.SeniorHistory.route) {
-                SeniorHistoryScreen(onBack = { navController.popBackStack() })
+                SeniorHistoryScreen(
+                    onBack = { navController.popBackStack() },
+                    onOpenResult = { entity ->
+                        val scanResult = entity.toScanResult(gson)
+                        val json = NavArgCodec.encode(gson.toJson(scanResult))
+                        navController.navigate(Screen.SeniorResult.createRoute(json))
+                    },
+                )
             }
 
             composable(Screen.VerifyChallenge.route) {

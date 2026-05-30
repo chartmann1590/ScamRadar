@@ -145,6 +145,15 @@ fun HomeScreen(
             }
         }
     }
+    val micPermissionLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestPermission()
+    ) { granted ->
+        if (granted) {
+            audioPicker.launch("audio/*")
+        } else {
+            noticeMessage = "Microphone permission is required to scan voicemail audio files."
+        }
+    }
     val imagePicker = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
     ) { uri ->
@@ -233,7 +242,14 @@ fun HomeScreen(
             },
             onImportFile = {
                 showVoicemailChooser = false
-                audioPicker.launch("audio/*")
+                if (androidx.core.content.ContextCompat.checkSelfPermission(
+                        context, android.Manifest.permission.RECORD_AUDIO
+                    ) == android.content.pm.PackageManager.PERMISSION_GRANTED
+                ) {
+                    audioPicker.launch("audio/*")
+                } else {
+                    micPermissionLauncher.launch(android.Manifest.permission.RECORD_AUDIO)
+                }
             }
         )
     }

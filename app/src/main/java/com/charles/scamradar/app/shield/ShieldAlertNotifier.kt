@@ -12,6 +12,7 @@ import com.charles.scamradar.app.MainActivity
 import com.charles.scamradar.app.data.model.ScanResult
 import com.charles.scamradar.app.data.model.Verdict
 import com.charles.scamradar.app.messaging.ScamRadarMessagingService
+import com.google.gson.Gson
 
 object ShieldAlertNotifier {
 
@@ -34,14 +35,18 @@ object ShieldAlertNotifier {
         ensureChannel(context)
         val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-        val deepLink = "scamradar://shield/alert?pkg=$sourcePackage"
+        // Reuse the existing scamradar://result deep link so the alert lands on
+        // the full Result screen (verdict, red flags, what-to-do, share),
+        // not a placeholder. Same wire format QuickVerdictActivity uses.
+        val resultJson = Gson().toJson(result)
+        val deepLink = "scamradar://result?payload=${Uri.encode(resultJson)}"
         val intent = Intent(context, MainActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
             data = Uri.parse(deepLink)
         }
         val pending = PendingIntent.getActivity(
             context,
-            sourcePackage.hashCode(),
+            (sourcePackage + result.timestamp).hashCode(),
             intent,
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
         )
