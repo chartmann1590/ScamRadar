@@ -1,0 +1,132 @@
+{
+  "flows": [
+    {
+      "scamType": "PHISHING",
+      "title": "Phishing recovery",
+      "lead": "If you clicked a phishing link or entered information, act fast.",
+      "steps": [
+        {"id": "p1", "title": "Disconnect from networks", "description": "If you're worried malware was installed, turn off Wi-Fi and mobile data while you finish these steps."},
+        {"id": "p2", "title": "Change the password you typed", "description": "Open the real site (not from the link) and reset the password. If you reused that password elsewhere, change those too."},
+        {"id": "p3", "title": "Turn on two-factor authentication", "description": "Add a code generator app or hardware key. SMS-based 2FA is better than nothing but can be SIM-swapped."},
+        {"id": "p4", "title": "Review sign-in activity", "description": "Most accounts (Google, Apple, Microsoft) show recent device sign-ins. Sign out any device you don't recognize."},
+        {"id": "p5", "title": "Check connected apps", "description": "Revoke any third-party app permissions you don't recognize in account security settings."},
+        {"id": "p6", "title": "Run a malware scan", "description": "Use Play Protect on Android, the built-in scanner on Windows, or your antivirus on Mac."},
+        {"id": "p7", "title": "File a report", "description": "Report to your country's fraud authority — ScamRadar can prefill this for you."}
+      ]
+    },
+    {
+      "scamType": "ROMANCE",
+      "title": "Romance scam recovery",
+      "lead": "Stop sending money or gifts. The person is not who they say they are.",
+      "steps": [
+        {"id": "r1", "title": "Cut contact", "description": "Block the account on every platform: chat app, dating app, social media, email, phone."},
+        {"id": "r2", "title": "Stop any payments in flight", "description": "Call your bank, card issuer, gift-card brand, Western Union, MoneyGram, Zelle, or crypto exchange to attempt a reversal. Speed matters."},
+        {"id": "r3", "title": "Save evidence", "description": "Screenshot every conversation, payment receipt, and profile before you block them. ScamRadar's Evidence Locker can bundle it."},
+        {"id": "r4", "title": "Reverse-image search photos", "description": "Confirm to yourself the photos were stolen. This protects you from re-engaging if they reach out again."},
+        {"id": "r5", "title": "Tell one trusted person", "description": "Romance-scam shame keeps people silent. Telling one person breaks the isolation that scammers rely on."},
+        {"id": "r6", "title": "File a report", "description": "FTC (US), Action Fraud (UK), or your national fraud agency. Also report to the platform where you met."}
+      ]
+    },
+    {
+      "scamType": "IRS_IMPERSONATION",
+      "title": "Tax-agency impersonator recovery",
+      "lead": "The real IRS, HMRC, ATO, or CRA does not threaten arrest by phone or text.",
+      "steps": [
+        {"id": "i1", "title": "Don't pay", "description": "If you haven't paid yet, stop. Real tax agencies use postal mail and never demand gift cards or crypto."},
+        {"id": "i2", "title": "Reverse payment if possible", "description": "If you paid by gift card, call the brand's fraud line immediately. By crypto, contact the exchange. By bank transfer, call the bank."},
+        {"id": "i3", "title": "Verify your real tax status", "description": "Sign in to the real tax-agency website using a bookmark or typed URL — never the scammer's link."},
+        {"id": "i4", "title": "Report to the tax agency", "description": "US: phishing@irs.gov + TIGTA. UK: phishing@hmrc.gov.uk. AU: ReportEmailFraud@ato.gov.au. CA: anti-fraud centre."},
+        {"id": "i5", "title": "Place a fraud alert", "description": "Contact one major credit bureau (US: Equifax/Experian/TransUnion) to place a free fraud alert."},
+        {"id": "i6", "title": "File with the fraud authority", "description": "ScamRadar can prefill the right form for your country."}
+      ]
+    },
+    {
+      "scamType": "CRYPTO",
+      "title": "Crypto scam recovery",
+      "lead": "Crypto is fast but not always lost. Move quickly.",
+      "steps": [
+        {"id": "c1", "title": "Stop sending more", "description": "Pig-butchering scams escalate. The 'small fee to withdraw' is another scam step."},
+        {"id": "c2", "title": "Document the transaction IDs", "description": "Copy every transaction hash and wallet address. These are needed for any chance of trace."},
+        {"id": "c3", "title": "Report to the exchange", "description": "Coinbase, Binance, Kraken, and others have fraud lines. They cannot reverse, but they can flag the receiving wallet."},
+        {"id": "c4", "title": "Report to authorities", "description": "FBI IC3 (US), Action Fraud (UK), or your national cyber-fraud unit."},
+        {"id": "c5", "title": "Avoid 'recovery services'", "description": "Most are secondary scams. Real recovery requires court orders, not a Telegram contact."},
+        {"id": "c6", "title": "Save evidence", "description": "Screenshots, wallet addresses, chat logs. ScamRadar's Evidence Locker bundles these."}
+      ]
+    },
+    {
+      "scamType": "FAMILY_EMERGENCY",
+      "title": "\"Family emergency\" / grandparent scam recovery",
+      "lead": "The voice you heard may have been AI-cloned. Verify the real family member is safe.",
+      "steps": [
+        {"id": "f1", "title": "Call your relative directly", "description": "Use a number you already have, not one from the scammer."},
+        {"id": "f2", "title": "Stop the payment", "description": "Bank wire, Zelle, gift card, or cash courier — call the bank/brand immediately. Couriers can sometimes be intercepted by police."},
+        {"id": "f3", "title": "Tell other family members", "description": "Scammers often try multiple relatives. Warn the rest of the family today."},
+        {"id": "f4", "title": "Set a family code phrase", "description": "Agree on a word only your family knows. Real future emergencies will use it. ScamRadar's verified-contact feature is built for this."},
+        {"id": "f5", "title": "Report to authorities", "description": "FTC (US), Action Fraud (UK), CAFC (CA), or local police if money was lost."}
+      ]
+    },
+    {
+      "scamType": "PACKAGE_DELIVERY",
+      "title": "Fake delivery scam recovery",
+      "lead": "USPS, FedEx, UPS, Royal Mail, AusPost never ask for fees via SMS link.",
+      "steps": [
+        {"id": "d1", "title": "Don't pay the 'redelivery fee'", "description": "Even small fees are pretexts to capture your card and identity details."},
+        {"id": "d2", "title": "Change card if you entered details", "description": "Call the issuer to freeze or replace the card."},
+        {"id": "d3", "title": "Verify the real tracking", "description": "Use the carrier's app or website directly. Don't tap any link from the SMS."},
+        {"id": "d4", "title": "Report the SMS", "description": "Forward to 7726 (US/UK/CA carriers). Then delete."},
+        {"id": "d5", "title": "Place a credit lock", "description": "If you provided personal info, a free credit freeze blocks new accounts."}
+      ]
+    },
+    {
+      "scamType": "JOB_OFFER",
+      "title": "Fake job-offer recovery",
+      "lead": "Real employers never charge fees, never pay via gift card, and verify identity in person.",
+      "steps": [
+        {"id": "j1", "title": "Stop talking to them", "description": "Block the recruiter on every platform you contacted them on."},
+        {"id": "j2", "title": "Reverse any payment", "description": "If you paid for 'equipment' or 'training', call your bank or card issuer for chargeback."},
+        {"id": "j3", "title": "Cancel any checks deposited", "description": "Fake-check scams clear initially then bounce. The bank will charge it back."},
+        {"id": "j4", "title": "Protect your identity", "description": "If you sent ID documents, place a fraud alert with credit bureaus."},
+        {"id": "j5", "title": "Report to platforms", "description": "LinkedIn, Indeed, Glassdoor — report the fake recruiter and company."},
+        {"id": "j6", "title": "File a fraud report", "description": "FTC ReportFraud, IC3, or local equivalent."}
+      ]
+    },
+    {
+      "scamType": "TECH_SUPPORT",
+      "title": "Tech-support scam recovery",
+      "lead": "Real Apple, Microsoft, Google never call you. Browser pop-ups with phone numbers are always fake.",
+      "steps": [
+        {"id": "t1", "title": "Disconnect if remote access was granted", "description": "Unplug your network cable or turn off Wi-Fi to break their session."},
+        {"id": "t2", "title": "Uninstall remote-access tools", "description": "AnyDesk, TeamViewer, LogMeIn — anything installed during the call. Then reboot."},
+        {"id": "t3", "title": "Change passwords from a clean device", "description": "Bank, email, password manager — change from another device they don't control."},
+        {"id": "t4", "title": "Reverse payment", "description": "Call the bank or card issuer immediately. If you paid in gift cards, call the brand's fraud line."},
+        {"id": "t5", "title": "Run malware scan", "description": "Windows Defender full scan, or Mac Malwarebytes."},
+        {"id": "t6", "title": "Report", "description": "FTC (US), Action Fraud (UK), CAFC (CA), or local cyber-fraud unit."}
+      ]
+    },
+    {
+      "scamType": "LOTTERY",
+      "title": "Lottery / prize scam recovery",
+      "lead": "Real lotteries never charge you to receive a prize you didn't enter.",
+      "steps": [
+        {"id": "l1", "title": "Stop paying", "description": "Any 'tax', 'shipping', or 'processing fee' to claim winnings is the scam."},
+        {"id": "l2", "title": "Reverse payments", "description": "Bank wire, gift card, crypto — call the relevant fraud line. Speed matters."},
+        {"id": "l3", "title": "Block the scammer", "description": "Phone, email, social media — every channel."},
+        {"id": "l4", "title": "Protect your identity", "description": "Place a fraud alert with credit bureaus if you provided ID."},
+        {"id": "l5", "title": "Report", "description": "FTC (US), or your national fraud agency."}
+      ]
+    },
+    {
+      "scamType": "INVESTMENT",
+      "title": "Investment scam recovery",
+      "lead": "If they guarantee returns, it's a scam. Real investments have risk disclosures.",
+      "steps": [
+        {"id": "v1", "title": "Stop adding funds", "description": "Don't 'invest more to recover'. That's the second-stage scam."},
+        {"id": "v2", "title": "Attempt withdrawal anyway", "description": "Document the response — refusal or fees are clear evidence."},
+        {"id": "v3", "title": "Save records", "description": "Every email, screenshot, transaction. ScamRadar's Evidence Locker bundles these."},
+        {"id": "v4", "title": "Report to securities regulator", "description": "US: SEC.gov tips. UK: FCA. AU: ASIC. CA: CSA. They also coordinate with criminal authorities."},
+        {"id": "v5", "title": "Report to your bank", "description": "If you wired or transferred to the scammer, file a fraud claim with your bank — required by some recovery routes."},
+        {"id": "v6", "title": "Beware recovery scams", "description": "Anyone messaging you offering to 'recover' funds is almost always a follow-on scam."}
+      ]
+    }
+  ]
+}

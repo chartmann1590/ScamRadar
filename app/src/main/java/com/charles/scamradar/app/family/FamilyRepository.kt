@@ -119,6 +119,12 @@ class FamilyRepository(context: Context) {
         return JoinOutcome.Joined(code, result.getOrNull())
     }
 
+    suspend fun joinPodWithPresets(payload: RemoteSetupPayload): JoinOutcome {
+        val outcome = joinFamily(payload.podCode)
+        if (outcome !is JoinOutcome.Joined) return outcome
+        return outcome
+    }
+
     suspend fun leaveFamily(code: String) {
         val uid = AnonymousAuthBootstrapper.ensureSignedIn() ?: return
         runCatching {

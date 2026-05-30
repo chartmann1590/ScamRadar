@@ -18,3 +18,11 @@ pixel-*.xml
 result-screen.png
 scam_screen.png
 uidump*.xml
+# Test screenshots from device validation
+scamradar_*.png
+dev_section.png
+history_*.png
+perm_dialog.png
+post_*.png
+settings_*.png
+shield_screen.png

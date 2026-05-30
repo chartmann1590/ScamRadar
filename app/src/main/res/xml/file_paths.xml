@@ -2,4 +2,6 @@
 <paths>
     <files-path name="shared_images" path="shared/" />
     <cache-path name="cache" path="." />
+    <cache-path name="incidents" path="incidents/" />
+    <cache-path name="evidence" path="evidence/" />
 </paths>

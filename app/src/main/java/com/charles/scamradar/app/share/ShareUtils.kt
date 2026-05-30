@@ -23,6 +23,24 @@ fun buildShareText(scanResult: ScanResult): String {
     }
 }
 
+fun buildWarnFriendsText(scanResult: ScanResult): String {
+    val topFlags = scanResult.redFlags.take(3).map { it.phrase }
+    val typeLabel = scanResult.scamType.name.replace("_", " ").lowercase().replaceFirstChar { it.uppercase() }
+    return buildString {
+        appendLine("Heads up — I just got a $typeLabel scam.")
+        if (topFlags.isNotEmpty()) {
+            appendLine("Watch out for:")
+            topFlags.forEach { appendLine("• $it") }
+        }
+        appendLine()
+        appendLine("ScamRadar caught it on-device. Get the app: https://chartmann1590.github.io/ScamRadar/")
+    }
+}
+
+fun warnFriends(context: Context, scanResult: ScanResult) {
+    shareText(context, buildWarnFriendsText(scanResult))
+}
+
 fun shareText(context: Context, text: String) {
     val intent = Intent(Intent.ACTION_SEND).apply {
         type = "text/plain"

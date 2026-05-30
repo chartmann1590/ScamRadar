@@ -14,7 +14,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -36,20 +35,36 @@ import com.charles.scamradar.app.data.model.ScanResult
 import com.charles.scamradar.app.data.model.Verdict
 import com.charles.scamradar.app.download.ModelDownloadService
 import com.charles.scamradar.app.download.ModelManager
+import com.charles.scamradar.app.engagement.AchievementEngine
 import com.charles.scamradar.app.ui.components.AdBanner
 import com.charles.scamradar.app.ui.components.BottomNavBar
+import com.charles.scamradar.app.ui.screens.achievements.AchievementsScreen
 import com.charles.scamradar.app.ui.screens.help.HelpScreen
 import com.charles.scamradar.app.ui.screens.history.HistoryScreen
 import com.charles.scamradar.app.ui.screens.home.HomeScreen
 import com.charles.scamradar.app.ui.screens.library.LibraryScreen
 import com.charles.scamradar.app.ui.screens.onboarding.OnboardingScreen
+import com.charles.scamradar.app.ui.screens.premium.PremiumScreen
+import com.charles.scamradar.app.ui.screens.recovery.AuthorityReportScreen
+import com.charles.scamradar.app.ui.screens.recovery.RecoveryHubScreen
+import com.charles.scamradar.app.ui.screens.recovery.RecoveryWizardScreen
 import com.charles.scamradar.app.ui.screens.result.ResultScreen
 import com.charles.scamradar.app.ui.screens.scanning.ScanningScreen
+import com.charles.scamradar.app.ui.senior.SeniorHistoryScreen
+import com.charles.scamradar.app.ui.senior.SeniorHomeScreen
+import com.charles.scamradar.app.ui.senior.SeniorResultScreen
 import com.charles.scamradar.app.ui.screens.settings.SettingsScreen
 import com.charles.scamradar.app.ui.screens.family.FamilyActivityScreen
 import com.charles.scamradar.app.ui.screens.family.FamilyCreateScreen
 import com.charles.scamradar.app.ui.screens.family.FamilyJoinScreen
 import com.charles.scamradar.app.ui.screens.family.FamilyOnboardingScreen
+import com.charles.scamradar.app.ui.screens.family.RemoteSetupApplyScreen
+import com.charles.scamradar.app.ui.screens.family.RemoteSetupCreateScreen
+import com.charles.scamradar.app.ui.screens.family.VerifyChallengeScreen
+import com.charles.scamradar.app.ui.screens.family.VerifyResultScreen
+import com.charles.scamradar.app.ui.screens.family.WeeklyDigestScreen
+import com.charles.scamradar.app.ui.screens.shield.ShieldAlertScreen
+import com.charles.scamradar.app.ui.screens.shield.ShieldSettingsScreen
 import com.charles.scamradar.app.ui.screens.stats.TrustScoreScreen
 import com.charles.scamradar.app.ui.screens.today.TodayScreen
 import com.charles.scamradar.app.ui.screens.urlscan.UrlScanScreen
@@ -69,7 +84,8 @@ fun ScamRadarNavHost(
     filesDir: File,
     modifier: Modifier = Modifier,
     pendingDeepLink: PendingDeepLink? = null,
-    onDeepLinkConsumed: () -> Unit = {}
+    onDeepLinkConsumed: () -> Unit = {},
+    seniorMode: Boolean = false,
 ) {
     val navController = rememberNavController()
     val context = LocalContext.current
@@ -80,8 +96,8 @@ fun ScamRadarNavHost(
     val downloadProgress by ModelDownloadService.downloadProgress.collectAsState()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route ?: ""
-    val showBottomBar = currentRoute in bottomNavRoutes
-    val showBanner = currentRoute.isNotEmpty() && currentRoute != Screen.Onboarding.route && !careMode
+    val showBottomBar = !seniorMode && currentRoute in bottomNavRoutes
+    val showBanner = !seniorMode && currentRoute.isNotEmpty() && currentRoute != Screen.Onboarding.route && !careMode
 
     val classifierRouter = remember { ClassifierRouter(context) }
     val database = remember { AppDatabase.getInstance(context) }
@@ -89,33 +105,48 @@ fun ScamRadarNavHost(
 
     LaunchedEffect(pendingDeepLink, onboardingComplete) {
         val link = pendingDeepLink ?: return@LaunchedEffect
-        if (!onboardingComplete) return@LaunchedEffect
+        if (!onboardingComplete && link !is PendingDeepLink.ApplyRemoteSetup) return@LaunchedEffect
         when (link) {
             is PendingDeepLink.OpenResult -> {
                 val encoded = NavArgCodec.encode(link.scanResultJson)
-                navController.navigate("result/$encoded") {
-                    popUpTo(Screen.Scan.route)
-                }
+                navController.navigate("result/$encoded") { popUpTo(Screen.Scan.route) }
             }
             is PendingDeepLink.JoinFamily -> {
                 navController.navigate(Screen.FamilyJoin.createRoute(link.code))
+            }
+            is PendingDeepLink.ApplyRemoteSetup -> {
+                navController.navigate(Screen.RemoteSetupApply.createRoute(link.payload))
+            }
+            is PendingDeepLink.OpenShieldAlert -> {
+                navController.navigate(Screen.ShieldAlert.createRoute(NavArgCodec.encode(link.pkg)))
+            }
+            is PendingDeepLink.OpenLibraryPattern -> {
+                val id = ScamType.entries.indexOfFirst { it.name == link.scamType }
+                if (id >= 0) navController.navigate(Screen.Library.createDetailRoute(id))
+            }
+            is PendingDeepLink.OpenVerifyResult -> {
+                navController.navigate(Screen.VerifyResult.createRoute(link.payload))
+            }
+            PendingDeepLink.OpenDigest -> {
+                navController.navigate(Screen.WeeklyDigest.route)
             }
         }
         onDeepLinkConsumed()
     }
 
+    val startDestination = when {
+        !onboardingComplete -> Screen.Onboarding.route
+        seniorMode -> Screen.SeniorHome.route
+        else -> Screen.Scan.route
+    }
+
     Scaffold(
         modifier = modifier,
         bottomBar = {
-            val bottomBarModifier = if (showBottomBar) {
-                Modifier
-            } else {
-                Modifier.windowInsetsPadding(WindowInsets.navigationBars)
-            }
+            val bottomBarModifier = if (showBottomBar) Modifier
+            else Modifier.windowInsetsPadding(WindowInsets.navigationBars)
             Column(modifier = bottomBarModifier) {
-                if (showBanner) {
-                    AdBanner()
-                }
+                if (showBanner) AdBanner()
                 if (showBottomBar) {
                     BottomNavBar(
                         currentRoute = currentRoute,
@@ -133,7 +164,7 @@ fun ScamRadarNavHost(
     ) { innerPadding ->
         NavHost(
             navController = navController,
-            startDestination = if (onboardingComplete) Screen.Scan.route else Screen.Onboarding.route,
+            startDestination = startDestination,
             modifier = Modifier.padding(innerPadding)
         ) {
             composable(Screen.Onboarding.route) {
@@ -147,24 +178,11 @@ fun ScamRadarNavHost(
                             com.charles.scamradar.app.ui.screens.onboarding.DeviceClass.LITE_ONLY
                     }
                 }
-                val onboardingDownloadState = when (downloadProgress.state) {
-                    com.charles.scamradar.app.download.DownloadState.IDLE ->
-                        com.charles.scamradar.app.ui.screens.onboarding.DownloadState.IDLE
-                    com.charles.scamradar.app.download.DownloadState.DOWNLOADING ->
-                        com.charles.scamradar.app.ui.screens.onboarding.DownloadState.DOWNLOADING
-                    com.charles.scamradar.app.download.DownloadState.PAUSED ->
-                        com.charles.scamradar.app.ui.screens.onboarding.DownloadState.PAUSED
-                    com.charles.scamradar.app.download.DownloadState.COMPLETED ->
-                        com.charles.scamradar.app.ui.screens.onboarding.DownloadState.COMPLETED
-                    com.charles.scamradar.app.download.DownloadState.FAILED ->
-                        com.charles.scamradar.app.ui.screens.onboarding.DownloadState.FAILED
-                }
+                val onboardingDownloadState = mapDownloadState(downloadProgress.state)
                 val progressFraction = if (downloadProgress.totalBytes > 0L) {
                     (downloadProgress.bytesDownloaded.toFloat() / downloadProgress.totalBytes.toFloat())
                         .coerceIn(0f, 1f)
-                } else {
-                    null
-                }
+                } else null
 
                 LaunchedEffect(downloadProgress.state) {
                     if (downloadProgress.state == com.charles.scamradar.app.download.DownloadState.COMPLETED) {
@@ -174,16 +192,12 @@ fun ScamRadarNavHost(
 
                 OnboardingScreen(
                     onComplete = {
-                        coroutineScope.launch {
-                            userPrefs.setOnboardingComplete(true)
-                        }
+                        coroutineScope.launch { userPrefs.setOnboardingComplete(true) }
                         navController.navigate(Screen.Scan.route) {
                             popUpTo(Screen.Onboarding.route) { inclusive = true }
                         }
                     },
-                    onStartDownload = {
-                        ModelDownloadService.startDownload(context)
-                    },
+                    onStartDownload = { ModelDownloadService.startDownload(context) },
                     onPauseDownload = {
                         if (downloadProgress.state == com.charles.scamradar.app.download.DownloadState.PAUSED) {
                             ModelDownloadService.resumeDownload(context)
@@ -213,11 +227,9 @@ fun ScamRadarNavHost(
                     navArgument("scanMode") { type = NavType.StringType }
                 )
             ) { backStackEntry ->
-                val message = NavArgCodec.decode(
-                    backStackEntry.arguments?.getString("message") ?: ""
-                )
+                val message = NavArgCodec.decode(backStackEntry.arguments?.getString("message") ?: "")
                 val scanModeStr = backStackEntry.arguments?.getString("scanMode") ?: "TEXT"
-                val scanMode = try { ScanMode.valueOf(scanModeStr) } catch (_: Exception) { ScanMode.TEXT }
+                val scanMode = runCatching { ScanMode.valueOf(scanModeStr) }.getOrDefault(ScanMode.TEXT)
 
                 ScanningScreen(
                     message = message,
@@ -227,6 +239,7 @@ fun ScamRadarNavHost(
                         coroutineScope.launch {
                             database.scanHistoryDao().insert(ScanHistoryEntity(scanResult, scanMode))
                             ScamRadarWidget.refreshAll(context)
+                            AchievementEngine.onScanCompleted(context, scanResult.verdict == Verdict.LIKELY_SCAM)
 
                             val careModeEnabled = userPrefs.careMode.first()
                             val careModeAutoShare = userPrefs.careModeAutoShare.first()
@@ -237,39 +250,34 @@ fun ScamRadarNavHost(
                             if (careModeEnabled && careModeAutoShare && familyCode.isNotBlank() && shouldAutoShare) {
                                 runCatching {
                                     FamilyRepository(context).shareWithFamily(familyCode, scanResult)
+                                    AchievementEngine.onFamilyShare(context)
                                 }
                             }
                         }
+
                         val json = NavArgCodec.encode(gson.toJson(scanResult))
+                        val nextRoute = if (seniorMode) Screen.SeniorResult.createRoute(json)
+                        else "result/$json"
                         val navigateToResult = {
-                            navController.navigate("result/$json") {
-                                popUpTo(Screen.Scan.route)
-                            }
+                            navController.navigate(nextRoute) { popUpTo(Screen.Scan.route) }
                         }
                         val activity = context as? android.app.Activity
-                        if (activity != null && !careMode) {
+                        if (activity != null && !careMode && !seniorMode) {
                             InterstitialController.maybeShow(activity, navigateToResult)
                         } else {
                             navigateToResult()
                         }
                     },
-                    onError = {
-                        navController.popBackStack()
-                    }
+                    onError = { navController.popBackStack() }
                 )
             }
 
             composable(
                 route = Screen.Result.route,
-                arguments = listOf(
-                    navArgument("scanResultJson") { type = NavType.StringType }
-                )
+                arguments = listOf(navArgument("scanResultJson") { type = NavType.StringType })
             ) { backStackEntry ->
-                val json = NavArgCodec.decode(
-                    backStackEntry.arguments?.getString("scanResultJson") ?: ""
-                )
+                val json = NavArgCodec.decode(backStackEntry.arguments?.getString("scanResultJson") ?: "")
                 val scanResult = gson.fromJson(json, ScanResult::class.java)
-
                 ResultScreen(
                     scanResult = scanResult,
                     onScanAgain = {
@@ -283,23 +291,24 @@ fun ScamRadarNavHost(
                         }
                     },
                     userPrefs = userPrefs,
-                    careMode = careMode
+                    careMode = careMode,
+                    onOpenRecovery = { encoded ->
+                        navController.navigate(Screen.RecoveryWizard.createRoute(encoded))
+                    },
+                    onOpenAuthorityReport = { scamTypeName ->
+                        val country = java.util.Locale.getDefault().country.ifBlank { "US" }
+                        navController.navigate(Screen.AuthorityReport.createRoute(scamTypeName, country))
+                    },
                 )
             }
 
-            composable(Screen.Library.route) {
-                LibraryScreen()
-            }
+            composable(Screen.Library.route) { LibraryScreen() }
 
             composable(
                 route = Screen.Library.detailRoute,
-                arguments = listOf(
-                    navArgument("patternId") { type = NavType.IntType }
-                )
+                arguments = listOf(navArgument("patternId") { type = NavType.IntType })
             ) { backStackEntry ->
-                LibraryScreen(
-                    initialPatternId = backStackEntry.arguments?.getInt("patternId")
-                )
+                LibraryScreen(initialPatternId = backStackEntry.arguments?.getInt("patternId"))
             }
 
             composable(Screen.History.route) {
@@ -318,18 +327,17 @@ fun ScamRadarNavHost(
 
             composable(Screen.Settings.route) {
                 SettingsScreen(
-                    onOpenFamily = {
-                        navController.navigate(Screen.FamilyOnboarding.route)
-                    },
-                    onOpenTrustScore = {
-                        navController.navigate(Screen.TrustScore.route)
-                    },
-                    onOpenHelp = {
-                        navController.navigate(Screen.Help.route)
-                    },
-                    onReplayTutorial = {
-                        navController.navigate(Screen.AppTutorial.route)
-                    }
+                    onOpenFamily = { navController.navigate(Screen.FamilyOnboarding.route) },
+                    onOpenTrustScore = { navController.navigate(Screen.TrustScore.route) },
+                    onOpenHelp = { navController.navigate(Screen.Help.route) },
+                    onReplayTutorial = { navController.navigate(Screen.AppTutorial.route) },
+                    onOpenPremium = { navController.navigate(Screen.Premium.route) },
+                    onOpenAchievements = { navController.navigate(Screen.Achievements.route) },
+                    onOpenShieldSettings = { navController.navigate(Screen.ShieldSettings.route) },
+                    onOpenRecoveryHub = { navController.navigate(Screen.RecoveryHub.route) },
+                    onOpenRemoteSetup = { navController.navigate(Screen.RemoteSetupCreate.route) },
+                    onOpenWeeklyDigest = { navController.navigate(Screen.WeeklyDigest.route) },
+                    onOpenVerify = { navController.navigate(Screen.VerifyChallenge.route) },
                 )
             }
 
@@ -352,30 +360,9 @@ fun ScamRadarNavHost(
                             com.charles.scamradar.app.ui.screens.onboarding.DeviceClass.LITE_ONLY
                     }
                 }
-                val onboardingDownloadState = when (downloadProgress.state) {
-                    com.charles.scamradar.app.download.DownloadState.IDLE ->
-                        com.charles.scamradar.app.ui.screens.onboarding.DownloadState.IDLE
-                    com.charles.scamradar.app.download.DownloadState.DOWNLOADING ->
-                        com.charles.scamradar.app.ui.screens.onboarding.DownloadState.DOWNLOADING
-                    com.charles.scamradar.app.download.DownloadState.PAUSED ->
-                        com.charles.scamradar.app.ui.screens.onboarding.DownloadState.PAUSED
-                    com.charles.scamradar.app.download.DownloadState.COMPLETED ->
-                        com.charles.scamradar.app.ui.screens.onboarding.DownloadState.COMPLETED
-                    com.charles.scamradar.app.download.DownloadState.FAILED ->
-                        com.charles.scamradar.app.ui.screens.onboarding.DownloadState.FAILED
-                }
-                val progressFraction = if (downloadProgress.totalBytes > 0L) {
-                    (downloadProgress.bytesDownloaded.toFloat() / downloadProgress.totalBytes.toFloat())
-                        .coerceIn(0f, 1f)
-                } else {
-                    null
-                }
-
                 OnboardingScreen(
                     onComplete = { navController.popBackStack() },
-                    onStartDownload = {
-                        ModelDownloadService.startDownload(context)
-                    },
+                    onStartDownload = { ModelDownloadService.startDownload(context) },
                     onPauseDownload = {
                         if (downloadProgress.state == com.charles.scamradar.app.download.DownloadState.PAUSED) {
                             ModelDownloadService.resumeDownload(context)
@@ -384,8 +371,8 @@ fun ScamRadarNavHost(
                         }
                     },
                     deviceClass = modelDeviceClass,
-                    downloadProgress = progressFraction,
-                    downloadState = onboardingDownloadState,
+                    downloadProgress = null,
+                    downloadState = mapDownloadState(downloadProgress.state),
                     bytesDownloaded = downloadProgress.bytesDownloaded,
                     totalBytes = downloadProgress.totalBytes
                 )
@@ -456,17 +443,12 @@ fun ScamRadarNavHost(
             composable(Screen.Today.route) {
                 TodayScreen(
                     userPrefs = userPrefs,
-                    onOpenTrustScore = {
-                        navController.navigate(Screen.TrustScore.route)
-                    }
+                    onOpenTrustScore = { navController.navigate(Screen.TrustScore.route) }
                 )
             }
 
             composable(Screen.TrustScore.route) {
-                TrustScoreScreen(
-                    userPrefs = userPrefs,
-                    onBack = { navController.popBackStack() }
-                )
+                TrustScoreScreen(userPrefs = userPrefs, onBack = { navController.popBackStack() })
             }
 
             composable(Screen.UrlScan.route) {
@@ -506,18 +488,156 @@ fun ScamRadarNavHost(
                         coroutineScope.launch {
                             database.scanHistoryDao().insert(ScanHistoryEntity(enriched, ScanMode.URL))
                             ScamRadarWidget.refreshAll(context)
+                            AchievementEngine.onScanCompleted(context, enriched.verdict == Verdict.LIKELY_SCAM)
                         }
                         val json = NavArgCodec.encode(gson.toJson(enriched))
-                        navController.navigate("result/$json") {
-                            popUpTo(Screen.Scan.route)
-                        }
+                        navController.navigate("result/$json") { popUpTo(Screen.Scan.route) }
                     },
-                    onError = {
-                        navController.popBackStack()
-                    }
+                    onError = { navController.popBackStack() }
                 )
             }
+
+            composable(Screen.Premium.route) {
+                PremiumScreen(onBack = { navController.popBackStack() })
+            }
+
+            composable(Screen.Achievements.route) {
+                AchievementsScreen(onBack = { navController.popBackStack() })
+            }
+
+            composable(Screen.ShieldSettings.route) {
+                ShieldSettingsScreen(onBack = { navController.popBackStack() })
+            }
+
+            composable(
+                route = Screen.ShieldAlert.route,
+                arguments = listOf(navArgument("payload") { type = NavType.StringType })
+            ) { backStackEntry ->
+                val pkg = NavArgCodec.decode(backStackEntry.arguments?.getString("payload") ?: "")
+                ShieldAlertScreen(sourcePackage = pkg, onBack = { navController.popBackStack() })
+            }
+
+            composable(
+                route = Screen.RecoveryWizard.route,
+                arguments = listOf(navArgument("scanResultJson") { type = NavType.StringType })
+            ) { backStackEntry ->
+                val json = NavArgCodec.decode(backStackEntry.arguments?.getString("scanResultJson") ?: "")
+                val sr = gson.fromJson(json, ScanResult::class.java)
+                RecoveryWizardScreen(
+                    scanResult = sr,
+                    onBack = { navController.popBackStack() },
+                    onUpgrade = { navController.navigate(Screen.Premium.route) },
+                    onOpenAuthorities = {
+                        val country = java.util.Locale.getDefault().country.ifBlank { "US" }
+                        navController.navigate(Screen.AuthorityReport.createRoute(sr.scamType.name, country))
+                    },
+                )
+            }
+
+            composable(Screen.RecoveryHub.route) {
+                RecoveryHubScreen(onBack = { navController.popBackStack() })
+            }
+
+            composable(
+                route = Screen.AuthorityReport.route,
+                arguments = listOf(
+                    navArgument("scamType") { type = NavType.StringType },
+                    navArgument("country") { type = NavType.StringType },
+                )
+            ) { backStackEntry ->
+                val scamType = backStackEntry.arguments?.getString("scamType") ?: "OTHER"
+                AuthorityReportScreen(scamTypeName = scamType, onBack = { navController.popBackStack() })
+            }
+
+            composable(Screen.SeniorHome.route) {
+                SeniorHomeScreen(
+                    onStartScan = { message ->
+                        val encoded = NavArgCodec.encode(message)
+                        navController.navigate(Screen.Scanning.createRoute(encoded, ScanMode.TEXT.name))
+                    },
+                    onOpenHistory = { navController.navigate(Screen.SeniorHistory.route) },
+                )
+            }
+
+            composable(
+                route = Screen.SeniorResult.route,
+                arguments = listOf(navArgument("scanResultJson") { type = NavType.StringType })
+            ) { backStackEntry ->
+                val json = NavArgCodec.decode(backStackEntry.arguments?.getString("scanResultJson") ?: "")
+                val sr = gson.fromJson(json, ScanResult::class.java)
+                SeniorResultScreen(
+                    scanResult = sr,
+                    onScanAgain = {
+                        navController.navigate(Screen.SeniorHome.route) {
+                            popUpTo(Screen.SeniorHome.route) { inclusive = true }
+                        }
+                    },
+                )
+            }
+
+            composable(Screen.SeniorHistory.route) {
+                SeniorHistoryScreen(onBack = { navController.popBackStack() })
+            }
+
+            composable(Screen.VerifyChallenge.route) {
+                VerifyChallengeScreen(onBack = { navController.popBackStack() })
+            }
+
+            composable(
+                route = Screen.VerifyResult.route,
+                arguments = listOf(navArgument("payload") { type = NavType.StringType })
+            ) { backStackEntry ->
+                val payload = backStackEntry.arguments?.getString("payload") ?: ""
+                VerifyResultScreen(
+                    encoded = payload,
+                    onContinue = {
+                        navController.navigate(Screen.Scan.route) {
+                            popUpTo(Screen.Scan.route) { inclusive = true }
+                        }
+                    },
+                )
+            }
+
+            composable(Screen.RemoteSetupCreate.route) {
+                RemoteSetupCreateScreen(onBack = { navController.popBackStack() })
+            }
+
+            composable(
+                route = Screen.RemoteSetupApply.route,
+                arguments = listOf(navArgument("payload") { type = NavType.StringType })
+            ) { backStackEntry ->
+                val payload = backStackEntry.arguments?.getString("payload") ?: ""
+                RemoteSetupApplyScreen(
+                    encodedPayload = payload,
+                    onBack = { navController.popBackStack() },
+                    onApplied = {
+                        navController.navigate(Screen.Scan.route) {
+                            popUpTo(Screen.Onboarding.route) { inclusive = true }
+                        }
+                    },
+                )
+            }
+
+            composable(Screen.WeeklyDigest.route) {
+                WeeklyDigestScreen(onBack = { navController.popBackStack() })
+            }
         }
+    }
+}
+
+private fun mapDownloadState(s: com.charles.scamradar.app.download.DownloadState):
+    com.charles.scamradar.app.ui.screens.onboarding.DownloadState {
+    return when (s) {
+        com.charles.scamradar.app.download.DownloadState.IDLE ->
+            com.charles.scamradar.app.ui.screens.onboarding.DownloadState.IDLE
+        com.charles.scamradar.app.download.DownloadState.DOWNLOADING ->
+            com.charles.scamradar.app.ui.screens.onboarding.DownloadState.DOWNLOADING
+        com.charles.scamradar.app.download.DownloadState.PAUSED ->
+            com.charles.scamradar.app.ui.screens.onboarding.DownloadState.PAUSED
+        com.charles.scamradar.app.download.DownloadState.COMPLETED ->
+            com.charles.scamradar.app.ui.screens.onboarding.DownloadState.COMPLETED
+        com.charles.scamradar.app.download.DownloadState.FAILED ->
+            com.charles.scamradar.app.ui.screens.onboarding.DownloadState.FAILED
     }
 }
 

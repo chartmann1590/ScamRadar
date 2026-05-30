@@ -65,16 +65,29 @@ fun SettingsScreen(
     onOpenFamily: () -> Unit = {},
     onOpenTrustScore: () -> Unit = {},
     onOpenHelp: () -> Unit = {},
-    onReplayTutorial: () -> Unit = {}
+    onReplayTutorial: () -> Unit = {},
+    onOpenPremium: () -> Unit = {},
+    onOpenAchievements: () -> Unit = {},
+    onOpenShieldSettings: () -> Unit = {},
+    onOpenRecoveryHub: () -> Unit = {},
+    onOpenRemoteSetup: () -> Unit = {},
+    onOpenWeeklyDigest: () -> Unit = {},
+    onOpenVerify: () -> Unit = {},
 ) {
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
     val prefs = remember { UserPrefs(context) }
+    val entitlementRepo = remember { com.charles.scamradar.app.premium.EntitlementRepository(context) }
+    val entitlement by entitlementRepo.entitlement.collectAsState(initial = com.charles.scamradar.app.premium.EntitlementState.FREE)
     val wifiOnly by prefs.wifiOnlyDownload.collectAsState(initial = true)
     val careMode by prefs.careMode.collectAsState(initial = false)
     val careModeAutoShare by prefs.careModeAutoShare.collectAsState(initial = false)
     val careModeAutoShareThreshold by prefs.careModeAutoShareThreshold.collectAsState(initial = AUTO_SHARE_LIKELY_ONLY)
     val familyCode by prefs.familyCode.collectAsState(initial = "")
+    val shieldEnabled by prefs.shieldEnabled.collectAsState(initial = false)
+    val trendingAlerts by prefs.trendingAlertsEnabled.collectAsState(initial = true)
+    val regionOverride by prefs.regionOverride.collectAsState(initial = "")
+    val seniorEmergencyContact by prefs.seniorEmergencyContact.collectAsState(initial = "")
 
     var modelRefreshKey by remember { mutableIntStateOf(0) }
     var darkMode by remember { mutableStateOf(0) }
@@ -109,6 +122,59 @@ fun SettingsScreen(
             fontWeight = FontWeight.Bold,
             modifier = Modifier.padding(top = 16.dp, bottom = 16.dp)
         )
+
+        com.charles.scamradar.app.premium.PremiumCard(
+            entitlement = entitlement,
+            onClick = onOpenPremium,
+        )
+
+        Spacer(modifier = Modifier.height(12.dp))
+
+        var requestShieldNotifPerm by remember { mutableStateOf(false) }
+        com.charles.scamradar.app.shield.NotificationPermissionGate(
+            triggerRequest = requestShieldNotifPerm,
+            onConsumeTrigger = { requestShieldNotifPerm = false },
+        )
+
+        Card(
+            modifier = Modifier.fillMaxWidth(),
+            shape = MaterialTheme.shapes.medium
+        ) {
+            Column(modifier = Modifier.padding(16.dp)) {
+                Text("Live Shield", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+                Spacer(modifier = Modifier.height(8.dp))
+                Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(
+                            if (shieldEnabled) "On — watching message notifications"
+                            else "Off — turn on to scan inbound messages",
+                            style = MaterialTheme.typography.bodyLarge,
+                        )
+                        Text(
+                            "Ambient on-device scanning. Nothing is uploaded.",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
+                    }
+                    Switch(
+                        checked = shieldEnabled,
+                        onCheckedChange = { v ->
+                            coroutineScope.launch {
+                                prefs.setShieldEnabled(v)
+                                com.charles.scamradar.app.engagement.AchievementEngine.onShieldToggled(context, v)
+                            }
+                            if (v) requestShieldNotifPerm = true
+                        }
+                    )
+                }
+                Spacer(modifier = Modifier.height(8.dp))
+                OutlinedButton(onClick = onOpenShieldSettings, modifier = Modifier.fillMaxWidth()) {
+                    Text("Live Shield settings")
+                }
+            }
+        }
+
+        Spacer(modifier = Modifier.height(12.dp))
 
         Card(
             modifier = Modifier.fillMaxWidth(),
@@ -348,7 +414,7 @@ fun SettingsScreen(
                             style = MaterialTheme.typography.bodyLarge
                         )
                         Text(
-                            text = "Bigger text, simpler layout, no ads in results — for elderly relatives",
+                            text = "Bigger text, simpler layout, spoken verdicts, no ads — for elderly relatives",
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
@@ -356,8 +422,25 @@ fun SettingsScreen(
                     Switch(
                         checked = careMode,
                         onCheckedChange = { newValue ->
-                            coroutineScope.launch { prefs.setCareMode(newValue) }
+                            coroutineScope.launch {
+                                prefs.setCareMode(newValue)
+                                prefs.setSeniorMode(newValue)
+                            }
                         }
+                    )
+                }
+
+                if (careMode) {
+                    Spacer(modifier = Modifier.height(12.dp))
+                    androidx.compose.material3.OutlinedTextField(
+                        value = seniorEmergencyContact,
+                        onValueChange = { v ->
+                            coroutineScope.launch { prefs.setSeniorEmergencyContact(v) }
+                        },
+                        label = { Text("Emergency contact phone (\"Call my family\")") },
+                        placeholder = { Text("+15551234567") },
+                        modifier = Modifier.fillMaxWidth(),
+                        singleLine = true,
                     )
                 }
 
@@ -444,12 +527,146 @@ fun SettingsScreen(
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     }
-                    Text(
-                        text = "→",
-                        style = MaterialTheme.typography.titleMedium,
-                        color = MaterialTheme.colorScheme.primary
+                    Text("→", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.primary)
+                }
+                Spacer(modifier = Modifier.height(8.dp))
+                HorizontalDivider()
+                Spacer(modifier = Modifier.height(8.dp))
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable(onClick = onOpenAchievements)
+                        .padding(vertical = 4.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text("Achievements", style = MaterialTheme.typography.bodyLarge)
+                        Text(
+                            "All badges and progress",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
+                    Text("→", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.primary)
+                }
+                Spacer(modifier = Modifier.height(8.dp))
+                HorizontalDivider()
+                Spacer(modifier = Modifier.height(8.dp))
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable(onClick = onOpenRecoveryHub)
+                        .padding(vertical = 4.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text("Recovery hub", style = MaterialTheme.typography.bodyLarge)
+                        Text(
+                            "Resume any \"I've been scammed\" checklist",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
+                    Text("→", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.primary)
+                }
+                if (familyCode.isNotBlank()) {
+                    Spacer(modifier = Modifier.height(8.dp))
+                    HorizontalDivider()
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clickable(onClick = onOpenWeeklyDigest)
+                            .padding(vertical = 4.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Column(modifier = Modifier.weight(1f)) {
+                            Text("Family weekly digest", style = MaterialTheme.typography.bodyLarge)
+                            Text(
+                                "Monday summary for pod organizers",
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        }
+                        Text("→", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.primary)
+                    }
+                    Spacer(modifier = Modifier.height(8.dp))
+                    HorizontalDivider()
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clickable(onClick = onOpenRemoteSetup)
+                            .padding(vertical = 4.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Column(modifier = Modifier.weight(1f)) {
+                            Text("Set up someone's phone", style = MaterialTheme.typography.bodyLarge)
+                            Text(
+                                "QR code to apply Senior Mode + pod join",
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        }
+                        Text("→", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.primary)
+                    }
+                    Spacer(modifier = Modifier.height(8.dp))
+                    HorizontalDivider()
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clickable(onClick = onOpenVerify)
+                            .padding(vertical = 4.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Column(modifier = Modifier.weight(1f)) {
+                            Text("\"It's really me\" verification", style = MaterialTheme.typography.bodyLarge)
+                            Text(
+                                "Send a signed link to prove a message is from you",
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        }
+                        Text("→", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.primary)
+                    }
+                }
+            }
+        }
+
+        Spacer(modifier = Modifier.height(12.dp))
+
+        Card(modifier = Modifier.fillMaxWidth(), shape = MaterialTheme.shapes.medium) {
+            Column(modifier = Modifier.padding(16.dp)) {
+                Text("Trending alerts", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+                Spacer(modifier = Modifier.height(8.dp))
+                Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text("Push when a scam trends in your area", style = MaterialTheme.typography.bodyLarge)
+                        Text(
+                            "Max one alert per type per week. Region only — no PII.",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
+                    Switch(
+                        checked = trendingAlerts,
+                        onCheckedChange = { v ->
+                            coroutineScope.launch { prefs.setTrendingAlertsEnabled(v) }
+                        }
                     )
                 }
+                Spacer(modifier = Modifier.height(8.dp))
+                androidx.compose.material3.OutlinedTextField(
+                    value = regionOverride,
+                    onValueChange = { v ->
+                        coroutineScope.launch { prefs.setRegionOverride(v.take(2).uppercase()) }
+                    },
+                    label = { Text("Region override (2-letter, optional)") },
+                    placeholder = { Text("e.g. US, GB, AU") },
+                    modifier = Modifier.fillMaxWidth(),
+                    singleLine = true,
+                )
             }
         }
 

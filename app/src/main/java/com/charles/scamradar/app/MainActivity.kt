@@ -18,6 +18,7 @@ import com.charles.scamradar.app.data.datastore.UserPrefs
 import com.charles.scamradar.app.ui.navigation.PendingDeepLink
 import com.charles.scamradar.app.ui.navigation.ScamRadarNavHost
 import com.charles.scamradar.app.ui.theme.ScamRadarTheme
+import com.charles.scamradar.app.ui.theme.SeniorTheme
 
 class MainActivity : ComponentActivity() {
 
@@ -33,15 +34,23 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             val careMode by userPrefs.careMode.collectAsState(initial = false)
-            ScamRadarTheme(careMode = careMode) {
+
+            val content: @androidx.compose.runtime.Composable () -> Unit = {
                 var pending by remember { mutableStateOf(initialDeepLink) }
                 ScamRadarNavHost(
                     userPrefs = userPrefs,
                     filesDir = filesDir,
                     pendingDeepLink = pending,
                     onDeepLinkConsumed = { pending = null },
+                    seniorMode = careMode,
                     modifier = Modifier.fillMaxSize()
                 )
+            }
+
+            if (careMode) {
+                SeniorTheme { content() }
+            } else {
+                ScamRadarTheme(careMode = false) { content() }
             }
         }
     }
@@ -49,31 +58,47 @@ class MainActivity : ComponentActivity() {
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
         setIntent(intent)
-        // The next time NavHost recomposes from a setContent-level state change it will
-        // pick up the new pending deep link via state. For simplicity we restart by
-        // re-setting content via recreate when a deep link arrives via NEW_INTENT.
         val link = extractDeepLink(intent)
-        if (link != null) {
-            recreate()
-        }
+        if (link != null) recreate()
     }
 
     private fun extractDeepLink(intent: Intent?): PendingDeepLink? {
         intent ?: return null
         if (intent.action != Intent.ACTION_VIEW) return null
         val data: Uri = intent.data ?: return null
-        if (data.scheme != "scamradar") return null
 
-        return when (data.host) {
-            "result" -> {
-                val payload = data.getQueryParameter("payload")?.takeIf { it.isNotBlank() }
-                payload?.let { PendingDeepLink.OpenResult(it) }
+        if (data.scheme == "scamradar") {
+            return when (data.host) {
+                "result" -> {
+                    val payload = data.getQueryParameter("payload")?.takeIf { it.isNotBlank() }
+                    payload?.let { PendingDeepLink.OpenResult(it) }
+                }
+                "family" -> {
+                    val code = data.lastPathSegment.orEmpty().takeIf { it.isNotBlank() }
+                    code?.let { PendingDeepLink.JoinFamily(it) }
+                }
+                "remotesetup" -> {
+                    val payload = data.lastPathSegment.orEmpty().takeIf { it.isNotBlank() }
+                    payload?.let { PendingDeepLink.ApplyRemoteSetup(it) }
+                }
+                "shield" -> {
+                    val pkg = data.getQueryParameter("pkg") ?: data.lastPathSegment.orEmpty()
+                    if (pkg.isBlank()) null else PendingDeepLink.OpenShieldAlert(pkg)
+                }
+                "library" -> {
+                    val scamType = data.lastPathSegment.orEmpty().takeIf { it.isNotBlank() }
+                    scamType?.let { PendingDeepLink.OpenLibraryPattern(it) }
+                }
+                "digest" -> PendingDeepLink.OpenDigest
+                else -> null
             }
-            "family" -> {
-                val code = data.lastPathSegment.orEmpty().takeIf { it.isNotBlank() }
-                code?.let { PendingDeepLink.JoinFamily(it) }
-            }
-            else -> null
         }
+
+        if (data.scheme == "https" && data.host == "verify.scamradar.app") {
+            val payload = data.lastPathSegment.orEmpty().takeIf { it.isNotBlank() }
+            return payload?.let { PendingDeepLink.OpenVerifyResult(it) }
+        }
+
+        return null
     }
 }

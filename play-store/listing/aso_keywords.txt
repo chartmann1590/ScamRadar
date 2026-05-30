@@ -10,6 +10,8 @@ PRIMARY ASO KEYWORDS (use throughout listing + metadata)
 8. smishing protection
 9. deepfake voice detector
 10. scam shield
+11. live notification scam scanner
+12. senior phone safety
 
 LONG-TAIL (use in full description / blog / promo content)
 
@@ -23,3 +25,14 @@ LONG-TAIL (use in full description / blog / promo content)
 - screenshot scam checker
 - check email for phishing
 - IRS scam text checker
+- WhatsApp scam detector
+- Signal scam detector
+- scam recovery checklist
+- I have been scammed what to do
+- FTC scam report shortcut
+- IC3 scam report shortcut
+- voice clone protection family
+- elderly parent scam protection
+- family scam alerts shared
+- ambient scam detection notifications
+- on-device AI live shield

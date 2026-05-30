@@ -18,6 +18,8 @@ class ClassifierRouter(
         }
     }
 
+    fun liteOnly(): ScamClassifier = liteClassifier
+
     fun currentTier(): ClassifierTier {
         return if (ModelManager.isModelDownloaded(context)) {
             ClassifierTier.GEMMA

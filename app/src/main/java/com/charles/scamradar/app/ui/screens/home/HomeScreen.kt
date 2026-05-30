@@ -52,6 +52,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -96,6 +97,25 @@ fun HomeScreen(
     var showVoicemailChooser by remember { mutableStateOf(false) }
     val scrollState = rememberScrollState()
     val speechProcessor = remember { SpeechProcessor() }
+
+    val homePrefs = remember { com.charles.scamradar.app.data.datastore.UserPrefs(context) }
+    val shieldEnabled by homePrefs.shieldEnabled.collectAsState(initial = false)
+    val shieldOnboardingSeen by homePrefs.shieldOnboardingSeen.collectAsState(initial = true)
+    var requestPostNotifications by remember { mutableStateOf(false) }
+    val showShieldSheet = !shieldEnabled && !shieldOnboardingSeen
+
+    com.charles.scamradar.app.shield.NotificationPermissionGate(
+        triggerRequest = requestPostNotifications,
+        onConsumeTrigger = { requestPostNotifications = false },
+    )
+
+    if (showShieldSheet) {
+        com.charles.scamradar.app.shield.ShieldOnboardingSheet(
+            coroutineScope = coroutineScope,
+            onDismiss = { /* state-driven; nothing extra */ },
+            onRequestPostNotifications = { requestPostNotifications = true },
+        )
+    }
     val audioPicker = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
     ) { uri ->

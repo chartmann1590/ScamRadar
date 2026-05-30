@@ -76,4 +76,76 @@
     <string name="widget_description">Quick scan and recent verdicts</string>
     <string name="qs_tile_label">ScamRadar</string>
     <string name="qs_tile_subtitle">Tap to scan a message</string>
+
+    <string name="perm_notif_listener_title">Live Shield notification access</string>
+    <string name="perm_notif_listener_rationale">ScamRadar needs notification access to scan incoming message previews on your phone. Nothing is uploaded — every check runs locally with the same engine you already use. You can choose which apps Shield watches, pause it any time, or turn it off entirely.</string>
+    <string name="perm_clipboard_title">Clipboard scan chip</string>
+    <string name="perm_clipboard_rationale">When you copy a link or phone number, ScamRadar can offer a one-tap check. Android may show a clipboard message each time we read it — that\'s a system safety feature. You can disable this at any time.</string>
+    <string name="perm_post_notifications_rationale">ScamRadar uses notifications to surface scam warnings, trending alerts, and family digests. You can disable any category in Settings.</string>
+    <string name="perm_microphone_rationale">Used only for the voicemail and AI-voice scam checks you initiate. Audio never leaves your phone.</string>
+
+    <string name="premium_title">ScamRadar Premium</string>
+    <string name="premium_subtitle">Recovery PDFs, evidence export, unlimited Shield apps, ad-free</string>
+    <string name="premium_family_subtitle">Covers up to 8 family pod members</string>
+    <string name="premium_active">Premium active</string>
+    <string name="premium_locked_badge">Premium</string>
+
+    <string name="shield_title">Live Shield</string>
+    <string name="shield_subtitle">Ambient on-device scanning of incoming message notifications</string>
+    <string name="shield_master_toggle">Live Shield</string>
+    <string name="shield_enabled_summary">Watching message notifications on-device</string>
+    <string name="shield_disabled_summary">Off — turn on to scan inbound messages automatically</string>
+    <string name="shield_grant_access">Grant notification access</string>
+    <string name="shield_per_app">Choose which apps to watch</string>
+    <string name="shield_sensitivity">Detection sensitivity</string>
+    <string name="shield_pause_1h">Pause for 1 hour</string>
+    <string name="shield_pause_today">Pause until tomorrow</string>
+    <string name="shield_alert_title">ScamRadar caught something</string>
+    <string name="shield_alert_review">Review</string>
+
+    <string name="clipboard_chip_title">Clipboard chip</string>
+    <string name="clipboard_chip_subtitle">Offer to check copied links, numbers, or money phrases</string>
+    <string name="clipboard_chip_action">Check with ScamRadar</string>
+
+    <string name="senior_mode_title">Senior Mode</string>
+    <string name="senior_mode_subtitle">Larger text, simplified flow, voice readout of verdicts</string>
+    <string name="senior_call_family">Call my family</string>
+    <string name="senior_paste_check">Paste &amp; check a message</string>
+
+    <string name="recovery_button">I already replied / clicked / paid</string>
+    <string name="recovery_title">Recovery checklist</string>
+    <string name="recovery_export_pdf">Export incident PDF</string>
+    <string name="recovery_export_pdf_premium">Export PDF (Premium)</string>
+    <string name="recovery_what_happened">What happened (optional)</string>
+
+    <string name="authority_report_title">Report to authorities</string>
+    <string name="authority_review_first">ScamRadar prepared this for you — review before sending</string>
+
+    <string name="evidence_export">Export evidence (.zip)</string>
+    <string name="evidence_export_premium">Export evidence (Premium)</string>
+
+    <string name="achievements_title">Achievements</string>
+    <string name="achievements_unlocked">%1$d / %2$d unlocked</string>
+    <string name="streak_card_title">Your shield</string>
+    <string name="streak_days">%d-day streak</string>
+
+    <string name="trending_alert_title">Trending in your area</string>
+
+    <string name="family_digest_title">Family Weekly Digest</string>
+    <string name="family_digest_subtitle">Mondays at 9am — quick summary of your pod\'s week</string>
+
+    <string name="verify_challenge_title">Confirm it\'s me</string>
+    <string name="verify_challenge_send">Send a verified link</string>
+    <string name="verify_result_verified">Verified ✓ from %s</string>
+    <string name="verify_result_failed">This link is not from your pod</string>
+
+    <string name="remote_setup_title">Set up someone\'s phone</string>
+    <string name="remote_setup_subtitle">Hand a relative this QR — Senior Mode + pod join applied in one tap</string>
+    <string name="remote_setup_apply_title">Apply settings from your family?</string>
+
+    <string name="url_guard_title">Hold on — checking that link</string>
+    <string name="url_guard_open_anyway">Open anyway</string>
+    <string name="url_guard_cancel">Don\'t open</string>
+
+    <string name="warn_family_friends">Warn family or friends</string>
 </resources>

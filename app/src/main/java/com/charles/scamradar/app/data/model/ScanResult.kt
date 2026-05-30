@@ -30,4 +30,4 @@ data class ScanResult(
     val urlMetadata: UrlScanMetadata? = null
 )
 enum class ClassifierTier { STUB, LITE, GEMMA }
-enum class ScanMode { TEXT, OCR, VOICE, URL }
+enum class ScanMode { TEXT, OCR, VOICE, URL, SHIELD, CLIPBOARD }

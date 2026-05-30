@@ -47,6 +47,20 @@ AI-generated scams surged **1,210% in 2025**. Deepfake voice phishing is up **1,
 
 ## Features
 
+### Live Shield — Ambient Protection (NEW)
+
+**Notification Listener Auto-Scan**
+ScamRadar reads incoming message previews from Google Messages, WhatsApp, Signal, Telegram, Gmail, Outlook, Instagram, Messenger, Discord, and Zoom — on-device — and surfaces a discreet alert when it catches a scam. Nothing is uploaded. Off by default; you choose which apps it watches and can pause for an hour or a day with one tap.
+
+**Hybrid AI + Lite Classifier**
+Stage 1: fast pattern matcher on every notification (<50ms). Stage 2: if the Lite engine isn't confidently safe, the full Gemma 4 AI takes a second look. Most safe notifications never touch the model — battery and RAM stay healthy.
+
+**Smart Clipboard Chip**
+When you copy a link, phone number, or money phrase like "Zelle" or "gift card", ScamRadar offers a one-tap "Check this?" heads-up. Foreground-only and opt-in.
+
+**URL Pre-Click Guard**
+Register ScamRadar as a link option. Before opening a suspicious URL, ScamRadar runs the classifier and shows a "Safe", "Suspicious", or "Likely scam" verdict — then lets you proceed or cancel.
+
 ### Scanning
 
 **Text Scan**
@@ -63,6 +77,20 @@ Enter or paste a suspicious URL. A hardened off-screen WebView captures the full
 
 **Link Microscope**
 Every scanned URL gets a diagnostic card showing the domain anatomy, redirect chain, and risk signals — so you can see *why* a link is dangerous before you ever tap it.
+
+### Recovery & Aftermath (NEW)
+
+**"I've Been Scammed" Recovery Wizard**
+Triggered from any Likely Scam result via a single "I already replied / clicked / paid" button. Stepped, scam-type-specific checklist (Phishing, Romance, IRS, Crypto, Family Emergency, Delivery, Job Offer, Tech Support, Lottery, Investment) walks you through freezing cards, changing passwords, contacting your carrier, filing authority reports, and preserving evidence. Resumable across sessions.
+
+**Incident Report PDF**
+Export the full recovery checklist as a one-page PDF — verdict, redacted excerpt, red flags, completed steps, your notes. Designed for bank disputes, police reports, and insurance claims. *(Premium)*
+
+**One-Tap Authority Reporting Hub**
+Pre-filled deep links to FTC ReportFraud, IC3, BBB Scam Tracker, Action Fraud (UK), ACCC Scamwatch (AU), CAFC (Canada), Cybercrime.gov.in (India), and the 7726 carrier-spam short code — auto-selected for your region and scam type.
+
+**Evidence Locker**
+One-tap export of a ZIP bundle: original message, redacted version, classifier verdict JSON, screenshots, and a markdown summary. Useful for bank disputes and law enforcement. *(Premium)*
 
 ### Quick Access
 
@@ -84,7 +112,16 @@ A daily feed of trending scam alerts, new patterns, and safety tips — powered 
 Test your scam-detection skills with a daily interactive quiz. Build a streak and compete with yourself.
 
 **Trust Score & Achievements**
-Track your scanning habits with local-only stats: total scans, streaks, scam types encountered, and achievement badges.
+Track your scanning habits with local-only stats: total scans, streaks, scam types encountered, and 15 unlockable achievement badges (First Catch, 7-Day Streak, Family Saver, Shield Activated, Recovery Hero, and more).
+
+**Today Widget (NEW)**
+A Material You Glance widget shows today's brief headline plus the daily quiz — tap an answer right from the widget without opening the app.
+
+**Trending Scam Push Alerts (NEW)**
+When a scam type spikes in your region (country-level only, never finer), ScamRadar pushes a one-line alert: "FedEx delivery scam trending in your area — here's what to watch for." Throttled to one alert per scam type per week.
+
+**Warn Family & Friends**
+After a Likely Scam verdict, a one-tap "Warn family or friends" CTA generates a share card with the verdict and top red flags — perfect for forwarding via SMS or WhatsApp to people who might receive the same scam.
 
 ### Community
 
@@ -96,8 +133,17 @@ Report scams anonymously to help others. Browse a trending feed of the latest sc
 **Family Sync**
 Connect with family members using a simple family code or QR code. When someone in your family group scans a scam, everyone gets notified.
 
-**Family Care Mode**
-A simplified, larger-text interface designed for elderly users. Optionally auto-share scam verdicts with the family group so you can keep an eye out for your loved ones.
+**Care Mode — Senior-Friendly UX (EXPANDED)**
+One toggle unifies the simpler-layout, larger-text, ad-free, family-auto-share elder UX. When on: 24pt+ body fonts, a single "Paste & Read" home screen, full-screen color-coded verdicts ("STOP", "BE CAREFUL", "LOOKS SAFE"), Text-to-Speech readout of every verdict ("Stop. This looks like a scam. Do not reply."), and a large "Call my family" emergency button wired to the contact you set during setup.
+
+**Trusted Contact Verification — Anti-Deepfake (NEW)**
+Solves voice-cloning impersonation. Any pod member can tap "It's really me" → ScamRadar generates a cryptographically signed link (HMAC-SHA256, keys stored in Android Keystore) → forward via SMS/WhatsApp. When the recipient opens it, ScamRadar validates against the pod's verifier roster and shows "✓ Verified from MOM" or rejects the link if tampered. 72-hour expiry.
+
+**Family Weekly Digest (NEW)**
+Pod organizers receive a Monday-morning push: "Mom ran 14 scans this week, 2 likely scams caught (USPS, IRS), 1 suspicious link blocked. Streak: 12 days." Aggregated from anonymous pod shares — no message content ever leaves devices. *(Family tier)*
+
+**Remote Setup via QR (NEW)**
+Help a relative set up their phone over a phone call. You generate a QR code with their phone name, Senior Mode on, Care Mode on, your number as emergency contact, and the pod join — they scan it, tap Confirm, done. Removes the #1 setup friction.
 
 ### Sharing & Learning
 
@@ -152,11 +198,42 @@ A swipeable, illustrated onboarding flow that walks new users through how ScamRa
 | Performance | Firebase Performance Monitoring |
 | App Integrity | Firebase App Check (Play Integrity) |
 | Ads | Google AdMob |
+| Notification Listener | Android `NotificationListenerService` (Play "core functionality: scam detection") |
+| Push Messaging | Firebase Cloud Messaging (topic-based; country code only, no PII) |
+| Billing | Google Play Billing v7 (Premium / Family tiers) |
+| TTS | Android `TextToSpeech` (on-device system voices) |
+| Crypto for Verification | HMAC-SHA256 in Android Keystore (Trusted Contact Verification) |
+| PDF Export | Android `PdfDocument` (Incident Report PDF) |
 | Backend | **None for scanning** — your messages never leave the device |
 
 ### ScamRadar Lite
 
 On devices with less than 4 GB RAM, or before the AI model finishes downloading, ScamRadar runs in **Lite mode** — a fast heuristic classifier that uses regex, keyword matching, and URL reputation against 5,000+ known scam patterns. Still 100% private, still free, no download required.
+
+### Two-Stage Classification (Live Shield)
+
+Live Shield uses a hybrid pipeline so the AI doesn't burn battery on safe notifications:
+
+1. **Stage 1 — Lite (every notification, <50ms)** — pattern matcher returns SAFE/SUSPICIOUS/LIKELY_SCAM
+2. **Stage 2 — Gemma 4 AI (only if Lite isn't confidently safe)** — runs the full on-device LLM for a second opinion
+
+The verdict stored in History and posted as an alert is the *final* verdict — Gemma's if it ran, Lite's if Gemma was skipped or unavailable. Each entry's `Classifier Tier` badge (LITE / GEMMA) tells you which engine produced it.
+
+### Premium & Family Tiers
+
+A small set of follow-up features unlock with a subscription. The core scanner is always free.
+
+| Feature | Free | Premium | Family |
+|---|---|---|---|
+| All scanning modes (text, OCR, voice, URL, Live Shield) | ✅ | ✅ | ✅ |
+| Recovery checklist + Authority Reporting Hub | ✅ | ✅ | ✅ |
+| Incident Report PDF export | — | ✅ | ✅ |
+| Evidence Locker ZIP export | — | ✅ | ✅ |
+| Unlimited per-app Shield customization | 3 apps | unlimited | unlimited |
+| Ad-free | — | ✅ | ✅ |
+| Weekly Family Digest | — | — | ✅ |
+| Trusted Contact Verification | — | — | ✅ |
+| Family pod members covered | up to 8 (no premium) | individual only | all pod members covered by organizer |
 
 ---
 

@@ -1,6 +1,6 @@
 Paste it. Check it. Don't get scammed.
 
-ScamRadar is a free, on-device AI that tells you in 3 seconds whether a suspicious text message, email, or voicemail is a scam — and explains exactly why.
+ScamRadar is a free, on-device AI that tells you in 3 seconds whether a suspicious text message, email, voicemail, or URL is a scam — and explains exactly why.
 
 AI-generated scams jumped 1,210% in 2025. Deepfake voice phishing is up 1,633%. Humans now spot AI deepfakes less than 30% of the time. You deserve a second opinion that's faster than you.
 
@@ -8,7 +8,7 @@ WHY SCAMRADAR
 
 • 100% on-device — your messages never leave your phone
 • No account, no sign-up, no email required
-• Free forever — the scanner is not paywalled
+• Free forever — the core scanner is never paywalled
 • Built for the new wave of AI scams, not retrofitted spam filters
 • Explains the red flags in plain English
 
@@ -17,47 +17,88 @@ WHAT YOU CAN DO
 ✓ Text Scan
 Paste any suspicious message. Get an instant verdict — Looks Safe, Suspicious, or Likely Scam — with a confidence score and the red-flag phrases highlighted.
 
+✓ Live Shield (NEW)
+Turn on ambient on-device scanning of incoming notifications from Messages, WhatsApp, Signal, Telegram, Gmail, Outlook, Instagram, Messenger and more. ScamRadar surfaces a discreet alert the moment a scam arrives — without you pasting anything. A fast Lite filter runs on every notification; the full Gemma AI takes a second look only when the Lite engine isn't confidently safe. Off by default; you pick which apps to watch.
+
 ✓ Email Screenshot Scan
 Share a screenshot of a sketchy email. Built-in OCR pulls out the text and runs it through the same scam classifier.
 
 ✓ Voicemail Scan
 Import or record a voicemail. On-device speech recognition transcribes the audio and looks for AI voice-cloning indicators.
 
+✓ URL Scanner + Pre-Click Guard (NEW)
+Enter a suspicious URL and ScamRadar captures the page in a hardened off-screen WebView, runs OCR + Safe Browsing, and classifies it on-device. Tap an unfamiliar link from anywhere on your phone and ScamRadar can intercept it first, showing the verdict before your browser opens.
+
+✓ Clipboard Chip (NEW)
+Copy a sketchy link, phone number, or money phrase like "Zelle" or "gift card" and ScamRadar offers a one-tap "Check this?" heads-up.
+
+✓ "I've Been Scammed" Recovery Wizard (NEW)
+If you already replied, clicked, or paid — ScamRadar walks you through a stepped recovery checklist scoped to the scam type (Phishing, Romance, IRS, Crypto, Family Emergency, Delivery, Job Offer, Tech Support, Lottery, Investment). Resumable across sessions.
+
+✓ One-Tap Authority Reports (NEW)
+Pre-filled deep links to FTC, IC3, BBB, Action Fraud (UK), Scamwatch (AU), CAFC (Canada), Cybercrime.gov.in, and the 7726 carrier-spam short code — auto-selected for your region and scam type.
+
+✓ Incident Report PDF + Evidence Locker (Premium, NEW)
+Export a one-page Incident Report PDF or a complete evidence ZIP — designed for bank disputes, police reports, and insurance claims.
+
+✓ Care Mode — Senior-Friendly UX (EXPANDED)
+One toggle unlocks larger text (24pt+), single-button flow, spoken Text-to-Speech verdicts ("Stop. This looks like a scam. Do not reply."), and a "Call my family" emergency button wired to the contact you set during setup.
+
+✓ Trusted Contact Verification (Family tier, NEW)
+Solves voice-cloning impersonation. Any family pod member can send a cryptographically signed "It's really me" link. When you tap it, ScamRadar verifies the signature against your pod and shows "✓ Verified from MOM" — or rejects the link if tampered.
+
+✓ Remote Setup via QR (NEW)
+Help a relative set up their phone over a call. Generate a QR with their pod join, Care Mode on, and your number as emergency contact — they scan, tap Confirm, done.
+
+✓ Family Weekly Digest (Family tier, NEW)
+Pod organizers get a Monday-morning push: "Mom ran 14 scans this week, 2 likely scams caught (USPS, IRS). Streak: 12 days." Aggregated anonymously — no message content ever leaves devices.
+
+✓ Trending Scam Push Alerts (NEW)
+When a scam type spikes in your country, ScamRadar pushes a one-line alert: "FedEx delivery scam trending in your area." Region-only (no PII), throttled to one alert per type per week.
+
+✓ Achievements + Streak (NEW)
+15 unlockable badges — First Catch, 7-Day Streak, Family Saver, Shield Activated, Recovery Hero, and more.
+
+✓ Today Widget (NEW)
+A Material You Glance widget showing today's brief headline and the daily quiz — tap an answer right from the home screen.
+
 ✓ Scam Library
-Browse the 12 most common scam patterns of 2026 — phishing, USPS/FedEx smishing, IRS, AI voice cloning, romance, crypto investment, tech support, fake job offers, and more — with real annotated examples.
+Browse the 12 most common scam patterns of 2026 — phishing, USPS/FedEx smishing, IRS, AI voice cloning, romance, crypto investment, tech support, fake job offers, and more.
 
 ✓ Scan History
-Your last 50 scans, stored only on your device. Search, filter, re-scan. Delete anytime. Never synced anywhere.
+Your last 50 scans, stored only on your device. Search, filter by verdict, filter by Shield-caught items, re-scan, delete anytime. Never synced anywhere.
 
-✓ Share Verdict Card
-One-tap export of a verdict card as an image — perfect for warning family, friends, or your group chat.
+✓ Warn Family or Friends
+After a Likely Scam verdict, a one-tap "Warn family or friends" CTA generates a share card with the verdict and top red flags — perfect for forwarding via SMS, WhatsApp, or group chat.
 
 HOW IT WORKS
 
-1. Paste a suspicious text, share a screenshot, or import a voicemail.
-2. On-device AI (Gemma) analyzes the content privately, right on your phone.
+1. Paste a suspicious text, share a screenshot, import a voicemail, OR turn on Live Shield to catch scams as they arrive.
+2. On-device AI (Gemma 4) analyzes the content privately, right on your phone.
 3. Get a clear verdict, highlighted red flags, and recommended next steps.
 
 Your messages never leave your phone. We literally cannot read what you paste, because we never receive it.
 
 LITE MODE
 
-On devices with less than 4 GB of RAM, or before the AI model finishes downloading, ScamRadar runs in Lite mode — a fast heuristic classifier that checks regex, keyword matches, and URL reputation against 5,000+ known scam patterns. Still 100% private, still free, no download required.
+On devices with less than 4 GB of RAM, or before the AI model finishes downloading, ScamRadar runs in Lite mode — a fast heuristic classifier that checks regex, keyword matches, and URL reputation against 5,000+ known scam patterns. Live Shield runs Lite mode on every notification as a fast pre-filter even when the full AI is available. Still 100% private, still free, no download required.
 
 WHO IT'S FOR
 
 • Anyone who gets weird texts and wants a second opinion
-• Adult children helping older parents stay safe online
+• Adult children helping older parents stay safe online — Care Mode + Remote Setup + Family Pods are built for you
 • Small business owners who receive fake invoice emails
 • Anyone whose phone is buzzing with "USPS / Amazon / IRS / your bank" texts
 
 PRIVACY-FIRST
 
-• No cloud processing — all analysis happens on your device
+• No cloud processing — all scam analysis happens on your device
+• Live Shield reads notification previews on-device only — never uploaded
 • No account, no email, no personal info collected
 • No message logging — scan content is never sent anywhere
 • Local history only — stored on-device, deletable, never synced
 • Anonymous analytics only (button taps, no message content)
+• Trusted Contact Verification uses HMAC keys stored in Android Keystore (we never see them)
 
 Read the full Privacy Policy at the link below.
 
@@ -65,18 +106,20 @@ PERMISSIONS
 
 ScamRadar asks for the minimum permissions needed:
 
+• Notifications — to post scam alerts when Live Shield catches something
+• Notification access — only if you turn on Live Shield, so we can scan incoming previews
 • Microphone — only when you tap "Record voicemail"
 • Storage / Photos — only when you choose a screenshot or audio file
-• Internet — only for downloading the optional AI model and (if enabled) Firebase Analytics
+• Internet — only for downloading the optional AI model and the Firebase services that power community trending, family pods, and digest aggregation
 
-We do not request SMS, contacts, call log, or accessibility permissions. ScamRadar does not auto-scan your messages. You always paste in, then we check.
+We do not request SMS, contacts, call log, or accessibility permissions.
 
-OPEN, TRANSPARENT, AND FREE
+FREE FOREVER + OPTIONAL PREMIUM
 
-ScamRadar is built for the people. The scanner is free forever. There is no paid tier you have to unlock to get accurate detection. If ScamRadar has helped you or someone you care about, you can support development with a coffee — but you never have to.
+The core scanner — text, screenshot, voicemail, URL, Live Shield, Scam Library, Care Mode — is free forever. A small set of follow-up features unlock with a Premium subscription (Incident Report PDF, Evidence Locker, unlimited Shield per-app coverage, no ads). A Family subscription extends Premium to up to 8 pod members and unlocks the Weekly Digest and Trusted Contact Verification.
 
 Don't get scammed. Get ScamRadar.
 
 — — —
 
-Tags: scam detector, phishing checker, AI text checker, fake message detector, deepfake voice detector, scam text checker, anti-phishing, scam shield, fraud detection, smishing
+Tags: scam detector, phishing checker, AI text checker, fake message detector, deepfake voice detector, scam text checker, anti-phishing, scam shield, fraud detection, smishing, live notification scam scanner, family scam protection, senior phone safety, recovery checklist

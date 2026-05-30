@@ -79,6 +79,9 @@ import com.charles.scamradar.app.data.model.Verdict
 import com.charles.scamradar.app.share.buildShareText
 import com.charles.scamradar.app.share.shareCardImage
 import com.charles.scamradar.app.share.shareText
+import com.charles.scamradar.app.share.warnFriends
+import com.charles.scamradar.app.ui.navigation.NavArgCodec
+import com.google.gson.Gson
 import com.charles.scamradar.app.ui.screens.result.sharecard.ShareCardSelector
 import com.charles.scamradar.app.ui.screens.result.sharecard.ShareCardTheme
 import kotlinx.coroutines.launch
@@ -94,7 +97,9 @@ fun ResultScreen(
     onScanAgain: () -> Unit,
     onBack: () -> Unit,
     userPrefs: UserPrefs? = null,
-    careMode: Boolean = false
+    careMode: Boolean = false,
+    onOpenRecovery: ((String) -> Unit)? = null,
+    onOpenAuthorityReport: ((String) -> Unit)? = null,
 ) {
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
@@ -192,6 +197,20 @@ fun ResultScreen(
                                 title = "AI-generated indicators",
                                 items = scanResult.aiGeneratedIndicators
                             )
+                        }
+                        if (scanResult.verdict == Verdict.LIKELY_SCAM) {
+                            WarnFriendsCard(scanResult) { warnFriends(context, scanResult) }
+                            if (onOpenRecovery != null) {
+                                RecoveryEntryCard {
+                                    val encoded = NavArgCodec.encode(Gson().toJson(scanResult))
+                                    onOpenRecovery(encoded)
+                                }
+                            }
+                            if (onOpenAuthorityReport != null) {
+                                AuthorityEntryCard {
+                                    onOpenAuthorityReport(scanResult.scamType.name)
+                                }
+                            }
                         }
                         ReportAnonymouslyButton(scanResult)
                         if (!careMode && userPrefs != null) ShareWithFamilyButton(scanResult, userPrefs)
@@ -730,5 +749,97 @@ private fun verdictColor(verdict: Verdict): Color {
         Verdict.LIKELY_SCAM -> Danger
         Verdict.SUSPICIOUS -> Warning
         Verdict.SAFE -> Safe
+    }
+}
+
+@Composable
+private fun WarnFriendsCard(scanResult: ScanResult, onWarn: () -> Unit) {
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        shape = RoundedCornerShape(20.dp),
+        colors = CardDefaults.cardColors(containerColor = Danger.copy(alpha = 0.10f))
+    ) {
+        Column(modifier = Modifier.padding(20.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
+            Text(
+                text = "Warn someone you care about",
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.onSurface
+            )
+            Text(
+                text = "Share a 1-line summary with the red flags. Your message details are never included.",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+            Button(
+                onClick = {
+                    com.charles.scamradar.app.analytics.Analytics.shareCardExported(scanResult.verdict, "warn_friends")
+                    onWarn()
+                },
+                modifier = Modifier.fillMaxWidth(),
+                colors = ButtonDefaults.buttonColors(containerColor = Danger),
+                shape = RoundedCornerShape(16.dp)
+            ) {
+                Icon(Icons.Default.Share, contentDescription = null, modifier = Modifier.size(18.dp))
+                Spacer(modifier = Modifier.width(8.dp))
+                Text("Warn family or friends")
+            }
+        }
+    }
+}
+
+@Composable
+private fun RecoveryEntryCard(onOpen: () -> Unit) {
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        shape = RoundedCornerShape(20.dp),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.errorContainer)
+    ) {
+        Column(modifier = Modifier.padding(20.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
+            Text(
+                text = "I already replied / clicked / paid",
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.onErrorContainer
+            )
+            Text(
+                text = "Stepped checklist: freeze cards, change passwords, contact your carrier, file an authority report, preserve evidence.",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onErrorContainer
+            )
+            Button(
+                onClick = onOpen,
+                modifier = Modifier.fillMaxWidth(),
+                colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.error),
+                shape = RoundedCornerShape(16.dp)
+            ) { Text("Start recovery") }
+        }
+    }
+}
+
+@Composable
+private fun AuthorityEntryCard(onOpen: () -> Unit) {
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        shape = RoundedCornerShape(20.dp),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHigh)
+    ) {
+        Column(modifier = Modifier.padding(20.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
+            Text(
+                text = "Report to authorities",
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Bold
+            )
+            Text(
+                text = "ScamRadar prepared a one-tap report for FTC, carrier spam (7726), or your country's fraud agency.",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+            OutlinedButton(
+                onClick = onOpen,
+                modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(16.dp)
+            ) { Text("Open reporting hub") }
+        }
     }
 }

@@ -29,4 +29,40 @@ sealed class Screen(val route: String) {
         fun createRoute(code: String = ""): String = "family/join?code=$code"
     }
     data object FamilyActivity : Screen("family/activity")
+
+    data object Premium : Screen("premium")
+
+    data object Achievements : Screen("achievements")
+
+    data object ShieldSettings : Screen("shield/settings")
+    data object ShieldAlert : Screen("shield/alert/{payload}") {
+        fun createRoute(encodedPayload: String): String = "shield/alert/$encodedPayload"
+    }
+
+    data object RecoveryWizard : Screen("recovery/wizard/{scanResultJson}") {
+        fun createRoute(encodedScanJson: String): String = "recovery/wizard/$encodedScanJson"
+    }
+    data object RecoveryHub : Screen("recovery/hub")
+    data object AuthorityReport : Screen("recovery/authorities/{scamType}/{country}") {
+        fun createRoute(scamType: String, country: String): String =
+            "recovery/authorities/$scamType/$country"
+    }
+
+    data object SeniorHome : Screen("senior/home")
+    data object SeniorResult : Screen("senior/result/{scanResultJson}") {
+        fun createRoute(encodedJson: String): String = "senior/result/$encodedJson"
+    }
+    data object SeniorHistory : Screen("senior/history")
+
+    data object VerifyChallenge : Screen("family/verify/challenge")
+    data object VerifyResult : Screen("family/verify/result/{payload}") {
+        fun createRoute(payload: String): String = "family/verify/result/$payload"
+    }
+
+    data object RemoteSetupCreate : Screen("family/remotesetup/create")
+    data object RemoteSetupApply : Screen("family/remotesetup/apply/{payload}") {
+        fun createRoute(payload: String): String = "family/remotesetup/apply/$payload"
+    }
+
+    data object WeeklyDigest : Screen("family/digest")
 }

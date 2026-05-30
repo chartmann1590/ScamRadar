@@ -24,6 +24,7 @@ import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.History
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Shield
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -100,6 +101,7 @@ fun HistoryScreen(
             "Scams" -> historyItems.filter { it.verdict == Verdict.LIKELY_SCAM.name }
             "Suspicious" -> historyItems.filter { it.verdict == Verdict.SUSPICIOUS.name }
             "Safe" -> historyItems.filter { it.verdict == Verdict.SAFE.name }
+            "Shield" -> historyItems.filter { it.scanMode == ScanMode.SHIELD.name }
             else -> historyItems.toList()
         }
         val query = searchQuery.trim()
@@ -176,7 +178,7 @@ fun HistoryScreen(
                 .fillMaxWidth()
                 .padding(bottom = 12.dp)
         ) {
-            listOf("All", "Scams", "Suspicious", "Safe").forEach { filter ->
+            listOf("All", "Scams", "Suspicious", "Safe", "Shield").forEach { filter ->
                 FilterChip(
                     selected = selectedFilter == filter,
                     onClick = { selectedFilter = filter },
@@ -298,6 +300,7 @@ private fun HistoryItemCard(
 ) {
     val urlMeta = remember(item.id, item.urlMetadataJson) { item.urlMetadata() }
     val isUrlScan = item.scanMode == ScanMode.URL.name && urlMeta != null
+    val isShieldScan = item.scanMode == ScanMode.SHIELD.name
     val preview = if (isUrlScan && urlMeta != null) urlMeta.finalUrl
         else item.originalMessage.trim().ifEmpty { "(empty message)" }
     val scamTypeLabel = item.scamType
@@ -334,6 +337,32 @@ private fun HistoryItemCard(
                         fontWeight = FontWeight.Bold,
                         color = verdictColors[item.verdict] ?: Color.Gray
                     )
+                }
+
+                if (isShieldScan) {
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Box(
+                        modifier = Modifier
+                            .clip(RoundedCornerShape(8.dp))
+                            .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.15f))
+                            .padding(horizontal = 8.dp, vertical = 4.dp)
+                    ) {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Icon(
+                                Icons.Default.Shield,
+                                contentDescription = null,
+                                tint = MaterialTheme.colorScheme.primary,
+                                modifier = Modifier.size(12.dp),
+                            )
+                            Spacer(modifier = Modifier.width(4.dp))
+                            Text(
+                                text = "Shield",
+                                style = MaterialTheme.typography.labelSmall,
+                                fontWeight = FontWeight.Bold,
+                                color = MaterialTheme.colorScheme.primary,
+                            )
+                        }
+                    }
                 }
 
                 if (scamTypeLabel != null) {

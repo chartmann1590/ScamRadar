@@ -1,0 +1,29 @@
+name: Family weekly digest
+
+on:
+  schedule:
+    - cron: '0 9 * * 1' # every Monday 09:00 UTC
+  workflow_dispatch:
+
+jobs:
+  digest:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Install deps
+        working-directory: scripts
+        run: npm install firebase-admin
+
+      - name: Run digest aggregator
+        working-directory: scripts
+        env:
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+          FCM_BROADCAST: '1'
+        run: node update-digest.mjs
