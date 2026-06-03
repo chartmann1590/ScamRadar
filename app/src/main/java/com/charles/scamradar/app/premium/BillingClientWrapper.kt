@@ -93,9 +93,9 @@ class BillingClientWrapper(
             .setProductList(productList)
             .build()
         val deferred = suspendCancellableCoroutine<List<ProductDetails>> { cont ->
-            client.queryProductDetailsAsync(params) { result, list ->
+            client.queryProductDetailsAsync(params) { result, productDetailsResult ->
                 if (result.responseCode == BillingClient.BillingResponseCode.OK) {
-                    cont.resume(list)
+                    cont.resume(productDetailsResult.productDetailsList)
                 } else {
                     cont.resume(emptyList())
                 }
