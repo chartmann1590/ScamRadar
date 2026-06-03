@@ -3,6 +3,7 @@ package com.charles.scamradar.app.messaging
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -60,6 +61,8 @@ class ScamRadarMessagingService : FirebaseMessagingService() {
 
         val intent = Intent(this, MainActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+            setPackage(packageName)
+            component = ComponentName(this@ScamRadarMessagingService, MainActivity::class.java)
             if (deepLink != null) data = Uri.parse(deepLink)
         }
         val pending = PendingIntent.getActivity(
