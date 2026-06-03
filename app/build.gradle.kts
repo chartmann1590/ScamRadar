@@ -196,7 +196,7 @@ dependencies {
 
     implementation("androidx.webkit:webkit:1.12.1")
 
-    implementation("com.google.zxing:core:3.5.3")
+    implementation("com.google.zxing:core:3.5.4")
     implementation("com.journeyapps:zxing-android-embedded:4.3.0")
 
     debugImplementation("androidx.compose.ui:ui-tooling")
