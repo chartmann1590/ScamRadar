@@ -53,7 +53,9 @@ class ScamRadarTileService : TileService() {
     private fun refreshTile() {
         val tile = qsTile ?: return
         tile.label = getString(R.string.qs_tile_label)
-        tile.subtitle = getString(R.string.qs_tile_subtitle)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            tile.subtitle = getString(R.string.qs_tile_subtitle)
+        }
         tile.icon = Icon.createWithResource(this, R.drawable.ic_tile_shield)
         tile.state = Tile.STATE_INACTIVE
         tile.updateTile()
