@@ -3,7 +3,6 @@ package com.charles.scamradar.app.shield
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
-import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -13,6 +12,7 @@ import com.charles.scamradar.app.MainActivity
 import com.charles.scamradar.app.data.model.ScanResult
 import com.charles.scamradar.app.data.model.Verdict
 import com.charles.scamradar.app.messaging.ScamRadarMessagingService
+import com.charles.scamradar.app.security.ExplicitIntents
 import com.google.gson.Gson
 
 object ShieldAlertNotifier {
@@ -41,10 +41,8 @@ object ShieldAlertNotifier {
         // not a placeholder. Same wire format QuickVerdictActivity uses.
         val resultJson = Gson().toJson(result)
         val deepLink = "scamradar://result?payload=${Uri.encode(resultJson)}"
-        val intent = Intent(context, MainActivity::class.java).apply {
+        val intent = ExplicitIntents.activity(context, MainActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
-            setPackage(context.packageName)
-            component = ComponentName(context, MainActivity::class.java)
             data = Uri.parse(deepLink)
         }
         val pending = PendingIntent.getActivity(

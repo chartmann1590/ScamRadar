@@ -3,12 +3,12 @@ package com.charles.scamradar.app.shield
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
-import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import com.charles.scamradar.app.R
+import com.charles.scamradar.app.security.ExplicitIntents
 import com.charles.scamradar.app.ui.quickverdict.QuickVerdictActivity
 import com.charles.scamradar.app.messaging.ScamRadarMessagingService
 
@@ -20,10 +20,8 @@ object ClipboardHeadsUp {
         val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         ensureChannel(manager)
 
-        val intent = Intent(context, QuickVerdictActivity::class.java).apply {
+        val intent = ExplicitIntents.activity(context, QuickVerdictActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK
-            setPackage(context.packageName)
-            component = ComponentName(context, QuickVerdictActivity::class.java)
             action = Intent.ACTION_SEND
             type = "text/plain"
             putExtra(Intent.EXTRA_TEXT, copiedText.take(2000))
