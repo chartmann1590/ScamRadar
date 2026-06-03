@@ -3,6 +3,7 @@ package com.charles.scamradar.app.shield
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -42,6 +43,8 @@ object ShieldAlertNotifier {
         val deepLink = "scamradar://result?payload=${Uri.encode(resultJson)}"
         val intent = Intent(context, MainActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+            setPackage(context.packageName)
+            component = ComponentName(context, MainActivity::class.java)
             data = Uri.parse(deepLink)
         }
         val pending = PendingIntent.getActivity(
