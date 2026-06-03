@@ -181,7 +181,7 @@ dependencies {
     implementation("com.google.firebase:firebase-appcheck-playintegrity")
     implementation("com.google.firebase:firebase-messaging-ktx")
 
-    implementation("com.android.billingclient:billing-ktx:7.1.1")
+    implementation("com.android.billingclient:billing-ktx:9.0.0")
 
     // On-device ASR via Sherpa-ONNX (16 KB-aligned native libs, fully offline)
     implementation(files("libs/sherpa-onnx-1.13.2.aar"))
