@@ -160,13 +160,13 @@ dependencies {
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.navigation:navigation-compose:2.8.5")
 
-    implementation("androidx.datastore:datastore-preferences:1.1.1")
+    implementation("androidx.datastore:datastore-preferences:1.2.1")
     implementation("androidx.room:room-runtime:2.6.1")
     implementation("androidx.room:room-ktx:2.6.1")
 
     implementation("com.google.mlkit:text-recognition:16.0.1")
 
-    implementation("com.google.android.gms:play-services-ads:23.6.0")
+    implementation("com.google.android.gms:play-services-ads:25.3.0")
     implementation("com.google.android.gms:play-services-ads-identifier:18.2.0")
     implementation("com.google.android.ump:user-messaging-platform:3.1.0")
 
@@ -185,7 +185,7 @@ dependencies {
     implementation(files("libs/sherpa-onnx-1.13.2.aar"))
 
     implementation("com.google.code.gson:gson:2.11.0")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.9.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.11.0")
     implementation("androidx.work:work-runtime-ktx:2.10.0")
     implementation("com.google.ai.edge.litertlm:litertlm-android:0.12.0")
 
@@ -194,7 +194,7 @@ dependencies {
 
     implementation("androidx.webkit:webkit:1.12.1")
 
-    implementation("com.google.zxing:core:3.5.3")
+    implementation("com.google.zxing:core:3.5.4")
     implementation("com.journeyapps:zxing-android-embedded:4.3.0")
 
     debugImplementation("androidx.compose.ui:ui-tooling")
