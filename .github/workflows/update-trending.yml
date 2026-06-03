@@ -14,12 +14,13 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
 
       - name: Set up Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
         with:
           node-version: "24"
+          cache: npm
 
       - name: Validate Firebase secret
         env:
@@ -31,7 +32,7 @@ jobs:
           fi
 
       - name: Install Firebase Admin SDK
-        run: npm install --no-save firebase-admin@^12.6.0
+        run: npm ci --ignore-scripts
 
       - name: Aggregate reports into Firestore trending
         env:
