@@ -167,7 +167,7 @@ dependencies {
     implementation("com.google.mlkit:text-recognition:16.0.1")
 
     implementation("com.google.android.gms:play-services-ads:25.3.0")
-    implementation("com.google.android.gms:play-services-ads-identifier:18.2.0")
+    implementation("com.google.android.gms:play-services-ads-identifier:18.3.0")
     implementation("com.google.android.ump:user-messaging-platform:3.1.0")
 
     implementation(platform("com.google.firebase:firebase-bom:33.7.0"))
