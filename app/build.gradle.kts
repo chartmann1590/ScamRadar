@@ -187,7 +187,7 @@ dependencies {
     implementation("com.google.code.gson:gson:2.11.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.11.0")
     implementation("androidx.work:work-runtime-ktx:2.11.2")
-    implementation("com.google.ai.edge.litertlm:litertlm-android:0.12.0")
+    implementation("com.google.ai.edge.litertlm:litertlm-android:0.13.1")
 
     implementation("androidx.glance:glance-appwidget:1.1.1")
     implementation("androidx.glance:glance-material3:1.1.1")
