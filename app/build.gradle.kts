@@ -184,7 +184,7 @@ dependencies {
     // On-device ASR via Sherpa-ONNX (16 KB-aligned native libs, fully offline)
     implementation(files("libs/sherpa-onnx-1.13.2.aar"))
 
-    implementation("com.google.code.gson:gson:2.11.0")
+    implementation("com.google.code.gson:gson:2.14.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.11.0")
     implementation("androidx.work:work-runtime-ktx:2.11.2")
     implementation("com.google.ai.edge.litertlm:litertlm-android:0.12.0")
