@@ -58,7 +58,7 @@ jobs:
         run: |
           git log --since="90 days ago" --pretty=format:"COMMIT %H|%s|%ai" --name-only > all_commits_raw.txt
           awk '/^COMMIT /{commit=$0; next} /^app\//{print commit"|"$0}' all_commits_raw.txt > fix_commits_raw.txt
-          grep -iE "(fix|crash|NPE|nullpointer|runtimeexception|ANR|bugfix|bug:)" fix_commits_raw.txt > fix_commits.txt 2>/dev/null || echo "0|no match" > fix_commits.txt
+          grep -iE "\b(fix|fixes|crash|NPE|nullpointer|runtimeexception|ANR|bugfix|bug:)\b" fix_commits_raw.txt > fix_commits.txt 2>/dev/null || echo "0|no match" > fix_commits.txt
           echo "Fix commits found:"
           head -200 fix_commits.txt
 
