@@ -176,6 +176,10 @@ fun SettingsScreen(
 
         Spacer(modifier = Modifier.height(12.dp))
 
+        SupportFeedbackSection()
+
+        Spacer(modifier = Modifier.height(12.dp))
+
         Card(
             modifier = Modifier.fillMaxWidth(),
             shape = MaterialTheme.shapes.medium

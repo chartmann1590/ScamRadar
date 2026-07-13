@@ -1,9 +1,11 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import java.util.Properties
 
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("org.jetbrains.kotlin.plugin.compose")
+    id("org.jetbrains.kotlin.plugin.serialization")
     id("com.google.gms.google-services")
     id("com.google.firebase.crashlytics")
     id("com.google.firebase.firebase-perf")
@@ -13,6 +15,26 @@ val keystoreFilePath: String? = System.getenv("KEYSTORE_FILE")
 val keystorePasswordEnv: String? = System.getenv("KEYSTORE_PASSWORD")
 val keyAliasEnv: String? = System.getenv("KEY_ALIAS")
 val keyPasswordEnv: String? = System.getenv("KEY_PASSWORD")
+
+val localProperties = Properties().apply {
+    val localFile = rootProject.file("local.properties")
+    if (localFile.exists()) {
+        localFile.inputStream().use(::load)
+    }
+}
+
+fun feedbackProperty(propertyName: String, envName: String): String =
+    (localProperties.getProperty(propertyName)
+        ?: providers.gradleProperty(propertyName).orNull
+        ?: System.getenv(envName)
+        ?: "").trim()
+
+fun buildConfigString(value: String): String =
+    "\"" + value.replace("\\", "\\\\").replace("\"", "\\\"") + "\""
+
+val githubApiToken = feedbackProperty("github.api.token", "GH_API_TOKEN")
+val githubRepoOwner = feedbackProperty("github.repo.owner", "GH_REPO_OWNER")
+val githubRepoName = feedbackProperty("github.repo.name", "GH_REPO_NAME")
 
 val testAdmobAppId = "ca-app-pub-3940256099942544~3347511713"
 val testAdmobBannerId = "ca-app-pub-3940256099942544/6300978111"
@@ -73,6 +95,10 @@ android {
             "MODEL_SIZE_BYTES",
             "2588147712L"
         )
+        buildConfigField("String", "GITHUB_API_TOKEN", buildConfigString(githubApiToken))
+        buildConfigField("String", "GITHUB_REPO_OWNER", buildConfigString(githubRepoOwner))
+        buildConfigField("String", "GITHUB_REPO_NAME", buildConfigString(githubRepoName))
+        buildConfigField("String", "FEEDBACK_ASSETS_DIR", buildConfigString("feedback-assets"))
     }
 
     buildTypes {
@@ -185,9 +211,13 @@ dependencies {
     implementation(files("libs/sherpa-onnx-1.13.2.aar"))
 
     implementation("com.google.code.gson:gson:2.11.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.11.0")
     implementation("androidx.work:work-runtime-ktx:2.11.2")
     implementation("com.google.ai.edge.litertlm:litertlm-android:0.12.0")
+    implementation("com.squareup.retrofit2:retrofit:2.11.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.11.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
 
     implementation("androidx.glance:glance-appwidget:1.1.1")
     implementation("androidx.glance:glance-material3:1.1.1")
