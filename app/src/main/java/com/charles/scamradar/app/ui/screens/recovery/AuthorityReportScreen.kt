@@ -31,6 +31,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -50,7 +51,10 @@ fun AuthorityReportScreen(
     val context = LocalContext.current
     val prefs = remember { UserPrefs(context) }
     val regionOverride by prefs.regionOverride.collectAsState(initial = "")
-    val country = if (regionOverride.length == 2) regionOverride else Locale.getDefault().country
+    val configuration = LocalConfiguration.current
+    val country = remember(regionOverride, configuration) {
+        if (regionOverride.length == 2) regionOverride else Locale.getDefault().country
+    }
     val scamType = runCatching { ScamType.valueOf(scamTypeName) }.getOrDefault(ScamType.OTHER)
     val list = remember(scamType, country) {
         AuthorityDirectory.authoritiesFor(country, scamType)
