@@ -54,13 +54,17 @@ object ShieldRouter {
         // Stage 2 — Gemma confirmation when available and the Lite verdict
         // is anything but a confident SAFE.
         val gemmaAvailable = ModelManager.isModelDownloaded(context)
-        val finalResult = if (needsAiConfirmation && gemmaAvailable) {
+        val rawResult = if (needsAiConfirmation && gemmaAvailable) {
             runCatching { router.selectClassifier().classify(combined) }
                 .getOrNull()
                 ?: liteResult
         } else {
             liteResult
         }
+
+        // Softens the verdict if the user previously told ScamRadar a similar
+        // notification wasn't a scam, so Live Shield stops repeating the same alert.
+        val finalResult = runCatching { router.applyLearnedFeedback(rawResult) }.getOrDefault(rawResult)
 
         val crossesThreshold = when (sensitivity) {
             UserPrefs.SHIELD_SENSITIVITY_LOW -> finalResult.verdict == Verdict.LIKELY_SCAM

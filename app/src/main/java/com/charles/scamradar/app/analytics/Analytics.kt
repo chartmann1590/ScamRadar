@@ -27,4 +27,7 @@ object Analytics {
 
     fun libraryDetailViewed(category: String) {
     }
+
+    fun scanFeedbackGiven(verdict: Verdict, wasFalsePositive: Boolean) {
+    }
 }

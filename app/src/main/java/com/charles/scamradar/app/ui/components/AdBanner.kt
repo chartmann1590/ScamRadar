@@ -6,6 +6,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -17,12 +20,14 @@ import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdSize
 import com.google.android.gms.ads.AdView
 import com.charles.scamradar.app.ads.AdUnits
+import com.charles.scamradar.app.ads.ConsentManager
 
 @Composable
 fun AdBanner(modifier: Modifier = Modifier) {
     val context = LocalContext.current
     val configuration = LocalConfiguration.current
     val widthDp = configuration.screenWidthDp
+    val adsReady by ConsentManager.adsReady.collectAsState()
 
     val adView = remember {
         AdView(context).apply {
@@ -34,8 +39,11 @@ fun AdBanner(modifier: Modifier = Modifier) {
                 AdSize.BANNER
             }
             setAdSize(size)
-            loadAd(AdRequest.Builder().build())
         }
+    }
+
+    LaunchedEffect(adsReady) {
+        if (adsReady) adView.loadAd(AdRequest.Builder().build())
     }
 
     DisposableEffect(adView) {

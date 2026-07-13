@@ -43,7 +43,7 @@ fun ScanningScreen(
         val trace = Analytics.startClassifyTrace(tier)
         val startedAt = System.currentTimeMillis()
         try {
-            val result = classifierRouter.selectClassifier().classify(message)
+            val result = classifierRouter.applyLearnedFeedback(classifierRouter.selectClassifier().classify(message))
             trace.stop()
             Analytics.scanCompleted(
                 verdict = result.verdict,

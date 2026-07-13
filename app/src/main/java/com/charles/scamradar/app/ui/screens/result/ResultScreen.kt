@@ -70,6 +70,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.charles.scamradar.app.analytics.Analytics
+import com.charles.scamradar.app.classifier.FeedbackLearningEngine
+import com.charles.scamradar.app.data.datastore.FeedbackStore
 import com.charles.scamradar.app.data.datastore.UserPrefs
 import com.charles.scamradar.app.data.model.ClassifierTier
 import com.charles.scamradar.app.data.model.RedFlag
@@ -198,6 +200,7 @@ fun ResultScreen(
                                 items = scanResult.aiGeneratedIndicators
                             )
                         }
+                        FeedbackCard(scanResult)
                         if (scanResult.verdict == Verdict.LIKELY_SCAM) {
                             WarnFriendsCard(scanResult) { warnFriends(context, scanResult) }
                             if (onOpenRecovery != null) {
@@ -700,6 +703,54 @@ private fun RedFlagsCard(redFlags: List<RedFlag>) {
             }
             if (index < unique.lastIndex) {
                 Spacer(modifier = Modifier.height(12.dp))
+            }
+        }
+    }
+}
+
+@Composable
+private fun FeedbackCard(scanResult: ScanResult) {
+    val context = LocalContext.current
+    val coroutineScope = rememberCoroutineScope()
+    var feedbackGiven by remember(scanResult.originalMessage, scanResult.timestamp) { mutableStateOf(false) }
+
+    SectionCard(title = "Was this accurate?") {
+        if (feedbackGiven) {
+            Text(
+                text = "Thanks — ScamRadar will remember this and soften similar alerts in the future.",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        } else {
+            Text(
+                text = "Your feedback trains ScamRadar's on-device detection so it stops repeating the same mistake. Nothing leaves your device.",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                OutlinedButton(
+                    onClick = {
+                        feedbackGiven = true
+                        Analytics.scanFeedbackGiven(scanResult.verdict, wasFalsePositive = false)
+                    },
+                    modifier = Modifier.weight(1f),
+                    shape = RoundedCornerShape(16.dp)
+                ) { Text("Yes, this is right") }
+                Button(
+                    onClick = {
+                        feedbackGiven = true
+                        Analytics.scanFeedbackGiven(scanResult.verdict, wasFalsePositive = true)
+                        coroutineScope.launch {
+                            val tokens = FeedbackLearningEngine.signature(scanResult.originalMessage)
+                            FeedbackStore(context.applicationContext).recordFalsePositive(tokens)
+                        }
+                    },
+                    modifier = Modifier.weight(1f),
+                    shape = RoundedCornerShape(16.dp)
+                ) { Text("No, not a scam") }
             }
         }
     }

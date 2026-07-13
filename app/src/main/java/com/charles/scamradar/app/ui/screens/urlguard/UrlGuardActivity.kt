@@ -83,7 +83,7 @@ private fun UrlGuardBody(
     LaunchedEffect(url) {
         scope.launch {
             val router = ClassifierRouter(context)
-            result = runCatching { router.liteOnly().classify(url) }.getOrNull()
+            result = runCatching { router.applyLearnedFeedback(router.liteOnly().classify(url)) }.getOrNull()
         }
     }
 

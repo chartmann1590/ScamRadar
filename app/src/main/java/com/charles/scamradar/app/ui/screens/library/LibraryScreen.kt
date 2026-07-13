@@ -56,7 +56,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.foundation.lazy.grid.GridItemSpan
+import com.charles.scamradar.app.ads.ConsentManager
 import com.charles.scamradar.app.ads.NativeAdLoader
+import androidx.compose.runtime.collectAsState
 import com.charles.scamradar.app.analytics.Analytics
 import com.charles.scamradar.app.ui.components.NativeAdCard
 
@@ -371,9 +373,12 @@ fun LibraryScreen(
     }
 
     val context = LocalContext.current
+    val adsReady by ConsentManager.adsReady.collectAsState()
     LaunchedEffect(Unit) {
         Analytics.libraryViewed()
-        NativeAdLoader.preload(context, listOf(0, 1, 2))
+    }
+    LaunchedEffect(adsReady) {
+        if (adsReady) NativeAdLoader.preload(context, listOf(0, 1, 2))
     }
 
     LaunchedEffect(selectedPattern?.id) {

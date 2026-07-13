@@ -1,7 +1,6 @@
 package com.charles.scamradar.app
 
 import android.app.Application
-import com.google.android.gms.ads.MobileAds
 import com.google.firebase.FirebaseApp
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.firebase.perf.FirebasePerformance
@@ -21,7 +20,7 @@ class ScamRadarApp : Application() {
         FirebaseApp.initializeApp(this)
         FirebaseCrashlytics.getInstance().isCrashlyticsCollectionEnabled = true
         FirebasePerformance.getInstance().isPerformanceCollectionEnabled = true
-        MobileAds.initialize(this) {}
+        // Mobile Ads SDK is initialized from MainActivity via ConsentManager, after UMP consent is gathered.
 
         val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
         scope.launch {

@@ -119,8 +119,13 @@ ScamRadar requests the following permissions:
 | `CAMERA` | QR code scanning to join a family group | Only when you tap "Scan QR" in Family Join |
 | `POST_NOTIFICATIONS` | Model download progress | Only during model download |
 | `FOREGROUND_SERVICE` | Background model download | Only during model download |
+| Notification Access (`BIND_NOTIFICATION_LISTENER_SERVICE`) | Live Shield real-time scam detection | Only when you enable Live Shield in Settings and grant notification access via the Android system settings screen |
 
 **We never request:** SMS access, contacts, location, or call logs.
+
+### Live Shield and Notification Access
+
+If you enable Live Shield, ScamRadar uses Android's Notification Listener API to read the text of incoming notifications (for example, messaging-app previews) **entirely on-device**, so it can flag likely scams in real time. Notification content is processed locally by the on-device model, is never transmitted off your device, and is not stored beyond what's needed to show you the Live Shield alert and, if you choose to keep it, your local scan history. Live Shield is off by default and only activates after you explicitly grant notification access; you can revoke access at any time from Android Settings → Notification access, which immediately stops ScamRadar from receiving notification content.
 
 All runtime permissions are requested in-context with a plain-language explanation of why the permission is needed.
 
@@ -227,12 +232,13 @@ ScamRadar does not "sell" personal information as defined by the CCPA. We do not
 
 As declared in our Google Play Data Safety form:
 
-- **Data collected:** Anonymous app interaction events (scan started/completed, feature usage), crash reports, and anonymous app performance traces (no message content). Anonymous community scam reports (sanitized, no personal data). Anonymous family group metadata (random IDs, redacted verdict summaries).
-- **Data shared:** None
-- **Data encrypted in transit:** Yes (Firebase default)
+- **Data collected:** Anonymous app interaction events (scan started/completed, feature usage), crash reports, and anonymous app performance traces (no message content). Anonymous community scam reports (sanitized, no personal data). Anonymous family group metadata (random IDs, redacted verdict summaries). Advertising ID (for AdMob ad serving; can be opted out of via Android Settings → Ads).
+- **Data shared:** Advertising ID only, shared with Google/AdMob for ad serving. No other data is shared.
+- **Data encrypted in transit:** Yes (Firebase default, AdMob HTTPS)
 - **User can request deletion:** Yes (in-app or by clearing app data)
 - **Message content:** Not collected, not shared, not stored on any server
+- **Notification content (Live Shield):** Processed entirely on-device when Live Shield is enabled; not collected, not shared, not stored on any server
 
 ---
 
-*This privacy policy is effective as of May 29, 2026 (rev. 4).*
+*This privacy policy is effective as of July 12, 2026 (rev. 5).*

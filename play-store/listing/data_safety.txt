@@ -28,6 +28,18 @@ DATA TYPES COLLECTED:
     Optional:  Yes (user can opt-out via Android Settings → Ads)
     Purpose:   Advertising or marketing
 
+NOTIFICATION CONTENT (LIVE SHIELD):
+
+  Live Shield uses the Android Notification Listener API to read incoming
+  notification text on-device for real-time scam detection. This is
+  opt-in (off by default) and revocable at any time in Android Settings →
+  Notification access.
+    Collected: No (processed transiently on-device only)
+    Shared:    No
+    Stored:    No (not persisted beyond the on-device alert / local
+               history you choose to keep)
+    Purpose:   App functionality (real-time scam detection)
+
 DATA TYPES *NOT* COLLECTED:
 
   - Personal info (name, email, address, phone number)

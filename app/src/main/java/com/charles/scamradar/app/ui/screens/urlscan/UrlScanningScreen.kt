@@ -131,7 +131,7 @@ fun UrlScanningScreen(
             val tier = classifierRouter.currentTier()
             Analytics.scanStarted(ScanMode.URL, tier)
             val classifyStart = System.currentTimeMillis()
-            val result = classifierRouter.selectClassifier().classify(prelude)
+            val result = classifierRouter.applyLearnedFeedback(classifierRouter.selectClassifier().classify(prelude))
             Analytics.scanCompleted(
                 verdict = result.verdict,
                 scamType = result.scamType,

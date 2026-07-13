@@ -13,7 +13,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import com.charles.scamradar.app.ads.ConsentManager
 import com.charles.scamradar.app.ads.InterstitialController
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import com.charles.scamradar.app.data.datastore.UserPrefs
 import com.charles.scamradar.app.ui.navigation.PendingDeepLink
 import com.charles.scamradar.app.ui.navigation.ScamRadarNavHost
@@ -28,7 +34,12 @@ class MainActivity : ComponentActivity() {
 
         val userPrefs = UserPrefs(applicationContext)
         val filesDir = applicationContext.filesDir
-        InterstitialController.preload(applicationContext)
+
+        ConsentManager.gatherConsentAndInitialize(this)
+        CoroutineScope(Dispatchers.Main).launch {
+            ConsentManager.adsReady.filter { it }.first()
+            InterstitialController.preload(applicationContext)
+        }
 
         val initialDeepLink = extractDeepLink(intent)
 

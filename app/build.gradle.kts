@@ -39,6 +39,7 @@ val githubRepoName = feedbackProperty("github.repo.name", "GH_REPO_NAME")
 val testAdmobAppId = "ca-app-pub-3940256099942544~3347511713"
 val testAdmobBannerId = "ca-app-pub-3940256099942544/6300978111"
 val testAdmobInterstitialId = "ca-app-pub-3940256099942544/1033173712"
+val testAdmobNativeId = "ca-app-pub-3940256099942544/2247696110"
 
 fun requireEnv(name: String): String =
     System.getenv(name) ?: error("$name must be set for release builds")
@@ -53,6 +54,7 @@ val bundleBuildRequested = gradle.startParameter.taskNames.any {
 val releaseAdmobAppId = if (releaseBuildRequested) requireEnv("ADMOB_APP_ID") else testAdmobAppId
 val releaseAdmobBannerId = if (releaseBuildRequested) requireEnv("ADMOB_BANNER_ID") else testAdmobBannerId
 val releaseAdmobInterstitialId = if (releaseBuildRequested) requireEnv("ADMOB_INTERSTITIAL_ID") else testAdmobInterstitialId
+val releaseAdmobNativeId = if (releaseBuildRequested) requireEnv("ADMOB_NATIVE_ID") else testAdmobNativeId
 
 val envVersionCode = System.getenv("ANDROID_VERSION_CODE")?.toIntOrNull()
 val envVersionName = System.getenv("ANDROID_VERSION_NAME")
@@ -75,7 +77,7 @@ android {
     defaultConfig {
         applicationId = "com.charles.scamradar.app"
         minSdk = 26
-        targetSdk = 35
+        targetSdk = 36
         versionCode = envVersionCode ?: 1
         versionName = envVersionName ?: "1.0.0"
 
@@ -114,6 +116,7 @@ android {
             buildConfigField("String", "ADMOB_APP_ID", "\"$testAdmobAppId\"")
             buildConfigField("String", "ADMOB_BANNER_ID", "\"$testAdmobBannerId\"")
             buildConfigField("String", "ADMOB_INTERSTITIAL_ID", "\"$testAdmobInterstitialId\"")
+            buildConfigField("String", "ADMOB_NATIVE_ID", "\"$testAdmobNativeId\"")
             manifestPlaceholders["admobAppId"] = testAdmobAppId
         }
         release {
@@ -128,6 +131,7 @@ android {
             buildConfigField("String", "ADMOB_APP_ID", "\"$releaseAdmobAppId\"")
             buildConfigField("String", "ADMOB_BANNER_ID", "\"$releaseAdmobBannerId\"")
             buildConfigField("String", "ADMOB_INTERSTITIAL_ID", "\"$releaseAdmobInterstitialId\"")
+            buildConfigField("String", "ADMOB_NATIVE_ID", "\"$releaseAdmobNativeId\"")
             manifestPlaceholders["admobAppId"] = releaseAdmobAppId
         }
     }

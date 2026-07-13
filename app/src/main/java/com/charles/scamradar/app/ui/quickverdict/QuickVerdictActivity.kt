@@ -138,7 +138,7 @@ class QuickVerdictActivity : ComponentActivity() {
             val tier = classifierRouter.currentTier()
             Analytics.scanStarted(mode, tier)
             val started = System.currentTimeMillis()
-            val result = classifierRouter.selectClassifier().classify(text)
+            val result = classifierRouter.applyLearnedFeedback(classifierRouter.selectClassifier().classify(text))
             Analytics.scanCompleted(
                 verdict = result.verdict,
                 scamType = result.scamType,

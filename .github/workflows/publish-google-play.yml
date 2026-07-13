@@ -4,9 +4,18 @@ on:
   workflow_dispatch:
     inputs:
       confirm_play_publish:
-        description: 'Type "publish" to confirm submission to Google Play Production'
+        description: 'Type "publish" to confirm submission to Google Play'
         required: true
         type: string
+      track:
+        description: 'Play Console track (internal = instant, no setup; alpha = closed testing default track, must exist in Console first; production = public release)'
+        required: true
+        type: choice
+        options:
+          - internal
+          - alpha
+          - production
+        default: internal
       release_notes:
         description: 'Release notes (leave empty to auto-generate from commits)'
         required: false
@@ -26,7 +35,7 @@ jobs:
             echo "::error::confirm_play_publish must be exactly 'publish' to proceed. Got: '${{ github.event.inputs.confirm_play_publish }}'"
             exit 1
           fi
-          echo "Publish confirmed. Proceeding with Play release."
+          echo "Publish confirmed. Proceeding with Play release to track: ${{ github.event.inputs.track }}"
 
       - name: Checkout
         uses: actions/checkout@v4
@@ -93,6 +102,7 @@ jobs:
           ADMOB_APP_ID: ${{ secrets.ADMOB_APP_ID }}
           ADMOB_BANNER_ID: ${{ secrets.ADMOB_BANNER_ID }}
           ADMOB_INTERSTITIAL_ID: ${{ secrets.ADMOB_INTERSTITIAL_ID }}
+          ADMOB_NATIVE_ID: ${{ secrets.ADMOB_NATIVE_ID }}
         run: ./gradlew bundleRelease
 
       - name: Upload AAB as artifact
@@ -118,7 +128,7 @@ jobs:
           serviceAccountJsonPlainText: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT_JSON }}
           packageName: com.charles.scamradar.app
           releaseFiles: app/build/outputs/bundle/release/app-release.aab
-          track: production
+          track: ${{ github.event.inputs.track }}
           status: completed
           whatsNewDirectory: distribution/whatsnew
           mappingFile: app/build/outputs/mapping/release/mapping.txt

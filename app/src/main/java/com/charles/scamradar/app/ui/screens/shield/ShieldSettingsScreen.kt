@@ -119,7 +119,9 @@ fun ShieldSettingsScreen(onBack: () -> Unit) {
                     Column(modifier = Modifier.padding(16.dp)) {
                         Text("Grant notification access", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
                         Text(
-                            "Required for ScamRadar to read incoming messages on-device.",
+                            "Live Shield needs notification access to scan incoming message previews for scams the moment they arrive. " +
+                                "This is processed entirely on your device — nothing is uploaded, logged, or seen by us. " +
+                                "You can revoke this at any time from Android Settings.",
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
