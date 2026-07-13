@@ -3,7 +3,6 @@ import java.util.Properties
 
 plugins {
     id("com.android.application")
-    id("org.jetbrains.kotlin.android")
     id("org.jetbrains.kotlin.plugin.compose")
     id("org.jetbrains.kotlin.plugin.serialization")
     id("com.google.gms.google-services")
@@ -62,7 +61,7 @@ val envVersionName = System.getenv("ANDROID_VERSION_NAME")
 
 android {
     namespace = "com.charles.scamradar.app"
-    compileSdk = 36
+    compileSdk = 37
 
     signingConfigs {
         create("release") {
