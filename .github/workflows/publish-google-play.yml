@@ -24,6 +24,14 @@ on:
         required: false
         type: string
         default: ''
+      release_status:
+        description: 'Release status. Use "draft" for a brand-new app''s very first release (Google Play requires manually submitting that one for review in Play Console); "completed" for normal releases once the app is out of draft state.'
+        required: true
+        type: choice
+        options:
+          - completed
+          - draft
+        default: completed
 
 jobs:
   publish:
@@ -133,6 +141,6 @@ jobs:
           packageName: com.charles.scamradar.app
           releaseFiles: app/build/outputs/bundle/release/app-release.aab
           track: ${{ github.event.inputs.track }}
-          status: completed
+          status: ${{ github.event.inputs.release_status }}
           whatsNewDirectory: distribution/whatsnew
           mappingFile: app/build/outputs/mapping/release/mapping.txt
