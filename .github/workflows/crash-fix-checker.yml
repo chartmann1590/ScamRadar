@@ -51,7 +51,8 @@ jobs:
             "https://firebasecrashlytics.googleapis.com/v1alpha/projects/${FIREBASE_PROJECT_NUMBER}/apps/${FIREBASE_APP_ID}/reports/topIssues?pageSize=50" \
             > crashlytics_issues.json
           echo "Fetched Crashlytics data:"
-          cat crashlytics_issues.json | jq '[.groups | length, ( .groups[].issue.id // "N/A" )]'
+          cat crashlytics_issues.json | jq .
+          echo "Group count: $(cat crashlytics_issues.json | jq '.groups | length // 0')"
 
       - name: Collect fix commits from git log
         run: |
