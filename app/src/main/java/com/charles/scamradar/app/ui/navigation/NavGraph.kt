@@ -36,6 +36,7 @@ import com.charles.scamradar.app.data.model.Verdict
 import com.charles.scamradar.app.download.ModelDownloadService
 import com.charles.scamradar.app.download.ModelManager
 import com.charles.scamradar.app.engagement.AchievementEngine
+import com.charles.scamradar.app.premium.EntitlementRepository
 import com.charles.scamradar.app.ui.components.AdBanner
 import com.charles.scamradar.app.ui.components.BottomNavBar
 import com.charles.scamradar.app.ui.screens.achievements.AchievementsScreen
@@ -97,7 +98,10 @@ fun ScamRadarNavHost(
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route ?: ""
     val showBottomBar = !seniorMode && currentRoute in bottomNavRoutes
-    val showBanner = currentRoute.isNotEmpty() && currentRoute != Screen.Onboarding.route
+    val entitlementRepository = remember { EntitlementRepository(context) }
+    val entitlement by entitlementRepository.entitlement.collectAsState(initial = com.charles.scamradar.app.premium.EntitlementState.FREE)
+    val adFree = entitlement.unlocksPremium()
+    val showBanner = !adFree && currentRoute.isNotEmpty() && currentRoute != Screen.Onboarding.route
 
     val classifierRouter = remember { ClassifierRouter(context) }
     val database = remember { AppDatabase.getInstance(context) }
@@ -262,7 +266,7 @@ fun ScamRadarNavHost(
                             navController.navigate(nextRoute) { popUpTo(Screen.Scan.route) }
                         }
                         val activity = context as? android.app.Activity
-                        if (activity != null && !careMode && !seniorMode) {
+                        if (activity != null && !careMode && !seniorMode && !adFree) {
                             InterstitialController.maybeShow(activity, navigateToResult)
                         } else {
                             navigateToResult()

@@ -15,6 +15,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import com.charles.scamradar.app.ads.ConsentManager
 import com.charles.scamradar.app.ads.InterstitialController
+import com.charles.scamradar.app.premium.EntitlementRepository
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.CoroutineScope
@@ -36,9 +37,12 @@ class MainActivity : ComponentActivity() {
         val filesDir = applicationContext.filesDir
 
         ConsentManager.gatherConsentAndInitialize(this)
+        val entitlementRepository = EntitlementRepository(applicationContext)
         CoroutineScope(Dispatchers.Main).launch {
             ConsentManager.adsReady.filter { it }.first()
-            InterstitialController.preload(applicationContext)
+            if (!entitlementRepository.entitlement.first().unlocksPremium()) {
+                InterstitialController.preload(applicationContext)
+            }
         }
 
         val initialDeepLink = extractDeepLink(intent)
