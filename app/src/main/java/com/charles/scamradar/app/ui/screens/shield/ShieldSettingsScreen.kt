@@ -34,6 +34,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -54,6 +55,10 @@ fun ShieldSettingsScreen(onBack: () -> Unit) {
     val enabled by prefs.shieldEnabled.collectAsState(initial = false)
     val sensitivity by prefs.shieldSensitivity.collectAsState(initial = UserPrefs.SHIELD_SENSITIVITY_MEDIUM)
     val pausedUntil by prefs.shieldPausedUntil.collectAsState(initial = 0L)
+    val configuration = LocalConfiguration.current
+    val pausedUntilTime = remember(pausedUntil, configuration) {
+        java.text.SimpleDateFormat("HH:mm", java.util.Locale.getDefault()).format(java.util.Date(pausedUntil))
+    }
     val disabled by prefs.shieldPerAppDisabled.collectAsState(initial = emptySet())
     val clipboardEnabled by prefs.clipboardChipEnabled.collectAsState(initial = false)
     val entitlementRepository = remember { EntitlementRepository(context) }
@@ -204,7 +209,7 @@ fun ShieldSettingsScreen(onBack: () -> Unit) {
                     Text("Pause", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
                     Spacer(Modifier.height(4.dp))
                     if (pausedUntil > System.currentTimeMillis()) {
-                        Text("Paused until ${java.text.SimpleDateFormat("HH:mm", java.util.Locale.getDefault()).format(java.util.Date(pausedUntil))}")
+                        Text("Paused until $pausedUntilTime")
                         OutlinedButton(
                             onClick = { scope.launch { prefs.setShieldPausedUntil(0L) } },
                             modifier = Modifier.fillMaxWidth(),
