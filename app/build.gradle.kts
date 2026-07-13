@@ -46,6 +46,9 @@ fun requireEnv(name: String): String =
 val releaseBuildRequested = gradle.startParameter.taskNames.any {
     it.contains("release", ignoreCase = true) || it.contains("bundle", ignoreCase = true)
 }
+val bundleBuildRequested = gradle.startParameter.taskNames.any {
+    it.contains("bundle", ignoreCase = true)
+}
 
 val releaseAdmobAppId = if (releaseBuildRequested) requireEnv("ADMOB_APP_ID") else testAdmobAppId
 val releaseAdmobBannerId = if (releaseBuildRequested) requireEnv("ADMOB_BANNER_ID") else testAdmobBannerId
@@ -154,7 +157,7 @@ android {
 
     splits {
         abi {
-            isEnable = true
+            isEnable = !bundleBuildRequested
             reset()
             // Modern Android (Pixel 6+, all Android 15 devices) is 64-bit only.
             // Dropping 32-bit ABIs removes the legacy 4-KB-aligned native libs
