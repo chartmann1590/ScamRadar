@@ -77,7 +77,7 @@ fun TodayScreen(
 ) {
     val context = LocalContext.current
     val repo = remember { TodayRepository(context) }
-    val communityRepo = remember { CommunityReportsRepository() }
+    val communityRepo = remember { CommunityReportsRepository(context) }
     val brief = remember { repo.loadDailyBrief() }
     val question = remember { repo.questionForToday() }
     var trending by remember { mutableStateOf<List<TrendingItem>>(emptyList()) }

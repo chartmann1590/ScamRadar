@@ -38,8 +38,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.charles.scamradar.app.data.datastore.UserPrefs
 import com.charles.scamradar.app.family.FamilyRepository
+import com.charles.scamradar.app.premium.EntitlementRepository
+import com.charles.scamradar.app.premium.EntitlementState
 import com.journeyapps.barcodescanner.ScanContract
 import com.journeyapps.barcodescanner.ScanOptions
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -52,6 +55,7 @@ fun FamilyJoinScreen(
 ) {
     val context = LocalContext.current
     val repo = remember { FamilyRepository(context) }
+    val entitlementRepository = remember { EntitlementRepository(context) }
     val scope = rememberCoroutineScope()
     var code by remember { mutableStateOf(initialCode) }
     var status by remember { mutableStateOf<String?>(null) }
@@ -132,6 +136,14 @@ fun FamilyJoinScreen(
                             is FamilyRepository.JoinOutcome.Joined -> {
                                 userPrefs.setFamilyCode(outcome.code)
                                 userPrefs.setFamilyMemberLabel(outcome.memberLabel.orEmpty())
+                                userPrefs.setFamilyIsOrganizer(false)
+                                // Joining a Family-plan pod grants free coverage — but
+                                // never downgrade someone who already pays for their
+                                // own Premium/Family subscription.
+                                val current = entitlementRepository.entitlement.first()
+                                if (current == EntitlementState.FREE) {
+                                    entitlementRepository.applyEntitlement(EntitlementState.FAMILY_MEMBER)
+                                }
                                 onJoined()
                                 null
                             }

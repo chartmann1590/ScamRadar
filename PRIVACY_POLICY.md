@@ -1,6 +1,6 @@
 # ScamRadar Privacy Policy
 
-**Last updated: May 29, 2026 (rev. 4)**
+**Last updated: July 13, 2026 (rev. 6)**
 
 ---
 
@@ -16,7 +16,7 @@ Our fundamental promise: **your messages never leave your phone.** Community rep
 
 1. **100% On-Device Processing.** All scam detection and analysis is performed locally on your device. Your text messages, emails, voicemails, and screenshots are never transmitted to any external server for processing.
 
-2. **No Account Required.** ScamRadar does not require you to create an account, provide an email address, or submit any personal information to use the core scanning features.
+2. **No Account Required to Scan.** ScamRadar does not require you to create an account, provide an email address, or submit any personal information to use the core scanning features. An account (email/password or Google Sign-In) is only required to set up or join a Family pod.
 
 3. **No Cloud Backend.** ScamRadar operates without a backend server. There is no server that receives, stores, or processes your message content.
 
@@ -51,7 +51,7 @@ All analytics data is anonymous and cannot be linked to you personally. We never
 
 ScamRadar allows users to anonymously report scams to a community feed:
 
-1. **Anonymous authentication.** Community features use Firebase Anonymous Auth to generate a random, non-identifying user ID. No email, phone number, or personal information is associated with this ID.
+1. **On-device generated ID.** Community Reports use a random ID generated and stored on your device (not your account) for spam prevention. No email, phone number, or personal information is associated with this ID.
 
 2. **Client-side sanitization.** Before any report is submitted, the app strips all personal information, full message content, and identifying details. Only a sanitized scam type and redacted summary are sent.
 
@@ -61,15 +61,17 @@ ScamRadar allows users to anonymously report scams to a community feed:
 
 ---
 
-## Family Sync
+## Accounts & Family Sync
 
-ScamRadar offers optional family protection features:
+ScamRadar offers optional family protection features, which require creating an account:
 
-- **Family groups:** You can create or join a family group using a shareable code or QR code. Family group membership is stored anonymously in Firebase Firestore.
+- **Account creation:** Setting up or joining a Family pod requires signing in with an email address and password, or with Google Sign-In. This is the only ScamRadar feature that requires an account. We use Firebase Authentication to manage sign-in; your email is used solely for authentication and is not shared with third parties or used for marketing.
+- **Family groups:** You can create or join a family group using a shareable code or QR code. Family group membership is stored in Firebase Firestore, keyed to your account ID and a member label you choose (not your email or name).
+- **Family plan status:** If you host a pod, a flag reflecting whether your Family subscription is currently active is stored on the pod so member coverage can be granted or revoked automatically — no billing details are stored in Firestore.
 - **Scan sharing:** When enabled, scam verdicts can be shared with your family group. Only the verdict type (e.g., "Likely Scam") and a redacted summary are shared — never the full original message.
 - **Care Mode:** An optional simplified interface for elderly users. Care Mode settings are stored locally on the device. Auto-share to family is opt-in and can be disabled at any time.
 - **Camera usage:** Camera is used solely for scanning QR codes to join a family group. No photos or video are recorded or stored.
-- **Family data:** Family group data in Firestore contains only anonymous IDs and redacted verdict summaries — no personal information, no full messages.
+- **Family data:** Family group data in Firestore contains your account ID, a member label, a live subscription-active flag (organizer only), and redacted verdict summaries — no full messages.
 
 ### Advertising Data
 
@@ -90,7 +92,7 @@ You may see a consent prompt regarding ad personalization as required by applica
 ### Local Data Stored On Your Device
 
 - **Scan history:** Your last 50 scan results (verdict + redacted metadata) are stored locally using Room database. This data never leaves your device.
-- **AI model file:** The Gemma 4 model (~3.1 GB) is downloaded to your device's internal storage during onboarding. It is stored in the app's private directory and is deleted when you uninstall the app.
+- **AI model file:** The Gemma 4 model (~2.6 GB) is downloaded to your device's internal storage during onboarding. It is stored in the app's private directory and is deleted when you uninstall the app.
 - **User preferences:** Theme preference (light/dark), onboarding completion status, Care Mode settings, family group membership, streak data, and similar settings stored via DataStore.
 - **Achievement data:** Trust score, quiz streaks, and achievement badges are stored locally and never synced to any server.
 
@@ -113,7 +115,6 @@ ScamRadar requests the following permissions:
 |-----------|---------|----------------|
 | `INTERNET` | AdMob ads, Firebase Analytics, model download, community reports | Automatic at install |
 | `ACCESS_NETWORK_STATE` | Check connectivity for model download | Automatic at install |
-| `READ_MEDIA_IMAGES` | Screenshot OCR scanning | Only when you use the screenshot scan feature |
 | `RECORD_AUDIO` | Voicemail recording | Only when you use the voicemail scan feature |
 | `READ_MEDIA_AUDIO` | Voicemail file import | Only when you import an audio file |
 | `CAMERA` | QR code scanning to join a family group | Only when you tap "Scan QR" in Family Join |
@@ -145,11 +146,12 @@ All runtime permissions are requested in-context with a plain-language explanati
 - Measures app performance and stability (start time, render time, classifier latency) to help us improve responsiveness — no message content is included in performance traces
 - Privacy policy: [https://firebase.google.com/policies/analytics](https://firebase.google.com/policies/analytics)
 
-### Firebase Firestore & Anonymous Authentication
-- Stores anonymous community scam reports and family group metadata
-- Uses Firebase Anonymous Auth for community features — generates a random, non-identifying user ID with no personal information
-- All data is sanitized client-side before writing to Firestore (no full messages, no personal data)
-- Privacy policy: [https://firebase.google.com/policies/firestore](https://firebase.google.com/policies/firestore)
+### Firebase Firestore, Authentication & Google Sign-In
+- Stores community scam reports (keyed to an on-device random ID) and family group data (keyed to your account)
+- Firebase Authentication (Email/Password and Google Sign-In) is used only for Family pod account creation and sign-in; not required for scanning
+- Google Sign-In shares your Google account's name, email, and profile photo with ScamRadar solely to create your account — nothing further is requested
+- All Community Report data is sanitized client-side before writing to Firestore (no full messages, no personal data)
+- Privacy policy: [https://firebase.google.com/policies/firestore](https://firebase.google.com/policies/firestore) · [https://policies.google.com/privacy](https://policies.google.com/privacy)
 
 ### Firebase App Check
 - Uses Google Play Integrity to verify that requests come from a genuine, unmodified copy of the app
@@ -179,7 +181,7 @@ ScamRadar is a general-audience utility app. We do not knowingly collect persona
 Depending on your jurisdiction, you may have the following rights:
 
 - **Right to access:** Request a copy of any data we hold about you (minimal — only anonymous analytics)
-- **Right to deletion:** Delete all local data by clearing the app's data in Android Settings or using the in-app "Clear History" function
+- **Right to deletion:** Delete all local data by clearing the app's data in Android Settings or using the in-app "Clear History" function. If you created an account for Family pod, delete it anytime from Settings → Account → Delete account.
 - **Right to opt out of personalized ads:** Adjust through the Google Ads Settings page or the consent prompt in the app
 - **Right to data portability:** Export your scan history from the app's History screen
 
@@ -232,7 +234,7 @@ ScamRadar does not "sell" personal information as defined by the CCPA. We do not
 
 As declared in our Google Play Data Safety form:
 
-- **Data collected:** Anonymous app interaction events (scan started/completed, feature usage), crash reports, and anonymous app performance traces (no message content). Anonymous community scam reports (sanitized, no personal data). Anonymous family group metadata (random IDs, redacted verdict summaries). Advertising ID (for AdMob ad serving; can be opted out of via Android Settings → Ads).
+- **Data collected:** Anonymous app interaction events (scan started/completed, feature usage), crash reports, and anonymous app performance traces (no message content). Community scam reports keyed to an on-device random ID (sanitized, no personal data). If you create a Family pod account: your email address (or Google account name/email/photo), used only for sign-in and Family pod membership. Advertising ID (for AdMob ad serving; can be opted out of via Android Settings → Ads).
 - **Data shared:** Advertising ID only, shared with Google/AdMob for ad serving. No other data is shared.
 - **Data encrypted in transit:** Yes (Firebase default, AdMob HTTPS)
 - **User can request deletion:** Yes (in-app or by clearing app data)
@@ -241,4 +243,4 @@ As declared in our Google Play Data Safety form:
 
 ---
 
-*This privacy policy is effective as of July 12, 2026 (rev. 5).*
+*This privacy policy is effective as of July 13, 2026 (rev. 6).*

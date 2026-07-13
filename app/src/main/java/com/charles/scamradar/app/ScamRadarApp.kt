@@ -4,7 +4,6 @@ import android.app.Application
 import com.google.firebase.FirebaseApp
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.firebase.perf.FirebasePerformance
-import com.charles.scamradar.app.community.AnonymousAuthBootstrapper
 import com.charles.scamradar.app.download.ModelManager
 import com.charles.scamradar.app.engagement.AchievementEngine
 import com.charles.scamradar.app.messaging.FcmRegistrar
@@ -25,9 +24,6 @@ class ScamRadarApp : Application() {
         val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
         scope.launch {
             runCatching { ModelManager.verifyModelOnStartup(applicationContext) }
-        }
-        scope.launch {
-            runCatching { AnonymousAuthBootstrapper.ensureSignedIn() }
         }
         scope.launch {
             runCatching { FcmRegistrar.bootstrap(applicationContext) }

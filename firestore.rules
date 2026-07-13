@@ -2,9 +2,11 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
+    // Community Reports stay anonymous (device-generated id, no account
+    // required) — abuse mitigation is best-effort via the ban list.
     match /reports/{reportId} {
-      allow create: if request.auth != null
-        && request.resource.data.authorUid == request.auth.uid
+      allow create: if request.resource.data.authorUid is string
+        && request.resource.data.authorUid.size() > 0
         && request.resource.data.verdict == "LIKELY_SCAM"
         && request.resource.data.excerpt is string
         && request.resource.data.excerpt.size() <= 280
@@ -12,8 +14,8 @@ service cloud.firestore {
             "scamType", "verdict", "confidence",
             "excerpt", "createdAt", "authorUid"
           ])
-        && !(exists(/databases/$(database)/documents/abuse/$(request.auth.uid))
-             && get(/databases/$(database)/documents/abuse/$(request.auth.uid)).data.banned == true);
+        && !(exists(/databases/$(database)/documents/abuse/$(request.resource.data.authorUid))
+             && get(/databases/$(database)/documents/abuse/$(request.resource.data.authorUid)).data.banned == true);
       allow read, update, delete: if false;
     }
 
@@ -26,6 +28,9 @@ service cloud.firestore {
       allow read, write: if false;
     }
 
+    // Family pod requires a real signed-in Firebase Auth user (Email/Password
+    // or Google Sign-In) — this ties family membership to an actual account
+    // rather than a client-declared id.
     match /families/{code} {
       function isMember() {
         return exists(/databases/$(database)/documents/families/$(code)/members/$(request.auth.uid));
@@ -33,25 +38,50 @@ service cloud.firestore {
       function willBeMember() {
         return existsAfter(/databases/$(database)/documents/families/$(code)/members/$(request.auth.uid));
       }
+      function baseFields() {
+        return ["memberCount", "createdAt", "organizerUid", "organizerActive"];
+      }
       function familyBaseFieldsUnchanged() {
         return request.resource.data.createdAt == resource.data.createdAt
-          && request.resource.data.keys().hasOnly(["memberCount", "createdAt"]);
+          && request.resource.data.organizerUid == resource.data.organizerUid
+          && request.resource.data.organizerActive == resource.data.organizerActive
+          && request.resource.data.keys().hasOnly(baseFields());
       }
-      allow read: if request.auth != null && isMember();
+      // Any signed-in user may read the top-level family doc (memberCount /
+      // organizer flags only, nothing sensitive) — needed for the
+      // pre-membership collision check on create and the "is it full" check
+      // on join, both of which happen before the caller is a member.
+      // Sensitive data (member labels, shared scans) lives in subcollections
+      // below, which stay member-only.
+      allow read: if request.auth != null;
       allow create: if request.auth != null
         && request.resource.data.memberCount == 1
-        && request.resource.data.keys().hasOnly(["memberCount", "createdAt"]);
+        && request.resource.data.organizerUid == request.auth.uid
+        && request.resource.data.organizerActive == true
+        && request.resource.data.keys().hasOnly(baseFields());
       allow update: if request.auth != null
-        && familyBaseFieldsUnchanged()
         && (
           (
-            willBeMember()
-            && resource.data.memberCount < 8
-            && request.resource.data.memberCount == resource.data.memberCount + 1
+            familyBaseFieldsUnchanged()
+            && (
+              (
+                willBeMember()
+                && resource.data.memberCount < 8
+                && request.resource.data.memberCount == resource.data.memberCount + 1
+              )
+              || (
+                isMember()
+                && request.resource.data.memberCount == resource.data.memberCount - 1
+              )
+            )
           )
           || (
-            isMember()
-            && request.resource.data.memberCount == resource.data.memberCount - 1
+            // Organizer toggling their own live-subscription flag only.
+            request.auth.uid == resource.data.organizerUid
+            && request.resource.data.memberCount == resource.data.memberCount
+            && request.resource.data.createdAt == resource.data.createdAt
+            && request.resource.data.organizerUid == resource.data.organizerUid
+            && request.resource.data.keys().hasOnly(baseFields())
           )
         );
       allow delete: if false;
@@ -81,6 +111,17 @@ service cloud.firestore {
           && request.resource.data.sanitizedExcerpt is string
           && request.resource.data.sanitizedExcerpt.size() <= 280;
         allow update, delete: if false;
+      }
+
+      match /verifiers/{uid} {
+        allow read: if request.auth != null && isMember();
+        allow create, update: if request.auth != null
+          && request.auth.uid == uid
+          && request.resource.data.uid == uid
+          && request.resource.data.keys().hasOnly(["uid", "memberLabel", "registeredAt"])
+          && request.resource.data.memberLabel is string
+          && request.resource.data.memberLabel.size() <= 32;
+        allow delete: if false;
       }
     }
   }

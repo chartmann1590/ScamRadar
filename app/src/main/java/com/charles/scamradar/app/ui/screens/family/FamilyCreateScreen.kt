@@ -65,6 +65,7 @@ fun FamilyCreateScreen(
                 code = outcome.code
                 userPrefs.setFamilyCode(outcome.code)
                 userPrefs.setFamilyMemberLabel("Member 1")
+                userPrefs.setFamilyIsOrganizer(true)
             }
             is FamilyRepository.CreateOutcome.Failed -> {
                 error = outcome.reason
