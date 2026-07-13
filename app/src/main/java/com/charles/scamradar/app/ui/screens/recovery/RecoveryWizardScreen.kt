@@ -18,6 +18,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.FolderZip
 import androidx.compose.material.icons.filled.PictureAsPdf
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
@@ -50,6 +51,7 @@ import com.charles.scamradar.app.engagement.AchievementEngine
 import com.charles.scamradar.app.premium.EntitlementRepository
 import com.charles.scamradar.app.premium.EntitlementState
 import com.charles.scamradar.app.premium.PremiumLockBadge
+import com.charles.scamradar.app.recovery.EvidenceBundler
 import com.charles.scamradar.app.recovery.IncidentReportBuilder
 import com.charles.scamradar.app.recovery.RecoveryFlowRepository
 import com.charles.scamradar.app.recovery.RecoveryProgress
@@ -247,6 +249,56 @@ fun RecoveryWizardScreen(
                                 }
                                 Text(
                                     "Bring this to your bank or police report. Unlocks with Premium.",
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                )
+                            }
+                        }
+                    }
+                }
+                Spacer(Modifier.height(12.dp))
+            }
+
+            item {
+                if (entitlement.unlocksPremium()) {
+                    Button(
+                        onClick = {
+                            val bundler = EvidenceBundler(context)
+                            val file = bundler.bundle(scanResult)
+                            context.startActivity(
+                                Intent.createChooser(bundler.shareIntent(file), "Share evidence ZIP")
+                            )
+                        },
+                        modifier = Modifier.fillMaxWidth(),
+                        shape = RoundedCornerShape(16.dp),
+                    ) {
+                        Icon(Icons.Default.FolderZip, contentDescription = null)
+                        Spacer(Modifier.size(8.dp))
+                        Text("Export evidence ZIP")
+                    }
+                } else {
+                    Surface(
+                        modifier = Modifier.fillMaxWidth(),
+                        shape = RoundedCornerShape(16.dp),
+                        color = MaterialTheme.colorScheme.surfaceContainer,
+                        onClick = onUpgrade,
+                    ) {
+                        Row(
+                            modifier = Modifier.padding(16.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                        ) {
+                            Column(modifier = Modifier.padding(end = 8.dp)) {
+                                Row(verticalAlignment = Alignment.CenterVertically) {
+                                    Text(
+                                        "Export evidence ZIP",
+                                        style = MaterialTheme.typography.titleMedium,
+                                        fontWeight = FontWeight.Bold,
+                                    )
+                                    Spacer(Modifier.size(8.dp))
+                                    PremiumLockBadge()
+                                }
+                                Text(
+                                    "Bundle the message, red flags, and metadata for a bank dispute. Unlocks with Premium.",
                                     style = MaterialTheme.typography.bodyMedium,
                                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                                 )

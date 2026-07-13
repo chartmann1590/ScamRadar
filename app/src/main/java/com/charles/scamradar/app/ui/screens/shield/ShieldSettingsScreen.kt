@@ -39,6 +39,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.charles.scamradar.app.data.datastore.UserPrefs
 import com.charles.scamradar.app.engagement.AchievementEngine
+import com.charles.scamradar.app.premium.EntitlementRepository
 import com.charles.scamradar.app.shield.NotificationPermissionGate
 import com.charles.scamradar.app.shield.ShieldFilter
 import kotlinx.coroutines.launch
@@ -55,6 +56,12 @@ fun ShieldSettingsScreen(onBack: () -> Unit) {
     val pausedUntil by prefs.shieldPausedUntil.collectAsState(initial = 0L)
     val disabled by prefs.shieldPerAppDisabled.collectAsState(initial = emptySet())
     val clipboardEnabled by prefs.clipboardChipEnabled.collectAsState(initial = false)
+    val entitlementRepository = remember { EntitlementRepository(context) }
+    val entitlement by entitlementRepository.entitlement.collectAsState(
+        initial = com.charles.scamradar.app.premium.EntitlementState.FREE
+    )
+    val enabledAppCount = remember(disabled) { ShieldFilter.defaultAllowed().count { it !in disabled } }
+    val atFreeAppLimit = !entitlement.unlocksPremium() && enabledAppCount >= ShieldFilter.FREE_TIER_APP_LIMIT
     var requestPostNotifications by remember { mutableStateOf(false) }
 
     val notifAccessGranted = remember(enabled) {
@@ -161,6 +168,7 @@ fun ShieldSettingsScreen(onBack: () -> Unit) {
                     Text("Apps watched", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
                     Spacer(Modifier.height(4.dp))
                     ShieldFilter.defaultAllowed().forEach { pkg ->
+                        val isEnabled = pkg !in disabled
                         Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
                             Text(
                                 text = friendlyName(pkg),
@@ -169,7 +177,8 @@ fun ShieldSettingsScreen(onBack: () -> Unit) {
                             )
                             androidx.compose.foundation.layout.Spacer(modifier = Modifier.weight(1f))
                             Switch(
-                                checked = pkg !in disabled,
+                                checked = isEnabled,
+                                enabled = isEnabled || !atFreeAppLimit,
                                 onCheckedChange = { checked ->
                                     scope.launch {
                                         val next = if (checked) disabled - pkg else disabled + pkg
@@ -178,6 +187,14 @@ fun ShieldSettingsScreen(onBack: () -> Unit) {
                                 }
                             )
                         }
+                    }
+                    if (!entitlement.unlocksPremium()) {
+                        Spacer(Modifier.height(8.dp))
+                        Text(
+                            "Free plan watches up to ${ShieldFilter.FREE_TIER_APP_LIMIT} apps at once. Upgrade to Premium for unlimited coverage.",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
                     }
                 }
             }
