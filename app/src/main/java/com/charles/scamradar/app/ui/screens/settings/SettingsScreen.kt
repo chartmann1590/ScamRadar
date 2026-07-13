@@ -22,6 +22,7 @@ import androidx.compose.material.icons.filled.Help
 import androidx.compose.material.icons.filled.Language
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.School
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -73,10 +74,14 @@ fun SettingsScreen(
     onOpenRemoteSetup: () -> Unit = {},
     onOpenWeeklyDigest: () -> Unit = {},
     onOpenVerify: () -> Unit = {},
+    onOpenSignIn: () -> Unit = {},
 ) {
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
     val prefs = remember { UserPrefs(context) }
+    val authRepo = remember { com.charles.scamradar.app.auth.AuthRepository(context) }
+    val currentUser by authRepo.authState.collectAsState(initial = authRepo.currentUser)
+    var showDeleteAccountDialog by remember { mutableStateOf(false) }
     val entitlementRepo = remember { com.charles.scamradar.app.premium.EntitlementRepository(context) }
     val entitlement by entitlementRepo.entitlement.collectAsState(initial = com.charles.scamradar.app.premium.EntitlementState.FREE)
     val wifiOnly by prefs.wifiOnlyDownload.collectAsState(initial = true)
@@ -127,6 +132,52 @@ fun SettingsScreen(
             entitlement = entitlement,
             onClick = onOpenPremium,
         )
+
+        Spacer(modifier = Modifier.height(12.dp))
+
+        Card(
+            modifier = Modifier.fillMaxWidth(),
+            shape = MaterialTheme.shapes.medium
+        ) {
+            Column(modifier = Modifier.padding(16.dp)) {
+                Text("Account", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+                Spacer(modifier = Modifier.height(4.dp))
+                if (currentUser != null) {
+                    Text(
+                        currentUser?.email ?: "Signed in",
+                        style = MaterialTheme.typography.bodyLarge,
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
+                    OutlinedButton(
+                        onClick = { authRepo.signOut() },
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Text("Sign out")
+                    }
+                    Spacer(modifier = Modifier.height(8.dp))
+                    OutlinedButton(
+                        onClick = { showDeleteAccountDialog = true },
+                        colors = ButtonDefaults.outlinedButtonColors(contentColor = MaterialTheme.colorScheme.error),
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Text("Delete account")
+                    }
+                } else {
+                    Text(
+                        "Sign in to set up a family pod that survives reinstalls and device changes.",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
+                    OutlinedButton(
+                        onClick = onOpenSignIn,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Text("Sign in")
+                    }
+                }
+            }
+        }
 
         Spacer(modifier = Modifier.height(12.dp))
 
@@ -832,6 +883,34 @@ fun SettingsScreen(
         }
 
         Spacer(modifier = Modifier.height(24.dp))
+    }
+
+    if (showDeleteAccountDialog) {
+        AlertDialog(
+            onDismissRequest = { showDeleteAccountDialog = false },
+            title = { Text("Delete account?") },
+            text = {
+                Text(
+                    "This permanently deletes your sign-in account. Any family pod you host will stop working for its members. This can't be undone."
+                )
+            },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        showDeleteAccountDialog = false
+                        coroutineScope.launch { authRepo.deleteAccount() }
+                    },
+                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.error)
+                ) {
+                    Text("Delete")
+                }
+            },
+            dismissButton = {
+                OutlinedButton(onClick = { showDeleteAccountDialog = false }) {
+                    Text("Cancel")
+                }
+            }
+        )
     }
 }
 

@@ -29,6 +29,7 @@ sealed class Screen(val route: String) {
         fun createRoute(code: String = ""): String = "family/join?code=$code"
     }
     data object FamilyActivity : Screen("family/activity")
+    data object SignIn : Screen("auth/signin")
 
     data object Premium : Screen("premium")
 

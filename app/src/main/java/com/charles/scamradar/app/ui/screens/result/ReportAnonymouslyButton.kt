@@ -35,7 +35,8 @@ fun ReportAnonymouslyButton(scanResult: ScanResult) {
     if (scanResult.verdict != Verdict.LIKELY_SCAM) return
 
     val scope = rememberCoroutineScope()
-    val repo = remember { CommunityReportsRepository() }
+    val context = androidx.compose.ui.platform.LocalContext.current
+    val repo = remember { CommunityReportsRepository(context) }
     var state by remember { mutableStateOf(ReportState.Ready) }
 
     OutlinedButton(

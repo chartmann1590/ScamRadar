@@ -4,15 +4,18 @@ The Data Safety form below mirrors what ScamRadar actually does. Use these
 exact answers when filling out the Play Console form.
 
 DOES YOUR APP COLLECT OR SHARE ANY USER DATA?
-  Yes — anonymous analytics only.
+  Yes — anonymous analytics, plus an email address (or Google account
+  name/email/photo) only if the user chooses to create an account to set up
+  or join a Family pod. Scanning never requires an account.
 
 DOES YOUR APP USE ENCRYPTION IN TRANSIT?
   Yes (Firebase + AdMob use HTTPS).
 
 DO YOU PROVIDE A WAY FOR USERS TO REQUEST DATA DELETION?
   Yes — users can clear scan history from Settings, and uninstalling the
-  app removes all on-device data. No server-side data is associated with
-  the user.
+  app removes all on-device data. Users who created an account for Family
+  pod can permanently delete that account in-app from Settings → Account →
+  Delete account.
 
 DATA TYPES COLLECTED:
 
@@ -28,6 +31,13 @@ DATA TYPES COLLECTED:
     Optional:  Yes (user can opt-out via Android Settings → Ads)
     Purpose:   Advertising or marketing
 
+  Personal info → Email address, or name/email/photo via Google Sign-In
+    Collected: Yes — only if the user creates an account for Family pod
+    Shared:    No (used solely for Firebase Authentication sign-in)
+    Optional:  Yes (entire app works without an account; only Family pod
+               setup/join requires one)
+    Purpose:   Account management, App functionality (Family pod)
+
 NOTIFICATION CONTENT (LIVE SHIELD):
 
   Live Shield uses the Android Notification Listener API to read incoming
@@ -42,7 +52,7 @@ NOTIFICATION CONTENT (LIVE SHIELD):
 
 DATA TYPES *NOT* COLLECTED:
 
-  - Personal info (name, email, address, phone number)
+  - Home address or phone number
   - Messages or message content (scan input)
   - Photos or videos
   - Audio files (voicemail recordings)

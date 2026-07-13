@@ -101,6 +101,9 @@ fun ScamRadarNavHost(
     val entitlementRepository = remember { EntitlementRepository(context) }
     val entitlement by entitlementRepository.entitlement.collectAsState(initial = com.charles.scamradar.app.premium.EntitlementState.FREE)
     val adFree = entitlement.unlocksPremium()
+    val authRepository = remember { com.charles.scamradar.app.auth.AuthRepository(context) }
+    val currentUser by authRepository.authState.collectAsState(initial = authRepository.currentUser)
+    val isSignedIn = currentUser != null
     val showBanner = !adFree && currentRoute.isNotEmpty() && currentRoute != Screen.Onboarding.route
 
     val classifierRouter = remember { ClassifierRouter(context) }
@@ -342,6 +345,7 @@ fun ScamRadarNavHost(
                     onOpenRemoteSetup = { navController.navigate(Screen.RemoteSetupCreate.route) },
                     onOpenWeeklyDigest = { navController.navigate(Screen.WeeklyDigest.route) },
                     onOpenVerify = { navController.navigate(Screen.VerifyChallenge.route) },
+                    onOpenSignIn = { navController.navigate(Screen.SignIn.route) },
                 )
             }
 
@@ -392,9 +396,20 @@ fun ScamRadarNavHost(
                     }
                 }
                 FamilyOnboardingScreen(
+                    entitlement = entitlement,
+                    isSignedIn = isSignedIn,
                     onCreate = { navController.navigate(Screen.FamilyCreate.route) },
                     onJoin = { navController.navigate(Screen.FamilyJoin.createRoute("")) },
+                    onUpgrade = { navController.navigate(Screen.Premium.route) },
+                    onSignIn = { navController.navigate(Screen.SignIn.route) },
                     onBack = { navController.popBackStack() }
+                )
+            }
+
+            composable(Screen.SignIn.route) {
+                com.charles.scamradar.app.ui.screens.auth.SignInScreen(
+                    onBack = { navController.popBackStack() },
+                    onSignedIn = { navController.popBackStack() }
                 )
             }
 

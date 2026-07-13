@@ -35,6 +35,7 @@ fun buildConfigString(value: String): String =
 val githubApiToken = feedbackProperty("github.api.token", "GH_API_TOKEN")
 val githubRepoOwner = feedbackProperty("github.repo.owner", "GH_REPO_OWNER")
 val githubRepoName = feedbackProperty("github.repo.name", "GH_REPO_NAME")
+val googleWebClientId = feedbackProperty("google.web.client.id", "GOOGLE_WEB_CLIENT_ID")
 
 val testAdmobAppId = "ca-app-pub-3940256099942544~3347511713"
 val testAdmobBannerId = "ca-app-pub-3940256099942544/6300978111"
@@ -107,6 +108,7 @@ android {
         buildConfigField("String", "GITHUB_REPO_OWNER", buildConfigString(githubRepoOwner))
         buildConfigField("String", "GITHUB_REPO_NAME", buildConfigString(githubRepoName))
         buildConfigField("String", "FEEDBACK_ASSETS_DIR", buildConfigString("feedback-assets"))
+        buildConfigField("String", "GOOGLE_WEB_CLIENT_ID", buildConfigString(googleWebClientId))
     }
 
     buildTypes {
@@ -214,6 +216,10 @@ dependencies {
     implementation("com.google.firebase:firebase-auth-ktx")
     implementation("com.google.firebase:firebase-appcheck-playintegrity")
     implementation("com.google.firebase:firebase-messaging-ktx")
+
+    implementation("androidx.credentials:credentials:1.3.0")
+    implementation("androidx.credentials:credentials-play-services-auth:1.3.0")
+    implementation("com.google.android.libraries.identity.googleid:googleid:1.1.1")
 
     implementation("com.android.billingclient:billing-ktx:9.0.0")
 

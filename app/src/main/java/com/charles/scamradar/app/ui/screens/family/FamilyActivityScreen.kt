@@ -47,6 +47,7 @@ import androidx.compose.ui.unit.dp
 import com.charles.scamradar.app.data.datastore.UserPrefs
 import com.charles.scamradar.app.family.FamilyRepository
 import com.charles.scamradar.app.family.FamilyShare
+import com.charles.scamradar.app.family.FamilySync
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import java.text.DateFormat
@@ -67,6 +68,7 @@ fun FamilyActivityScreen(
 
     LaunchedEffect(code) {
         if (code.isNotBlank()) {
+            runCatching { FamilySync.sync(context) }
             repo.observeShares(code).collect { items -> shares = items }
         }
     }

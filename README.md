@@ -130,8 +130,11 @@ Report scams anonymously to help others. Browse a trending feed of the latest sc
 
 ### Family Protection
 
-**Family Sync**
-Connect with family members using a simple family code or QR code. When someone in your family group scans a scam, everyone gets notified.
+**Family Sync (account-based)**
+Sign in with email/password or Google, then connect with family members using a simple family code or QR code. Family pods are tied to your account so membership survives reinstalls and device changes. When someone in your family group scans a scam, everyone gets notified.
+
+**Family Plan Coverage — Live Entitlement Sync (NEW)**
+Only Family-tier subscribers can create (host) a pod; anyone signed in can join one to receive free coverage. The organizer's subscription status syncs to their pod on every app launch — if a Family subscription lapses or is canceled, joined members' free Premium coverage is automatically revoked (and restored automatically if the organizer resubscribes), without ever touching a member's own separate paid subscription.
 
 **Care Mode — Senior-Friendly UX (EXPANDED)**
 One toggle unifies the simpler-layout, larger-text, ad-free, family-auto-share elder UX. When on: 24pt+ body fonts, a single "Paste & Read" home screen, full-screen color-coded verdicts ("STOP", "BE CAREFUL", "LOOKS SAFE"), Text-to-Speech readout of every verdict ("Stop. This looks like a scam. Do not reply."), and a large "Call my family" emergency button wired to the contact you set during setup.
@@ -191,8 +194,8 @@ A swipeable, illustrated onboarding flow that walks new users through how ScamRa
 | QR Codes | ZXing ("ZXing Android Embedded") |
 | Home Widget | Glance + glance-material3 (Material You) |
 | Storage | Room + DataStore |
-| Community Backend | Firebase Firestore (anonymous reports only) |
-| Auth | Firebase Anonymous Auth (community features) |
+| Community Backend | Firebase Firestore |
+| Auth | Firebase Authentication — Email/Password + Google Sign-In (account, Family pods); on-device generated id (Community Reports, stays anonymous) |
 | Analytics | Firebase Analytics (anonymous only) |
 | Crash Reporting | Firebase Crashlytics |
 | Performance | Firebase Performance Monitoring |
@@ -233,7 +236,7 @@ A small set of follow-up features unlock with a subscription. The core scanner i
 | Ad-free | — | ✅ | ✅ |
 | Weekly Family Digest | — | — | ✅ |
 | Trusted Contact Verification | — | — | ✅ |
-| Family pod members covered | up to 8 (no premium) | individual only | all pod members covered by organizer |
+| Family pod | join to receive coverage (sign-in required) | individual only | host a pod covering up to 7 members, revoked live if the subscription lapses |
 
 ---
 
@@ -262,12 +265,12 @@ Captured live on a Pixel 8 Pro running the actual app.
 ScamRadar is built with privacy as a core principle:
 
 - **No cloud processing** — all scan analysis happens on your device
-- **No account needed** — we don't collect emails or personal info
+- **No account needed for scanning** — the core scanner works fully without signing in; an account (email/password or Google) is only required to set up or join a Family pod, so membership can survive reinstalls and device changes
 - **No message logging** — scan content is never sent to any server
 - **Local history only** — stored on-device, deletable, never synced
 - **Anonymous analytics** — only app interaction events (no message content)
-- **Anonymous community reports** — fully sanitized client-side before submission; no personal data or full messages
-- **Family data is anonymous** — family groups use random IDs and share only redacted verdict summaries
+- **Anonymous community reports** — fully sanitized client-side before submission, tied to a random on-device id rather than your account; no personal data or full messages
+- **Family data stays minimal** — pods store only your account id, a member label, and redacted verdict summaries
 - **Camera for QR only** — used solely for scanning family QR codes; no photos or video stored
 
 See our full [Privacy Policy](PRIVACY_POLICY.md).
@@ -292,7 +295,7 @@ cd ScamRadar
 
 Open the project in Android Studio and run on a device or emulator.
 
-> **Note:** The AI model (Gemma 4 E2B-it, ~3.1 GB) is downloaded on first run, not bundled in the APK. The app works immediately in Lite mode before the download completes.
+> **Note:** The AI model (Gemma 4 E2B-it, ~2.6 GB) is downloaded on first run, not bundled in the APK. The app works immediately in Lite mode before the download completes. The download is a self-managed, resumable HTTP transfer that survives OS-level foreground-service interruptions and continues from the last saved byte offset.
 
 ---
 
@@ -302,15 +305,16 @@ Open the project in Android Studio and run on a device or emulator.
 app/src/main/java/com/charles/scamradar/app/
 ├── ads/                  # AdMob banner, interstitial, native ad loader
 ├── analytics/            # Firebase Analytics event helpers
-├── classifier/           # Scam classification (Gemma, Lite heuristic, Stub)
-├── community/            # Community reports, sanitization, anonymous auth
+├── auth/                 # Firebase Authentication (Email/Password, Google Sign-In)
+├── classifier/           # Scam classification (Gemma, Lite heuristic)
+├── community/            # Community reports, sanitization, on-device id
 ├── data/
 │   ├── db/               # Room DB (ScanHistoryDao, ScanHistoryEntity)
 │   ├── datastore/        # UserPrefs (DataStore)
 │   └── model/            # ScanResult models
 ├── download/             # Model download service & manager
 ├── engagement/           # Daily brief, quiz, Today models & repository
-├── family/               # Family code generation, sync, QR rendering
+├── family/               # Family code generation, entitlement sync, QR rendering
 ├── ocr/                  # ML Kit OCR processing
 ├── share/                # Share utilities
 ├── speech/               # On-device speech recognition
@@ -322,6 +326,7 @@ app/src/main/java/com/charles/scamradar/app/
     ├── navigation/       # Nav graph, screen routes, deep links
     ├── quickverdict/     # Share sheet overlay activity
     ├── screens/
+    │   ├── auth/         # Sign in / create account (Email/Password, Google)
     │   ├── home/         # Home / scan entry
     │   ├── scanning/     # Scanning animation state
     │   ├── result/       # Verdict, red flags, Link Microscope, share card, family share

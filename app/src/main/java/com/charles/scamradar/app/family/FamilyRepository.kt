@@ -1,9 +1,9 @@
 package com.charles.scamradar.app.family
 
 import android.content.Context
-import com.charles.scamradar.app.community.AnonymousAuthBootstrapper
 import com.charles.scamradar.app.community.ReportSanitizer
 import com.charles.scamradar.app.data.model.ScanResult
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
@@ -21,7 +21,7 @@ data class FamilyShare(
     val sharedAt: Long
 )
 
-class FamilyRepository(context: Context) {
+class FamilyRepository(private val context: Context) {
 
     private val firestore by lazy { FirebaseFirestore.getInstance() }
     private val codeGen = FamilyCodeGenerator(context)
@@ -38,9 +38,10 @@ class FamilyRepository(context: Context) {
         data class Failed(val reason: String) : JoinOutcome
     }
 
+    private fun requireUid(): String? = FirebaseAuth.getInstance().currentUser?.uid
+
     suspend fun createFamily(): CreateOutcome {
-        val uid = AnonymousAuthBootstrapper.ensureSignedIn()
-            ?: return CreateOutcome.Failed("Couldn't sign in.")
+        val uid = requireUid() ?: return CreateOutcome.Failed("Sign in required.")
 
         repeat(MAX_GENERATION_ATTEMPTS) { attempt ->
             val candidate = if (attempt < 4) codeGen.generate()
@@ -54,7 +55,9 @@ class FamilyRepository(context: Context) {
                         familyRef,
                         mapOf(
                             "memberCount" to 1,
-                            "createdAt" to FieldValue.serverTimestamp()
+                            "createdAt" to FieldValue.serverTimestamp(),
+                            "organizerUid" to uid,
+                            "organizerActive" to true
                         )
                     )
                     tx.set(
@@ -76,8 +79,7 @@ class FamilyRepository(context: Context) {
         val code = codeGen.normalize(rawCode)
         if (!codeGen.isValidFormat(code)) return JoinOutcome.NotFound
 
-        val uid = AnonymousAuthBootstrapper.ensureSignedIn()
-            ?: return JoinOutcome.Failed("Couldn't sign in.")
+        val uid = requireUid() ?: return JoinOutcome.Failed("Sign in required.")
 
         val familyRef = firestore.collection("families").document(code)
         val snap = runCatching { familyRef.get().await() }.getOrNull()
@@ -119,6 +121,29 @@ class FamilyRepository(context: Context) {
         return JoinOutcome.Joined(code, result.getOrNull())
     }
 
+    /** Called by the organizer whenever their own Play Billing entitlement is
+     * (re)verified, so members can detect a canceled Family subscription. */
+    suspend fun syncOrganizerStatus(code: String, active: Boolean) {
+        val uid = requireUid() ?: return
+        runCatching {
+            val familyRef = firestore.collection("families").document(code)
+            val snap = familyRef.get().await()
+            if (!snap.exists()) return@runCatching
+            if (snap.getString("organizerUid") != uid) return@runCatching
+            familyRef.update("organizerActive", active).await()
+        }
+    }
+
+    /** Called by members to decide whether their free family-plan coverage
+     * is still backed by an active organizer subscription. */
+    suspend fun isOrganizerActive(code: String): Boolean {
+        return runCatching {
+            val snap = firestore.collection("families").document(code).get().await()
+            if (!snap.exists()) return@runCatching false
+            snap.getBoolean("organizerActive") ?: true
+        }.getOrDefault(true)
+    }
+
     suspend fun joinPodWithPresets(payload: RemoteSetupPayload): JoinOutcome {
         val outcome = joinFamily(payload.podCode)
         if (outcome !is JoinOutcome.Joined) return outcome
@@ -126,7 +151,7 @@ class FamilyRepository(context: Context) {
     }
 
     suspend fun leaveFamily(code: String) {
-        val uid = AnonymousAuthBootstrapper.ensureSignedIn() ?: return
+        val uid = requireUid() ?: return
         runCatching {
             val familyRef = firestore.collection("families").document(code)
             val memberRef = familyRef.collection("members").document(uid)
@@ -144,7 +169,7 @@ class FamilyRepository(context: Context) {
     }
 
     suspend fun shareWithFamily(code: String, result: ScanResult): Boolean {
-        val uid = AnonymousAuthBootstrapper.ensureSignedIn() ?: return false
+        val uid = requireUid() ?: return false
         val sanitized = ReportSanitizer.sanitize(result.originalMessage)
         if (!sanitized.isUsable) return false
         val memberSnap = runCatching {

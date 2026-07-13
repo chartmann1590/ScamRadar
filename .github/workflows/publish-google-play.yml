@@ -106,6 +106,7 @@ jobs:
           ADMOB_BANNER_ID: ${{ secrets.ADMOB_BANNER_ID }}
           ADMOB_INTERSTITIAL_ID: ${{ secrets.ADMOB_INTERSTITIAL_ID }}
           ADMOB_NATIVE_ID: ${{ secrets.ADMOB_NATIVE_ID }}
+          GOOGLE_WEB_CLIENT_ID: ${{ secrets.GOOGLE_WEB_CLIENT_ID }}
         run: ./gradlew bundleRelease
 
       - name: Upload AAB as artifact
