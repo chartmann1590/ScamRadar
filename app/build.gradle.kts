@@ -54,6 +54,9 @@ val releaseAdmobAppId = if (releaseBuildRequested) requireEnv("ADMOB_APP_ID") el
 val releaseAdmobBannerId = if (releaseBuildRequested) requireEnv("ADMOB_BANNER_ID") else testAdmobBannerId
 val releaseAdmobInterstitialId = if (releaseBuildRequested) requireEnv("ADMOB_INTERSTITIAL_ID") else testAdmobInterstitialId
 
+val envVersionCode = System.getenv("ANDROID_VERSION_CODE")?.toIntOrNull()
+val envVersionName = System.getenv("ANDROID_VERSION_NAME")
+
 android {
     namespace = "com.charles.scamradar.app"
     compileSdk = 36
@@ -73,8 +76,8 @@ android {
         applicationId = "com.charles.scamradar.app"
         minSdk = 26
         targetSdk = 35
-        versionCode = 1
-        versionName = "1.0.0"
+        versionCode = envVersionCode ?: 1
+        versionName = envVersionName ?: "1.0.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
