@@ -36,6 +36,7 @@ class UserPrefs(private val context: Context) {
     }
     val familyCode: Flow<String> = dataStore.data.map { it[KEY_FAMILY_CODE] ?: "" }
     val familyMemberLabel: Flow<String> = dataStore.data.map { it[KEY_FAMILY_MEMBER_LABEL] ?: "" }
+    val familyIsOrganizer: Flow<Boolean> = dataStore.data.map { it[KEY_FAMILY_IS_ORGANIZER] ?: false }
     val careMode: Flow<Boolean> = dataStore.data.map { it[KEY_CARE_MODE] ?: false }
     val careModeAutoShare: Flow<Boolean> = dataStore.data.map { it[KEY_CARE_MODE_AUTO_SHARE] ?: false }
     val careModeAutoShareThreshold: Flow<String> = dataStore.data.map {
@@ -70,6 +71,7 @@ class UserPrefs(private val context: Context) {
     suspend fun setUnlockedAchievements(value: Set<String>) { dataStore.edit { it[KEY_UNLOCKED_ACHIEVEMENTS] = value } }
     suspend fun setFamilyCode(value: String) { dataStore.edit { it[KEY_FAMILY_CODE] = value } }
     suspend fun setFamilyMemberLabel(value: String) { dataStore.edit { it[KEY_FAMILY_MEMBER_LABEL] = value } }
+    suspend fun setFamilyIsOrganizer(value: Boolean) { dataStore.edit { it[KEY_FAMILY_IS_ORGANIZER] = value } }
     suspend fun setCareMode(value: Boolean) { dataStore.edit { it[KEY_CARE_MODE] = value } }
     suspend fun setCareModeAutoShare(value: Boolean) { dataStore.edit { it[KEY_CARE_MODE_AUTO_SHARE] = value } }
     suspend fun setCareModeAutoShareThreshold(value: String) { dataStore.edit { it[KEY_CARE_MODE_AUTO_SHARE_THRESHOLD] = value } }
@@ -103,6 +105,7 @@ class UserPrefs(private val context: Context) {
         private val KEY_UNLOCKED_ACHIEVEMENTS = stringSetPreferencesKey("unlocked_achievements")
         private val KEY_FAMILY_CODE = stringPreferencesKey("family_code")
         private val KEY_FAMILY_MEMBER_LABEL = stringPreferencesKey("family_member_label")
+        private val KEY_FAMILY_IS_ORGANIZER = booleanPreferencesKey("family_is_organizer")
         private val KEY_CARE_MODE = booleanPreferencesKey("care_mode")
         private val KEY_CARE_MODE_AUTO_SHARE = booleanPreferencesKey("care_mode_auto_share")
         private val KEY_CARE_MODE_AUTO_SHARE_THRESHOLD = stringPreferencesKey("care_mode_auto_share_threshold")

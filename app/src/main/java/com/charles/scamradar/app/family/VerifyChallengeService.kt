@@ -1,7 +1,8 @@
 package com.charles.scamradar.app.family
 
+import android.content.Context
 import android.util.Base64
-import com.charles.scamradar.app.community.AnonymousAuthBootstrapper
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import com.google.gson.Gson
@@ -25,8 +26,8 @@ object VerifyChallengeService {
 
     private val firestore by lazy { FirebaseFirestore.getInstance() }
 
-    suspend fun ensureRegistered(podCode: String, memberLabel: String) {
-        val uid = AnonymousAuthBootstrapper.ensureSignedIn() ?: return
+    suspend fun ensureRegistered(context: Context, podCode: String, memberLabel: String) {
+        val uid = FirebaseAuth.getInstance().currentUser?.uid ?: return
         PodKeyVault.ensureKey(podCode)
         firestore.collection("families").document(podCode)
             .collection("verifiers").document(uid)
@@ -41,8 +42,8 @@ object VerifyChallengeService {
             .await()
     }
 
-    suspend fun sign(podCode: String, memberLabel: String): SignedChallenge? {
-        val uid = AnonymousAuthBootstrapper.ensureSignedIn() ?: return null
+    suspend fun sign(context: Context, podCode: String, memberLabel: String): SignedChallenge? {
+        val uid = FirebaseAuth.getInstance().currentUser?.uid ?: return null
         val key = runCatching { PodKeyVault.ensureKey(podCode) }.getOrNull() ?: return null
         val payload = VerifyChallenge(
             podCode = podCode,

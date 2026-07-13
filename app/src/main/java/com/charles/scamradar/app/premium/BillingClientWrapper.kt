@@ -12,6 +12,7 @@ import com.android.billingclient.api.PurchasesUpdatedListener
 import com.android.billingclient.api.QueryProductDetailsParams
 import com.android.billingclient.api.QueryPurchasesParams
 import com.android.billingclient.api.Purchase
+import com.charles.scamradar.app.family.FamilySync
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -134,9 +135,11 @@ class BillingClientWrapper(
         }
         if (list.isEmpty()) {
             entitlementRepository.applyEntitlement(EntitlementState.FREE)
+            runCatching { FamilySync.sync(context) }
             return
         }
         list.forEach { handlePurchase(it) }
+        runCatching { FamilySync.sync(context) }
     }
 
     private suspend fun handlePurchase(purchase: Purchase) {

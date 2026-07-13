@@ -60,6 +60,8 @@ import com.charles.scamradar.app.ads.ConsentManager
 import com.charles.scamradar.app.ads.NativeAdLoader
 import androidx.compose.runtime.collectAsState
 import com.charles.scamradar.app.analytics.Analytics
+import com.charles.scamradar.app.premium.EntitlementRepository
+import com.charles.scamradar.app.premium.EntitlementState
 import com.charles.scamradar.app.ui.components.NativeAdCard
 
 data class ScamPattern(
@@ -374,11 +376,14 @@ fun LibraryScreen(
 
     val context = LocalContext.current
     val adsReady by ConsentManager.adsReady.collectAsState()
+    val entitlementRepository = remember { EntitlementRepository(context) }
+    val entitlement by entitlementRepository.entitlement.collectAsState(initial = EntitlementState.FREE)
+    val adFree = entitlement.unlocksPremium()
     LaunchedEffect(Unit) {
         Analytics.libraryViewed()
     }
-    LaunchedEffect(adsReady) {
-        if (adsReady) NativeAdLoader.preload(context, listOf(0, 1, 2))
+    LaunchedEffect(adsReady, adFree) {
+        if (adsReady && !adFree) NativeAdLoader.preload(context, listOf(0, 1, 2))
     }
 
     LaunchedEffect(selectedPattern?.id) {
@@ -472,7 +477,11 @@ fun LibraryScreen(
                 )
             }
         } else {
-            val cellPlan = remember(filteredPatterns) { buildCellPlan(filteredPatterns) }
+            val cellPlan = remember(filteredPatterns, adFree) {
+                buildCellPlan(filteredPatterns).let { plan ->
+                    if (adFree) plan.filterNot { it is LibraryCell.Ad } else plan
+                }
+            }
             LazyVerticalGrid(
                 columns = GridCells.Fixed(2),
                 horizontalArrangement = Arrangement.spacedBy(10.dp),

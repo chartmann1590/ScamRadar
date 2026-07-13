@@ -7,7 +7,7 @@ AI-generated scams jumped 1,210% in 2025. Deepfake voice phishing is up 1,633%. 
 WHY SCAMRADAR
 
 • 100% on-device — your messages never leave your phone
-• No account, no sign-up, no email required
+• No account needed to scan — sign in only if you want to set up or join a Family pod
 • Free forever — the core scanner is never paywalled
 • Built for the new wave of AI scams, not retrofitted spam filters
 • Explains the red flags in plain English
@@ -94,7 +94,7 @@ PRIVACY-FIRST
 
 • No cloud processing — all scam analysis happens on your device
 • Live Shield reads notification previews on-device only — never uploaded
-• No account, no email, no personal info collected
+• No account needed to scan — an email (or Google Sign-In) is only used if you set up or join a Family pod
 • No message logging — scan content is never sent anywhere
 • Local history only — stored on-device, deletable, never synced
 • Anonymous analytics only (button taps, no message content)

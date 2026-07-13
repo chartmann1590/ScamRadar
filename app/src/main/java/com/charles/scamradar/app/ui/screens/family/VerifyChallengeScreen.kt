@@ -49,7 +49,7 @@ fun VerifyChallengeScreen(onBack: () -> Unit) {
 
     LaunchedEffect(podCode, memberLabel) {
         if (podCode.isNotBlank()) {
-            VerifyChallengeService.ensureRegistered(podCode, memberLabel.ifBlank { "Member" })
+            VerifyChallengeService.ensureRegistered(context, podCode, memberLabel.ifBlank { "Member" })
         }
     }
 
@@ -90,7 +90,7 @@ fun VerifyChallengeScreen(onBack: () -> Unit) {
             Button(
                 onClick = {
                     scope.launch {
-                        val signed = VerifyChallengeService.sign(podCode, memberLabel.ifBlank { "Member" })
+                        val signed = VerifyChallengeService.sign(context, podCode, memberLabel.ifBlank { "Member" })
                             ?: return@launch
                         val url = VerifyChallengeService.shareUrl(signed)
                         lastUrl = url

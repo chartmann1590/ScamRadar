@@ -1,5 +1,6 @@
 package com.charles.scamradar.app.community
 
+import android.content.Context
 import com.charles.scamradar.app.data.model.ScamType
 import com.charles.scamradar.app.data.model.ScanResult
 import com.charles.scamradar.app.data.model.Verdict
@@ -13,7 +14,7 @@ data class TrendingItem(
     val updatedAt: Long
 )
 
-class CommunityReportsRepository {
+class CommunityReportsRepository(private val context: Context) {
 
     private val firestore by lazy { FirebaseFirestore.getInstance() }
 
@@ -28,8 +29,7 @@ class CommunityReportsRepository {
         val sanitized = ReportSanitizer.sanitize(result.originalMessage)
         if (!sanitized.isUsable) return ReportOutcome.NotEligible
 
-        val uid = AnonymousAuthBootstrapper.ensureSignedIn()
-            ?: return ReportOutcome.Failed("Couldn't sign in anonymously.")
+        val uid = DeviceIdentity.getId(context)
 
         return runCatching {
             firestore.collection("reports")

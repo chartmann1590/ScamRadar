@@ -3,7 +3,6 @@ import java.util.Properties
 
 plugins {
     id("com.android.application")
-    id("org.jetbrains.kotlin.android")
     id("org.jetbrains.kotlin.plugin.compose")
     id("org.jetbrains.kotlin.plugin.serialization")
     id("com.google.gms.google-services")
@@ -35,6 +34,7 @@ fun buildConfigString(value: String): String =
 val githubApiToken = feedbackProperty("github.api.token", "GH_API_TOKEN")
 val githubRepoOwner = feedbackProperty("github.repo.owner", "GH_REPO_OWNER")
 val githubRepoName = feedbackProperty("github.repo.name", "GH_REPO_NAME")
+val googleWebClientId = feedbackProperty("google.web.client.id", "GOOGLE_WEB_CLIENT_ID")
 
 val testAdmobAppId = "ca-app-pub-3940256099942544~3347511713"
 val testAdmobBannerId = "ca-app-pub-3940256099942544/6300978111"
@@ -61,7 +61,7 @@ val envVersionName = System.getenv("ANDROID_VERSION_NAME")
 
 android {
     namespace = "com.charles.scamradar.app"
-    compileSdk = 36
+    compileSdk = 37
 
     signingConfigs {
         create("release") {
@@ -107,6 +107,7 @@ android {
         buildConfigField("String", "GITHUB_REPO_OWNER", buildConfigString(githubRepoOwner))
         buildConfigField("String", "GITHUB_REPO_NAME", buildConfigString(githubRepoName))
         buildConfigField("String", "FEEDBACK_ASSETS_DIR", buildConfigString("feedback-assets"))
+        buildConfigField("String", "GOOGLE_WEB_CLIENT_ID", buildConfigString(googleWebClientId))
     }
 
     buildTypes {
@@ -185,7 +186,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.10.0")
     implementation("androidx.lifecycle:lifecycle-runtime-compose:2.10.0")
     implementation("androidx.lifecycle:lifecycle-process:2.8.7")
-    implementation("androidx.activity:activity-compose:1.9.3")
+    implementation("androidx.activity:activity-compose:1.13.0")
 
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")
@@ -215,6 +216,10 @@ dependencies {
     implementation("com.google.firebase:firebase-appcheck-playintegrity")
     implementation("com.google.firebase:firebase-messaging-ktx")
 
+    implementation("androidx.credentials:credentials:1.3.0")
+    implementation("androidx.credentials:credentials-play-services-auth:1.3.0")
+    implementation("com.google.android.libraries.identity.googleid:googleid:1.1.1")
+
     implementation("com.android.billingclient:billing-ktx:9.0.0")
 
     // On-device ASR via Sherpa-ONNX (16 KB-aligned native libs, fully offline)
@@ -232,7 +237,7 @@ dependencies {
     implementation("androidx.glance:glance-appwidget:1.1.1")
     implementation("androidx.glance:glance-material3:1.1.1")
 
-    implementation("androidx.webkit:webkit:1.12.1")
+    implementation("androidx.webkit:webkit:1.16.0")
 
     implementation("com.google.zxing:core:3.5.4")
     implementation("com.journeyapps:zxing-android-embedded:4.3.0")
@@ -242,7 +247,7 @@ dependencies {
     debugImplementation("androidx.compose.animation:animation-tooling-internal")
 
     testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.2.1")
+    androidTestImplementation("androidx.test.ext:junit:1.3.0")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.7.0")
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
 }
