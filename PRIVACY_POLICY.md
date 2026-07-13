@@ -115,7 +115,6 @@ ScamRadar requests the following permissions:
 |-----------|---------|----------------|
 | `INTERNET` | AdMob ads, Firebase Analytics, model download, community reports | Automatic at install |
 | `ACCESS_NETWORK_STATE` | Check connectivity for model download | Automatic at install |
-| `READ_MEDIA_IMAGES` | Screenshot OCR scanning | Only when you use the screenshot scan feature |
 | `RECORD_AUDIO` | Voicemail recording | Only when you use the voicemail scan feature |
 | `READ_MEDIA_AUDIO` | Voicemail file import | Only when you import an audio file |
 | `CAMERA` | QR code scanning to join a family group | Only when you tap "Scan QR" in Family Join |
