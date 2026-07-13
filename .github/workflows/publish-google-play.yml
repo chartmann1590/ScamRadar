@@ -1,5 +1,8 @@
 name: Publish to Google Play
 
+permissions:
+  contents: read
+
 on:
   workflow_dispatch:
     inputs:
@@ -38,18 +41,18 @@ jobs:
           echo "Publish confirmed. Proceeding with Play release to track: ${{ github.event.inputs.track }}"
 
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
         with:
           fetch-depth: 0
 
       - name: Set up JDK 17
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@c1e323688fd81a25caa38c78aa6df2d33d3e20d9 # v4
         with:
           distribution: temurin
           java-version: 17
 
       - name: Setup Gradle
-        uses: gradle/gradle-build-action@v3
+        uses: gradle/gradle-build-action@12318b01111bfa6462c00534ffa998f8b397b979 # v3
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
@@ -106,7 +109,7 @@ jobs:
         run: ./gradlew bundleRelease
 
       - name: Upload AAB as artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: scamradar-release-aab
           path: app/build/outputs/bundle/release/app-release.aab
@@ -123,7 +126,7 @@ jobs:
           echo "Service account key is present."
 
       - name: Publish to Google Play
-        uses: r0adkll/upload-google-play@v1.1.5
+        uses: r0adkll/upload-google-play@e738b9dd8f2476ea806d921b64aacd24f34515a5 # v1.1.5
         with:
           serviceAccountJsonPlainText: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT_JSON }}
           packageName: com.charles.scamradar.app
