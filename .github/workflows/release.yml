@@ -58,6 +58,7 @@ jobs:
           ADMOB_APP_ID: ${{ secrets.ADMOB_APP_ID }}
           ADMOB_BANNER_ID: ${{ secrets.ADMOB_BANNER_ID }}
           ADMOB_INTERSTITIAL_ID: ${{ secrets.ADMOB_INTERSTITIAL_ID }}
+          ADMOB_NATIVE_ID: ${{ secrets.ADMOB_NATIVE_ID }}
         run: |
           test -n "$GOOGLE_SERVICES_JSON"
           test -n "$KEYSTORE_BASE64"
@@ -67,6 +68,7 @@ jobs:
           test -n "$ADMOB_APP_ID"
           test -n "$ADMOB_BANNER_ID"
           test -n "$ADMOB_INTERSTITIAL_ID"
+          test -n "$ADMOB_NATIVE_ID"
           test "$ADMOB_APP_ID" != "$TEST_ADMOB_APP_ID"
           test "$ADMOB_BANNER_ID" != "$TEST_ADMOB_BANNER_ID"
           test "$ADMOB_INTERSTITIAL_ID" != "$TEST_ADMOB_INTERSTITIAL_ID"
@@ -87,6 +89,7 @@ jobs:
           ADMOB_APP_ID: ${{ secrets.ADMOB_APP_ID }}
           ADMOB_BANNER_ID: ${{ secrets.ADMOB_BANNER_ID }}
           ADMOB_INTERSTITIAL_ID: ${{ secrets.ADMOB_INTERSTITIAL_ID }}
+          ADMOB_NATIVE_ID: ${{ secrets.ADMOB_NATIVE_ID }}
 
       - name: Build signed App Bundle
         run: ./gradlew bundleRelease
@@ -98,6 +101,7 @@ jobs:
           ADMOB_APP_ID: ${{ secrets.ADMOB_APP_ID }}
           ADMOB_BANNER_ID: ${{ secrets.ADMOB_BANNER_ID }}
           ADMOB_INTERSTITIAL_ID: ${{ secrets.ADMOB_INTERSTITIAL_ID }}
+          ADMOB_NATIVE_ID: ${{ secrets.ADMOB_NATIVE_ID }}
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
