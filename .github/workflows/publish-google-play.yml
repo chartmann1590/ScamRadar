@@ -139,14 +139,24 @@ jobs:
           fi
           echo "Service account key is present."
 
-      - name: Publish to Google Play
-        uses: r0adkll/upload-google-play@e738b9dd8f2476ea806d921b64aacd24f34515a5 # v1.1.5
+      - name: Set up Node
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e
         with:
-          serviceAccountJsonPlainText: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT_JSON }}
-          packageName: com.charles.scamradar.app
-          releaseFiles: app/build/outputs/bundle/release/app-release.aab
-          track: ${{ github.event.inputs.track }}
-          status: ${{ github.event.inputs.release_status }}
-          whatsNewDirectory: distribution/whatsnew
-          mappingFile: app/build/outputs/mapping/release/mapping.txt
-          changesNotSentForReview: ${{ github.event.inputs.changes_not_sent_for_review }}
+          node-version: "24"
+
+      - name: Install googleapis
+        run: npm install googleapis@173 --no-save --ignore-scripts
+
+      - name: Publish to Google Play (AAB + en-US store listing)
+        env:
+          GOOGLE_PLAY_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT_JSON }}
+          PACKAGE_NAME: com.charles.scamradar.app
+          AAB_PATH: app/build/outputs/bundle/release/app-release.aab
+          MAPPING_PATH: app/build/outputs/mapping/release/mapping.txt
+          TRACK: ${{ github.event.inputs.track }}
+          RELEASE_STATUS: ${{ github.event.inputs.release_status }}
+          RELEASE_NOTES_PATH: distribution/whatsnew/whatsnew-en-US
+          LISTING_DIR: play-store/listing
+          LISTING_LANGUAGE: en-US
+          CHANGES_NOT_SENT_FOR_REVIEW: ${{ github.event.inputs.changes_not_sent_for_review }}
+        run: node scripts/publish-google-play.mjs
