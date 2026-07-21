@@ -119,7 +119,3 @@ FREE FOREVER + OPTIONAL PREMIUM
 The core scanner — text, screenshot, voicemail, URL, Live Shield, Scam Library, Care Mode — is free forever. A small set of follow-up features unlock with a Premium subscription (Incident Report PDF, Evidence Locker, unlimited Shield per-app coverage, no ads). A Family subscription extends Premium to up to 8 pod members and unlocks the Weekly Digest and Trusted Contact Verification.
 
 Don't get scammed. Get ScamRadar.
-
-— — —
-
-Tags: scam detector, phishing checker, AI text checker, fake message detector, deepfake voice detector, scam text checker, anti-phishing, scam shield, fraud detection, smishing, live notification scam scanner, family scam protection, senior phone safety, recovery checklist
