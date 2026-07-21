@@ -32,6 +32,11 @@ on:
           - completed
           - draft
         default: completed
+      changes_not_sent_for_review:
+        description: 'Commit the Play edit without auto-sending for review. Required when the app has an unresolved policy violation or other change that Play refuses to auto-review; you then submit for review manually from Play Console.'
+        required: false
+        type: boolean
+        default: false
 
 jobs:
   publish:
@@ -144,3 +149,4 @@ jobs:
           status: ${{ github.event.inputs.release_status }}
           whatsNewDirectory: distribution/whatsnew
           mappingFile: app/build/outputs/mapping/release/mapping.txt
+          changesNotSentForReview: ${{ github.event.inputs.changes_not_sent_for_review }}
