@@ -55,6 +55,8 @@ class UserPrefs(private val context: Context) {
     val regionOverride: Flow<String> = dataStore.data.map { it[KEY_REGION_OVERRIDE] ?: "" }
     val fcmTokenRegistered: Flow<Boolean> = dataStore.data.map { it[KEY_FCM_TOKEN_REGISTERED] ?: false }
     val shieldOnboardingSeen: Flow<Boolean> = dataStore.data.map { it[KEY_SHIELD_ONBOARDING_SEEN] ?: false }
+    val reviewPromptVerdictCount: Flow<Int> = dataStore.data.map { it[KEY_REVIEW_PROMPT_VERDICT_COUNT] ?: 0 }
+    val reviewPromptRequested: Flow<Boolean> = dataStore.data.map { it[KEY_REVIEW_PROMPT_REQUESTED] ?: false }
 
     suspend fun setOnboardingComplete(value: Boolean) { dataStore.edit { it[KEY_ONBOARDING_COMPLETE] = value } }
     suspend fun setDarkMode(value: String) { dataStore.edit { it[KEY_DARK_MODE] = value } }
@@ -89,6 +91,26 @@ class UserPrefs(private val context: Context) {
     suspend fun setFcmTokenRegistered(value: Boolean) { dataStore.edit { it[KEY_FCM_TOKEN_REGISTERED] = value } }
     suspend fun setShieldOnboardingSeen(value: Boolean) { dataStore.edit { it[KEY_SHIELD_ONBOARDING_SEEN] = value } }
 
+    /**
+     * Increments the count of verdicts shown and returns true exactly once, the first time the
+     * count crosses [REVIEW_PROMPT_THRESHOLD] — the signal to launch the official Play In-App
+     * Review dialog. A genuine verdict (safe or caught scam) is a real moment of delivered value,
+     * unlike app-open or a raw scan attempt.
+     */
+    suspend fun recordVerdictShownAndCheckReviewPrompt(): Boolean {
+        var shouldPrompt = false
+        dataStore.edit { prefs ->
+            val alreadyRequested = prefs[KEY_REVIEW_PROMPT_REQUESTED] ?: false
+            val count = (prefs[KEY_REVIEW_PROMPT_VERDICT_COUNT] ?: 0) + 1
+            prefs[KEY_REVIEW_PROMPT_VERDICT_COUNT] = count
+            if (!alreadyRequested && count >= REVIEW_PROMPT_THRESHOLD) {
+                prefs[KEY_REVIEW_PROMPT_REQUESTED] = true
+                shouldPrompt = true
+            }
+        }
+        return shouldPrompt
+    }
+
     companion object {
         private val KEY_ONBOARDING_COMPLETE = booleanPreferencesKey("onboarding_complete")
         private val KEY_DARK_MODE = stringPreferencesKey("dark_mode")
@@ -122,6 +144,9 @@ class UserPrefs(private val context: Context) {
         private val KEY_REGION_OVERRIDE = stringPreferencesKey("region_override")
         private val KEY_FCM_TOKEN_REGISTERED = booleanPreferencesKey("fcm_token_registered")
         private val KEY_SHIELD_ONBOARDING_SEEN = booleanPreferencesKey("shield_onboarding_seen")
+        private val KEY_REVIEW_PROMPT_VERDICT_COUNT = intPreferencesKey("review_prompt_verdict_count")
+        private val KEY_REVIEW_PROMPT_REQUESTED = booleanPreferencesKey("review_prompt_requested")
+        private const val REVIEW_PROMPT_THRESHOLD = 3
 
         const val AUTO_SHARE_LIKELY_ONLY = "LIKELY_ONLY"
         const val AUTO_SHARE_LIKELY_AND_SUSPICIOUS = "LIKELY_AND_SUSPICIOUS"

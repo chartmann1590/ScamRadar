@@ -46,12 +46,16 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberModalBottomSheetState
+import android.app.Activity
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import com.google.android.play.core.review.ReviewManagerFactory
+import kotlinx.coroutines.tasks.await
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -111,6 +115,20 @@ fun ResultScreen(
 
     val shareCardGraphicsLayer = rememberGraphicsLayer()
     val shareCardWidthDp = 360.dp
+
+    // A verdict just landed — a genuine moment of delivered value. Any interstitial ad already
+    // ran to completion before navigation reached this screen, so there's no overlap risk.
+    LaunchedEffect(scanResult) {
+        val prefs = userPrefs ?: return@LaunchedEffect
+        val activity = context as? Activity ?: return@LaunchedEffect
+        if (prefs.recordVerdictShownAndCheckReviewPrompt()) {
+            runCatching {
+                val manager = ReviewManagerFactory.create(activity)
+                val reviewInfo = manager.requestReviewFlow().await()
+                manager.launchReviewFlow(activity, reviewInfo).await()
+            }
+        }
+    }
 
     Scaffold(
         topBar = {
