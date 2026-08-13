@@ -40,6 +40,7 @@ import com.charles.scamradar.app.premium.EntitlementRepository
 import com.charles.scamradar.app.ui.components.AdBanner
 import com.charles.scamradar.app.ui.components.BottomNavBar
 import com.charles.scamradar.app.ui.screens.achievements.AchievementsScreen
+import com.charles.scamradar.app.ui.screens.moreapps.MoreAppsScreen
 import com.charles.scamradar.app.ui.screens.help.HelpScreen
 import com.charles.scamradar.app.ui.screens.history.HistoryScreen
 import com.charles.scamradar.app.ui.screens.home.HomeScreen
@@ -340,6 +341,7 @@ fun ScamRadarNavHost(
                     onReplayTutorial = { navController.navigate(Screen.AppTutorial.route) },
                     onOpenPremium = { navController.navigate(Screen.Premium.route) },
                     onOpenAchievements = { navController.navigate(Screen.Achievements.route) },
+                    onOpenMoreApps = { navController.navigate(Screen.MoreApps.route) },
                     onOpenShieldSettings = { navController.navigate(Screen.ShieldSettings.route) },
                     onOpenRecoveryHub = { navController.navigate(Screen.RecoveryHub.route) },
                     onOpenRemoteSetup = { navController.navigate(Screen.RemoteSetupCreate.route) },
@@ -522,6 +524,10 @@ fun ScamRadarNavHost(
 
             composable(Screen.Achievements.route) {
                 AchievementsScreen(onBack = { navController.popBackStack() })
+            }
+
+            composable(Screen.MoreApps.route) {
+                MoreAppsScreen(onBack = { navController.popBackStack() })
             }
 
             composable(Screen.ShieldSettings.route) {

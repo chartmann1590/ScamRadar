@@ -18,6 +18,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.CloudDownload
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Apps
 import androidx.compose.material.icons.filled.Help
 import androidx.compose.material.icons.filled.Language
 import androidx.compose.material.icons.filled.Info
@@ -69,6 +70,7 @@ fun SettingsScreen(
     onReplayTutorial: () -> Unit = {},
     onOpenPremium: () -> Unit = {},
     onOpenAchievements: () -> Unit = {},
+    onOpenMoreApps: () -> Unit = {},
     onOpenShieldSettings: () -> Unit = {},
     onOpenRecoveryHub: () -> Unit = {},
     onOpenRemoteSetup: () -> Unit = {},
@@ -410,6 +412,13 @@ fun SettingsScreen(
                     title = "Replay onboarding tutorial",
                     subtitle = "Review the intro and model setup walkthrough anytime",
                     onClick = onReplayTutorial
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                SettingsActionRow(
+                    icon = Icons.Default.Apps,
+                    title = "More apps from this developer",
+                    subtitle = "Check out our other privacy-first apps",
+                    onClick = onOpenMoreApps
                 )
             }
         }

@@ -34,6 +34,7 @@ sealed class Screen(val route: String) {
     data object Premium : Screen("premium")
 
     data object Achievements : Screen("achievements")
+    data object MoreApps : Screen("more_apps")
 
     data object ShieldSettings : Screen("shield/settings")
     data object ShieldAlert : Screen("shield/alert/{payload}") {
