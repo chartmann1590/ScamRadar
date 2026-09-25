@@ -4,14 +4,14 @@
 /.idea
 node_modules/
 .DS_Store
-/build
+build/
+**/build/
 /captures
 .externalNativeBuild
 .cxx
 local.properties
 app/google-services.json
 .kotlin
-app/build/
 PLAN.md
 SPRINT.md
 pixel-*.xml

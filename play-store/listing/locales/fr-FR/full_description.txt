@@ -1,0 +1,41 @@
+Collez. Vérifiez. Évitez les pièges.
+
+ScamRadar est une IA gratuite fonctionnant directement sur votre appareil qui vous indique en quelques secondes si un SMS, un e-mail, un message vocal ou un lien suspect est une arnaque, avec des explications claires.
+
+Les arnaques par IA ont augmenté de 1 210 % en 2025 et le clonage vocal de 1 633 %. Vous méritez un deuxième avis fiable, plus rapide que les fraudeurs.
+
+POURQUOI SCAMRADAR
+• 100 % sur l'appareil : vos messages ne quittent jamais votre téléphone
+• Aucun compte requis pour analyser
+• Gratuit pour toujours : le scanner principal reste accessible à tous
+• Conçu pour les arnaques modernes par IA, bien au-delà des filtres antispam classiques
+• Explications claires et détaillées de chaque signal d'alerte
+
+FONCTIONNALITÉS PRINCIPALES
+• Analyse de SMS : Collez un message pour un verdict immédiat (Sûr, Suspect, Arnaque probable) avec score de confiance et signaux d'alerte mis en évidence.
+• Live Shield : Analyse discrète sur l'appareil des notifications de Messages, WhatsApp, Signal, Telegram, Gmail, Outlook, Instagram et Messenger. Alerte immédiate dès la réception d'un piège. Désactivé par défaut ; vous choisissez les applications.
+• Analyse de capture d'écran : Partagez une capture d'un e-mail douteux ; la reconnaissance optique OCR l'analyse instantanément.
+• Messages vocaux : Importez ou enregistrez un message vocal ; l'IA détecte les indices de voix clonée.
+• Analyseur de liens (URL) : Inspecte les liens suspects dans un environnement sécurisé avant l'ouverture de votre navigateur.
+• Alerte presse-papiers : Copiez un lien ou une demande d'argent pour recevoir une proposition de vérification en un appui.
+• Guide d'urgence : Si vous avez répondu, cliqué ou payé, suivez une liste d'étapes adaptées pour réagir au plus vite.
+• Signalement officiel : Liens préremplis vers les autorités compétentes selon votre région.
+• Rapport d'incident PDF (Premium) : Exportez un dossier complet pour vos réclamations bancaires ou dépôts de plainte.
+• Mode Confort : Texte agrandi (24pt+), interface simplifiée à bouton unique et appel d'urgence familial.
+• Vérification des proches (Famille) : Liens sécurisés pour confirmer l'identité de vos proches face au clonage vocal.
+• Historique local : Vos 50 dernières analyses stockées uniquement sur votre appareil.
+
+COMMENT ÇA MARCHE
+1. Collez un texte, partagez une capture, importez un audio ou activevez Live Shield.
+2. L'IA locale (Gemma 4) analyse le contenu en toute confidentialité sur votre smartphone.
+3. Obtenez un verdict clair, les pièges repérés et la marche à suivre.
+
+Vos messages ne quittent jamais votre téléphone. Nous ne pouvons littéralement pas lire vos contenus.
+
+CONFIDENTIALITÉ TOTALE
+• Aucun traitement cloud : tout se passe sur votre appareil
+• Pas besoin de compte
+• Aucun enregistrement de message
+• Données strictement locales
+
+Ne vous faites plus piéger. Choisissez ScamRadar.

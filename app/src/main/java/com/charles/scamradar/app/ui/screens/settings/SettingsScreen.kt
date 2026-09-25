@@ -23,6 +23,7 @@ import androidx.compose.material.icons.filled.Apps
 import androidx.compose.material.icons.filled.Language
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.School
+import com.hartmann.crosspromo.ui.HartmannCrossPromoRow
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -424,6 +425,14 @@ fun SettingsScreen(
         }
 
         Spacer(modifier = Modifier.height(12.dp))
+
+        HartmannCrossPromoRow(
+            placement = "settings",
+            limit = 3,
+            modifier = Modifier.padding(bottom = 8.dp)
+        )
+
+        Spacer(modifier = Modifier.height(4.dp))
 
         Card(
             modifier = Modifier.fillMaxWidth(),

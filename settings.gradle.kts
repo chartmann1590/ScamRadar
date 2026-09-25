@@ -16,3 +16,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "ScamRadar"
 include(":app")
+include(":hartmann-crosspromo")

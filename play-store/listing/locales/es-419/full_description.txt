@@ -1,0 +1,48 @@
+Pégalo. Compruébalo. No caigas en la trampa.
+
+ScamRadar es una IA gratuita que funciona directamente en tu dispositivo y te dice en segundos si un mensaje de texto, correo, mensaje de voz o enlace sospechoso es una estafa, explicando el motivo con total claridad.
+
+Las estafas generadas por IA aumentaron un 1.210% en 2025 y la clonación de voz creció un 1.633%. Mereces una segunda opinión más rápida e inteligente.
+
+POR QUÉ SCAMRADAR
+• 100% en el dispositivo: tus mensajes nunca salen de tu teléfono
+• Sin cuenta obligatoria para escanear
+• Gratis para siempre: el escáner principal nunca tendrá muros de pago
+• Creado específicamente para estafas de IA modernas, no simples filtros de spam
+• Explica las señales de alerta en lenguaje claro y comprensible
+
+QUÉ PUEDES HACER
+• Escaneo de Texto: Pega un mensaje y obtén un veredicto instantáneo (Parece Seguro, Sospechoso, Probable Estafa) con puntuación de confianza y señales de alerta destacadas.
+• Live Shield: Escaneo ambiental en el dispositivo de notificaciones de Mensajes, WhatsApp, Signal, Telegram, Gmail, Outlook, Instagram y Messenger. Alerta inmediata ante amenazas. Desactivado por defecto; tú eliges las apps.
+• Captura de Pantalla: Comparte una captura de un correo dudoso; el reconocimiento OCR lo analiza con el mismo clasificador seguro.
+• Mensajes de Voz: Importa o graba un audio; el reconocimiento de voz analiza patrones de clonación de voz por IA.
+• Escáner de Enlaces: Analiza URLs sospechosas en un visor protegido antes de que abras el navegador web.
+• Acceso Rápido del Portapapeles: Copia un enlace o mención de transferencias ("Zelle", "tarjeta de regalo") para revisarlo al instante.
+• Guía de Recuperación: Si respondiste, hiciste clic o pagaste, dispones de una lista de pasos según el tipo de estafa.
+• Denuncias Oficiales: Enlaces directos a entidades regulatorias y de protección al consumidor según tu región.
+• Reporte de Incidentes en PDF (Premium): Exporta documentación para disputas bancarias y denuncias policiales.
+• Modo Cuidado: Texto grande (24pt+), flujo simplificado de un botón y botón de emergencia familiar.
+• Verificación de Contacto Seguro (Familia): Enlaces firmados para confirmar la identidad de tus familiares ante clonación de voz.
+• Biblioteca de Estafas: Explora los fraudes y tácticas más comunes.
+• Historial Local: Tus últimos análisis guardados únicamente en tu teléfono. Búsqueda, filtros y eliminación total.
+
+CÓMO FUNCIONA
+1. Pega un texto, comparte una captura, importa un audio o activa Live Shield.
+2. La IA en el dispositivo (Gemma 4) lo analiza de forma 100% privada.
+3. Recibe un veredicto claro con alertas y pasos recomendados.
+
+Tus mensajes nunca salen de tu teléfono. Es técnicamente imposible que leamos lo que pegas.
+
+PRIVACIDAD ANTE TODO
+• Sin procesamiento en la nube: todo el análisis se ejecuta localmente
+• Sin necesidad de cuenta para escanear
+• Sin registro de mensajes: el contenido jamás se almacena en servidores externos
+• Historial exclusivamente local
+
+PERMISOS
+Notificaciones (para mostrar alertas), acceso a notificaciones (solo si activas Live Shield), micrófono (solo para grabar audios de prueba) y almacenamiento (solo al seleccionar archivos). Nunca solicitamos acceso a SMS, contactos ni registros de llamadas.
+
+GRATIS PARA SIEMPRE + OPCIÓN PREMIUM
+El escáner principal es completamente gratuito. La suscripción opcional añade reportes formales en PDF, mayor cobertura de protección y elimina anuncios.
+
+No te dejes engañar. Protege tu tranquilidad con ScamRadar.

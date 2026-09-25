@@ -6,6 +6,10 @@ import android.os.Looper
 import com.google.firebase.FirebaseApp
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.firebase.perf.FirebasePerformance
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.hartmann.crosspromo.HartmannCrossPromo
+import com.hartmann.crosspromo.analytics.FirebaseAnalyticsAdapter
+import android.os.Bundle
 import com.charles.scamradar.app.download.ModelManager
 import com.charles.scamradar.app.engagement.AchievementEngine
 import com.charles.scamradar.app.messaging.FcmRegistrar
@@ -21,6 +25,27 @@ class ScamRadarApp : Application() {
         FirebaseApp.initializeApp(this)
         FirebaseCrashlytics.getInstance().isCrashlyticsCollectionEnabled = true
         FirebasePerformance.getInstance().isPerformanceCollectionEnabled = true
+
+        val firebaseAnalytics = FirebaseAnalytics.getInstance(this)
+        HartmannCrossPromo.initialize(
+            application = this,
+            apiBaseUrl = "https://hartmann-crosspromo-api.charles-h-hartmann1.workers.dev",
+            analytics = FirebaseAnalyticsAdapter { name, params ->
+                val bundle = Bundle()
+                params.forEach { (k, v) ->
+                    when (v) {
+                        is String -> bundle.putString(k, v)
+                        is Int -> bundle.putInt(k, v)
+                        is Long -> bundle.putLong(k, v)
+                        is Double -> bundle.putDouble(k, v)
+                        is Boolean -> bundle.putBoolean(k, v)
+                        else -> bundle.putString(k, v?.toString())
+                    }
+                }
+                firebaseAnalytics.logEvent(name, bundle)
+            }
+        )
+
         // Mobile Ads SDK is initialized from MainActivity via ConsentManager, after UMP consent is gathered.
         installStaleGlanceTrampolineGuard()
 
