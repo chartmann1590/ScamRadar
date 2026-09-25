@@ -1,5 +1,5 @@
 // Publishes a signed Android App Bundle to Google Play and updates the
-// en-US store listing in a single Play Developer API edit.
+// store listings (across all supported languages) in a single Play Developer API edit.
 //
 // Driven entirely by environment variables so it can run from CI without
 // any third-party action:
@@ -16,11 +16,11 @@
 //                                      otherwise the script attempts auto-review and
 //                                      falls back to no-review if Play refuses.
 //
-// Listing text is the source of truth in the repo (play-store/listing/*.txt),
-// so this keeps the Play Console listing in sync with the codebase.
+// Listing text is the source of truth in the repo (play-store/listing/*.txt and
+// play-store/listing/locales/*), so this keeps the Play Console listing in sync.
 
 import { google } from "googleapis";
-import { readFileSync, createReadStream, existsSync } from "node:fs";
+import { readFileSync, createReadStream, existsSync, readdirSync, statSync } from "node:fs";
 import path from "node:path";
 
 const PACKAGE_NAME = process.env.PACKAGE_NAME || "com.charles.scamradar.app";
@@ -47,8 +47,8 @@ function cleanText(value) {
   return String(value).replace(/\r\n/g, "\n").replace(/\r/g, "\n").trim();
 }
 
-function readListingFile(name) {
-  const file = path.join(LISTING_DIR, name);
+function readListingFile(name, dir = LISTING_DIR) {
+  const file = path.join(dir, name);
   if (!existsSync(file)) {
     throw new Error(`Listing file not found: ${file}`);
   }
@@ -57,7 +57,7 @@ function readListingFile(name) {
 
 function assertLength(label, value, max) {
   if (!value) {
-    throw new Error(`${label} is empty (file: ${LISTING_DIR}).`);
+    throw new Error(`${label} is empty.`);
   }
   if (value.length > max) {
     throw new Error(`${label} is ${value.length} chars, exceeds max ${max}.`);
@@ -65,12 +65,47 @@ function assertLength(label, value, max) {
   console.log(`${label}: ${value.length}/${max} chars OK`);
 }
 
-const title = readListingFile("app_title.txt");
-const shortDescription = readListingFile("short_description.txt");
-const fullDescription = readListingFile("full_description.txt");
-assertLength("title", title, LIMITS.title);
-assertLength("shortDescription", shortDescription, LIMITS.shortDescription);
-assertLength("fullDescription", fullDescription, LIMITS.fullDescription);
+function loadAllListings() {
+  const localesDir = path.join(LISTING_DIR, "locales");
+  const listings = [];
+
+  if (existsSync(localesDir)) {
+    const entries = readdirSync(localesDir);
+    for (const entry of entries) {
+      const dirPath = path.join(localesDir, entry);
+      if (statSync(dirPath).isDirectory()) {
+        const titleFile = path.join(dirPath, "app_title.txt");
+        const shortDescFile = path.join(dirPath, "short_description.txt");
+        const fullDescFile = path.join(dirPath, "full_description.txt");
+        if (existsSync(titleFile) && existsSync(shortDescFile) && existsSync(fullDescFile)) {
+          const title = cleanText(readFileSync(titleFile, "utf8"));
+          const shortDescription = cleanText(readFileSync(shortDescFile, "utf8"));
+          const fullDescription = cleanText(readFileSync(fullDescFile, "utf8"));
+          assertLength(`[${entry}] title`, title, LIMITS.title);
+          assertLength(`[${entry}] shortDescription`, shortDescription, LIMITS.shortDescription);
+          assertLength(`[${entry}] fullDescription`, fullDescription, LIMITS.fullDescription);
+          listings.push({ language: entry, title, shortDescription, fullDescription });
+        }
+      }
+    }
+  }
+
+  // Guarantee default language (en-US) is present from root listing dir if not in locales
+  if (!listings.some((l) => l.language === LISTING_LANGUAGE)) {
+    const title = readListingFile("app_title.txt");
+    const shortDescription = readListingFile("short_description.txt");
+    const fullDescription = readListingFile("full_description.txt");
+    assertLength(`[${LISTING_LANGUAGE}] title`, title, LIMITS.title);
+    assertLength(`[${LISTING_LANGUAGE}] shortDescription`, shortDescription, LIMITS.shortDescription);
+    assertLength(`[${LISTING_LANGUAGE}] fullDescription`, fullDescription, LIMITS.fullDescription);
+    listings.push({ language: LISTING_LANGUAGE, title, shortDescription, fullDescription });
+  }
+
+  return listings;
+}
+
+const allListings = loadAllListings();
+console.log(`Loaded ${allListings.length} store listing(s) to publish: ${allListings.map((l) => l.language).join(", ")}`);
 
 const auth = new google.auth.GoogleAuth({
   credentials: JSON.parse(SERVICE_ACCOUNT_JSON),
@@ -111,34 +146,38 @@ try {
     console.log(`No mapping file at ${MAPPING_PATH}; skipping.`);
   }
 
-  let existingVideo;
-  try {
-    const current = await pub.edits.listings.get({
+  // Update listings across all discovered languages
+  for (const listing of allListings) {
+    let existingVideo;
+    try {
+      const current = await pub.edits.listings.get({
+        packageName: PACKAGE_NAME,
+        editId,
+        language: listing.language,
+      });
+      existingVideo = current.data?.video;
+    } catch (_err) {
+      // Listing doesn't exist yet for this language
+    }
+
+    const listingBody = {
+      language: listing.language,
+      title: listing.title,
+      fullDescription: listing.fullDescription,
+      shortDescription: listing.shortDescription,
+    };
+    if (existingVideo) {
+      listingBody.video = existingVideo;
+    }
+
+    await pub.edits.listings.update({
       packageName: PACKAGE_NAME,
       editId,
-      language: LISTING_LANGUAGE,
+      language: listing.language,
+      requestBody: listingBody,
     });
-    existingVideo = current.data?.video;
-  } catch (err) {
-    console.warn(`Could not read existing ${LISTING_LANGUAGE} listing (continuing): ${err.message}`);
+    console.log(`Updated ${listing.language} store listing.`);
   }
-
-  const listingBody = {
-    language: LISTING_LANGUAGE,
-    title,
-    fullDescription,
-    shortDescription,
-  };
-  if (existingVideo) {
-    listingBody.video = existingVideo;
-  }
-  await pub.edits.listings.update({
-    packageName: PACKAGE_NAME,
-    editId,
-    language: LISTING_LANGUAGE,
-    requestBody: listingBody,
-  });
-  console.log(`Updated ${LISTING_LANGUAGE} store listing.`);
 
   let releaseNotes = "";
   if (existsSync(RELEASE_NOTES_PATH)) {
@@ -149,7 +188,10 @@ try {
     status: RELEASE_STATUS,
   };
   if (releaseNotes) {
-    release.releaseNotes = [{ language: LISTING_LANGUAGE, text: releaseNotes }];
+    release.releaseNotes = allListings.map((l) => ({
+      language: l.language,
+      text: releaseNotes,
+    }));
   }
   await pub.edits.tracks.update({
     packageName: PACKAGE_NAME,

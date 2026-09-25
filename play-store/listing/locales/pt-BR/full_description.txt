@@ -1,0 +1,41 @@
+Cole. Verifique. Não caia no golpe.
+
+O ScamRadar é uma IA gratuita que funciona diretamente no seu celular e informa em segundos se um SMS, e-mail, mensagem de voz ou link suspeito é golpe, explicando os motivos em detalhes.
+
+Golpes com IA aumentaram 1.210% e clonagem de voz por inteligência artificial cresceu 1.633%. Você precisa de uma verificação rápida e confiável.
+
+POR QUE USAR O SCAMRADAR
+• 100% no celular: suas mensagens nunca saem do seu aparelho
+• Sem necessidade de criar conta
+• Grátis para sempre: o verificador principal nunca terá cobrança
+• Feito sob medida para golpes modernos de IA, superando filtros comuns de spam
+• Alertas claros explicando os sinais de perigo
+
+O QUE VOCÊ PODE FAZER
+• Verificação de Texto: Cole mensagens para veredicto na hora (Parece Seguro, Suspeito, Provável Golpe) com índice de certeza e alertas em destaque.
+• Live Shield: Monitoramento discreto no celular para notificações do WhatsApp, Mensagens, Signal, Telegram, Gmail, Outlook, Instagram e Messenger. Aviso imediato ao receber algo perigoso. Desativado por padrão; você escolhe os apps.
+• Verificação de Capturas de Tela: Compartilhe prints de e-mails duvidosos para leitura OCR local.
+• Mensagens de Voz: Envie ou grave áudios; o sistema identifica padrões comuns de clonagem de voz por IA.
+• Verificador de Links e URLs: Avalia links duvidosos em ambiente seguro antes de abrir seu navegador.
+• Alerta da Área de Transferência: Ao copiar dados de pagamentos ("Pix", "transferência", links), receba um aviso para checar em um toque.
+• Guia de Recuperação: Caso tenha clicado ou feito pagamento, siga passos práticos para minimizar danos.
+• Denúncias Oficiais: Links rápidos para órgãos de proteção e segurança ao consumidor.
+• Relatório de Incidentes em PDF (Premium): Documentação pronta para bancos e boletins de ocorrência.
+• Modo Cuidado: Letras ampliadas (24pt+), fluxo simplificado e botão de emergência para contatar parentes.
+• Verificação de Contato Familiar: Links seguros para validar quem está falando e evitar golpes de voz clonada.
+• Histórico Local: Últimas 50 consultas gravadas com privacidade no seu telefone.
+
+COMO FUNCIONA
+1. Cole um texto, compartilhe um print, envie um áudio ou ative o Live Shield.
+2. A inteligência artificial local (Gemma 4) analisa tudo com total privacidade.
+3. Receba o veredicto claro, alertas e orientações do que fazer.
+
+Suas mensagens nunca saem do seu celular. Não temos acesso ao que você cola.
+
+PRIVACIDADE TOTAL
+• Sem envio para a nuvem: todo o processamento ocorre no próprio celular
+• Não exige cadastro nem login
+• Conteúdos não são gravados em servidores
+• Histórico 100% no dispositivo
+
+Evite fraudes e proteja sua família com o ScamRadar.

@@ -1,0 +1,52 @@
+Paste it. Check it. Don't get scammed.
+
+ScamRadar is a free, on-device AI that tells you in seconds whether a suspicious text, email, voicemail, or URL is a scam — and explains why.
+
+AI scams jumped 1,210% in 2025 and deepfake voice phishing is up 1,633%. You deserve a second opinion that's faster than you.
+
+WHY SCAMRADAR
+• 100% on-device — your messages never leave your phone
+• No account needed to scan
+• Free forever — the core scanner is never paywalled
+• Built for AI scams, not retrofitted spam filters
+• Explains the red flags in plain English
+
+WHAT YOU CAN DO
+• Text Scan — Paste a message for an instant verdict (Looks Safe, Suspicious, Likely Scam) with a confidence score and red flags highlighted.
+• Live Shield — Ambient on-device scanning of notifications from Messages, WhatsApp, Signal, Telegram, Gmail, Outlook, Instagram and Messenger. A discreet alert appears the moment a scam arrives. Off by default; you pick the apps.
+• Email Screenshot Scan — Share a screenshot of a sketchy email; OCR runs it through the same classifier.
+• Voicemail Scan — Import or record a voicemail; on-device speech recognition looks for AI voice-cloning indicators.
+• URL Scanner + Pre-Click Guard — Captures a suspicious URL in a hardened WebView, runs OCR + Safe Browsing, and can intercept link taps to show the verdict before your browser opens.
+• Clipboard Chip — Copy a sketchy link or money phrase ("Zelle", "gift card") for a one-tap "Check this?" heads-up.
+• Recovery Wizard — If you replied, clicked, or paid, a stepped recovery checklist scoped to the scam type. Resumable across sessions.
+• Authority Reports — Pre-filled deep links to FTC, IC3, BBB, Action Fraud (UK), Scamwatch (AU), CAFC (Canada), and 7726, auto-selected for your region.
+• Incident Report PDF + Evidence Locker (Premium) — Export a PDF or evidence ZIP for bank disputes, police reports, and insurance claims.
+• Care Mode — Larger text (24pt+), single-button flow, spoken verdicts, and a "Call my family" emergency button.
+• Trusted Contact Verification (Family) — Signed "It's really me" links prove a message is really from your family member and stop voice-cloning impersonation.
+• Family Weekly Digest (Family) — A Monday push summarizing the week's scans and caught scams. Anonymous — no content leaves devices.
+• Trending Scam Alerts — A one-line, region-only alert (no PII) when a scam spikes near you.
+• Scam Library — Browse the most common scam patterns of 2026.
+• Scan History — Your last 50 scans, on-device only. Search, filter, delete. Never synced.
+• Warn Family or Friends — Share a verdict card via SMS, WhatsApp, or group chat.
+
+HOW IT WORKS
+1. Paste a text, share a screenshot, import a voicemail, or turn on Live Shield.
+2. On-device AI (Gemma 4) analyzes it privately on your phone.
+3. Get a clear verdict, highlighted red flags, and next steps.
+
+Your messages never leave your phone. We literally cannot read what you paste.
+
+PRIVACY-FIRST
+• No cloud processing — all analysis is on your device
+• No account needed to scan
+• No message logging — scan content is never sent anywhere
+• Local history only — on-device, deletable, never synced
+• Anonymous analytics only (button taps, no message content)
+
+PERMISSIONS
+Notifications (to post alerts), notification access (only for Live Shield), microphone (only for voicemail recording), storage/photos (only when you pick a file), and internet (for the optional AI model and Firebase family/community features). We never request SMS, contacts, call log, or accessibility permissions.
+
+FREE FOREVER + OPTIONAL PREMIUM
+The core scanner — text, screenshot, voicemail, URL, Live Shield, Scam Library, Care Mode — is free forever. Premium adds the Incident Report PDF, Evidence Locker, unlimited Shield coverage, and no ads. A Family subscription extends Premium to up to 8 members and unlocks the Weekly Digest and Trusted Contact Verification.
+
+Don't get scammed. Get ScamRadar.

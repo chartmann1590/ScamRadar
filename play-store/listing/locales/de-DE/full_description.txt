@@ -1,0 +1,41 @@
+Einfügen. Prüfen. Nicht täuschen lassen.
+
+ScamRadar ist eine kostenlose KI, die direkt auf Ihrem Gerät läuft und Ihnen in Sekundenschnelle mitteilt, ob eine verdächtige SMS, E-Mail, Sprachnachricht oder ein Weblink ein Betrugsversuch ist – verständlich und nachvollziehbar erklärt.
+
+KI-Betrug stieg 2025 um 1.210 % und Stimmklone um 1.633 %. Sie verdienen eine verlässliche Zweitmeinung, die Betrügern immer einen Schritt voraus ist.
+
+WARUM SCAMRADAR
+• 100 % auf dem Gerät: Ihre Nachrichten verlassen niemals Ihr Telefon
+• Kein Benutzerkonto für Analysen erforderlich
+• Dauerhaft kostenlos: Der Kernscanner bleibt ohne Paywall
+• Speziell für moderne KI-Angriffe entwickelt, nicht nur ein einfacher Spamfilter
+• Verständliche Erklärung aller Warnsignale auf einen Blick
+
+DIE WICHTIGSTEN FUNKTIONEN
+• Text-Scan: Fügen Sie eine Nachricht ein und erhalten Sie ein sofortiges Ergebnis (Sicher, Verdächtig, Wahrscheinlicher Betrug) inklusive Vertrauensindex und hervorgehobenen Alarmzeichen.
+• Live Shield: Diskrete Hintergrundprüfung von Benachrichtigungen aus Messages, WhatsApp, Signal, Telegram, Gmail, Outlook, Instagram und Messenger direkt auf dem Gerät. Sofortiger Alarm bei Betrugsversuchen. Standardmäßig deaktiviert – Sie entscheiden, welche Apps überwacht werden.
+• Screenshot-Scan: Teilen Sie Screenshots zweifelhafter E-Mails; per OCR-Texterkennung wird der Inhalt lokal analysiert.
+• Sprachnachrichten-Scan: Importieren oder nehmen Sie Sprachnachrichten auf; die Erkennung sucht gezielt nach KI-Stimmklon-Mustern.
+• Link- & URL-Schutz: Untersucht verdächtige Links in einer isolierten Umgebung, noch bevor sich Ihr Webbrowser öffnet.
+• Schnelle Zwischenablage: Kopieren Sie einen verdächtigen Link oder Zahlungsaufforderungen für eine Ein-Klick-Überprüfung.
+• Notfall-Leitfaden: Falls Sie geantwortet, geklickt oder gezahlt haben – strukturierte Schritte passend zum jeweiligen Betrugstyp.
+• Offizielle Meldestellen: Direkte Links zu Verbraucherzentralen und Behörden.
+• PDF-Vorfallbericht (Premium): Detaillierte Dokumentation für Banken, Versicherungen oder die Polizei.
+• Pflege-Modus: Große Schrift (24pt+), vereinfachter Ein-Knopf-Ablauf und Schnellwahltaste für Angehörige.
+• Familienschutz: Sichere Verifizierungslinks gegen gefälschte Sprachnachrichten aus dem Bekanntenkreis.
+• Lokaler Verlauf: Ihre letzten 50 Überprüfungen verbleiben sicher und löschbar auf Ihrem Smartphone.
+
+SO FUNKTIONIERT ES
+1. Fügen Sie Text ein, teilen Sie einen Screenshot, importieren Sie ein Audio oder aktivieren Sie Live Shield.
+2. Die lokale KI (Gemma 4) analysiert den Inhalt absolut vertraulich auf Ihrem Gerät.
+3. Sie erhalten eine klare Einschätzung, gefundene Auffälligkeiten und empfohlene Sofortmaßnahmen.
+
+Ihre Nachrichten verlassen niemals Ihr Smartphone. Wir können Ihre Inhalte technisch nicht einsehen.
+
+DATENSCHUTZ AN ERSTER STELLE
+• Keine Cloud-Verarbeitung: Alle Analysen finden lokal statt
+• Keine Registrierung oder Anmeldung erforderlich
+• Keine Speicherung von Nachrichteninhalten
+• Vollständige Kontrolle über Ihre Daten
+
+Schützen Sie sich vor Betrug mit ScamRadar.

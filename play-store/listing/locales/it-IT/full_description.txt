@@ -1,0 +1,39 @@
+Incolla. Controlla. Non farti truffare.
+
+ScamRadar è un'intelligenza artificiale gratuita che opera direttamente sul tuo dispositivo e ti dice in pochi secondi se un SMS, un'e-mail, un messaggio vocale o un link sospetto è una truffa, spiegandoti chiaramente il perché.
+
+Le truffe generate dall'IA sono aumentate del 1.210% e il phishing con clonazione della voce del 1.633%. Meriti una seconda opinione affidabile e più veloce dei truffatori.
+
+PERCHÉ SCAMRADAR
+• 100% sul dispositivo: i tuoi messaggi non lasciano mai il telefono
+• Nessun account richiesto per effettuare le scansioni
+• Gratuito per sempre: il motore di scansione principale non è a pagamento
+• Progettato per le nuove truffe basate su IA, non un semplice filtro antispam
+• Spiega i segnali di allarme in modo chiaro e immediato
+
+FUNZIONALITÀ PRINCIPALI
+• Scansione Testo: Incolla un messaggio per ottenere un verdetto immediato (Sicuro, Sospetto, Probabile Truffa) con punteggio di affidabilità e segnali d'allarme evidenziati.
+• Live Shield: Scansione discreta in background delle notifiche di Messaggi, WhatsApp, Signal, Telegram, Gmail, Outlook, Instagram e Messenger. Allerta istantanea se arriva un contenuto pericoloso. Disattivato per impostazione predefinita; scegli tu quali app proteggere.
+• Scansione Screenshot: Condividi lo screenshot di un'e-mail sospetta; la lettura OCR lo analizza all'istante.
+• Messaggi Vocali: Importa o registra un vocale; l'algoritmo rileva le tracce di voci clonate con IA.
+• Analizzatore URL: Esamina link sconosciuti in un ambiente protetto prima che si aprano nel browser.
+• Avviso Appunti: Copiando richieste di denaro o link dubbi, ricevi subito un invito alla verifica con un tocco.
+• Guida d'Emergenza: Se hai risposto, cliccato o pagato, segui i passaggi mirati per limitare i danni.
+• Rapporto Ufficiale in PDF (Premium): Crea un fascicolo di prove per contestazioni bancarie o denunce.
+• Modalità Assistita: Testo ingrandito (24pt+), flusso semplificato a pulsante unico e chiamata rapida ai familiari.
+• Verifica Contatti di Famiglia: Link con firma sicura per verificare chi sta parlando ed evitare il raggiro della voce clonata.
+• Cronologia Locale: Le ultime 50 verifiche restano riservate sul tuo smartphone e possono essere cancellate in qualsiasi momento.
+
+COME FUNZIONA
+1. Incolla un testo, condividi uno screenshot, carica un audio o attiva Live Shield.
+2. L'IA locale (Gemma 4) analizza i contenuti in totale privacy.
+3. Ricevi un verdetto chiaro e le istruzioni pratiche.
+
+I tuoi messaggi non lasciano mai il tuo telefono. Non possiamo leggere ciò che incolli.
+
+MASSIMA RISERVATEZZA
+• Nessun'elaborazione su cloud: tutto avviene sul tuo telefono
+• Nessuna registrazione o login necessario
+• Nessuna registrazione dei messaggi
+
+Proteggiti dalle truffe online con ScamRadar.
