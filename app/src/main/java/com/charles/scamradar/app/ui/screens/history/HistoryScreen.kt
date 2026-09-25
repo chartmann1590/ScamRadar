@@ -110,7 +110,7 @@ fun HistoryScreen(
         } else {
             byVerdict.filter { entity ->
                 entity.originalMessage.contains(query, ignoreCase = true) ||
-                    (entity.scamType?.contains(query, ignoreCase = true) == true)
+                    entity.scamType.contains(query, ignoreCase = true)
             }
         }
     }
@@ -301,10 +301,10 @@ private fun HistoryItemCard(
     val urlMeta = remember(item.id, item.urlMetadataJson) { item.urlMetadata() }
     val isUrlScan = item.scanMode == ScanMode.URL.name && urlMeta != null
     val isShieldScan = item.scanMode == ScanMode.SHIELD.name
-    val preview = if (isUrlScan && urlMeta != null) urlMeta.finalUrl
+    val preview = if (isUrlScan) urlMeta.finalUrl
         else item.originalMessage.trim().ifEmpty { "(empty message)" }
     val scamTypeLabel = item.scamType
-        ?.takeIf { it.isNotBlank() && it.uppercase() !in setOf("NONE", "UNKNOWN") }
+        .takeIf { it.isNotBlank() && it.uppercase() !in setOf("NONE", "UNKNOWN") }
         ?.replace('_', ' ')
         ?.lowercase()
         ?.replaceFirstChar { it.uppercase() }
@@ -388,7 +388,7 @@ private fun HistoryItemCard(
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            if (isUrlScan && urlMeta != null) {
+            if (isUrlScan) {
                 ScreenshotThumb(path = urlMeta.screenshotPath)
                 Spacer(modifier = Modifier.height(8.dp))
             }
