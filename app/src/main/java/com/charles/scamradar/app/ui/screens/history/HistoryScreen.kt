@@ -301,7 +301,7 @@ private fun HistoryItemCard(
     val urlMeta = remember(item.id, item.urlMetadataJson) { item.urlMetadata() }
     val isUrlScan = item.scanMode == ScanMode.URL.name && urlMeta != null
     val isShieldScan = item.scanMode == ScanMode.SHIELD.name
-    val preview = if (isUrlScan) urlMeta.finalUrl
+    val preview = if (isUrlScan && urlMeta != null) urlMeta.finalUrl
         else item.originalMessage.trim().ifEmpty { "(empty message)" }
     val scamTypeLabel = item.scamType
         .takeIf { it.isNotBlank() && it.uppercase() !in setOf("NONE", "UNKNOWN") }
@@ -388,7 +388,7 @@ private fun HistoryItemCard(
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            if (isUrlScan) {
+            if (isUrlScan && urlMeta != null) {
                 ScreenshotThumb(path = urlMeta.screenshotPath)
                 Spacer(modifier = Modifier.height(8.dp))
             }
