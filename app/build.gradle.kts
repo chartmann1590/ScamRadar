@@ -221,7 +221,7 @@ dependencies {
     implementation("androidx.credentials:credentials-play-services-auth:1.6.0")
     implementation("com.google.android.libraries.identity.googleid:googleid:1.2.1")
 
-    implementation("com.android.billingclient:billing-ktx:9.0.0")
+    implementation("com.android.billingclient:billing-ktx:9.1.0")
 
     // On-device ASR via Sherpa-ONNX (16 KB-aligned native libs, fully offline)
     implementation(files("libs/sherpa-onnx-1.13.2.aar"))
