@@ -26,6 +26,7 @@ jobs:
 
       - name: Run digest aggregator
         env:
-          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+          # Same service-account secret the community-trending job already uses (raw JSON).
+          FIREBASE_SERVICE_ACCOUNT_JSON: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_JSON }}
           FCM_BROADCAST: '1'
         run: node scripts/update-digest.mjs
