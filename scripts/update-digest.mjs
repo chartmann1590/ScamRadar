@@ -3,21 +3,33 @@
 // For each active pod, computes the last 7 days' share counts and writes
 // pods/{code}/digests/{week-starting-iso}.
 //
-// Required env:
-//   FIREBASE_SERVICE_ACCOUNT  base64-encoded service-account JSON
-//   FCM_BROADCAST             "1" to also send FCM topic broadcasts (optional)
+// Required env (either one):
+//   FIREBASE_SERVICE_ACCOUNT_JSON  service-account JSON (raw), same secret as update-trending
+//   FIREBASE_SERVICE_ACCOUNT       service-account JSON, raw or base64-encoded (legacy)
+//   FCM_BROADCAST                  "1" to also send FCM topic broadcasts (optional)
 
 import { initializeApp, cert } from 'firebase-admin/app';
 import { getFirestore, FieldValue, Timestamp } from 'firebase-admin/firestore';
 import { getMessaging } from 'firebase-admin/messaging';
 
 const ENV = process.env;
-if (!ENV.FIREBASE_SERVICE_ACCOUNT) {
-  console.error('FIREBASE_SERVICE_ACCOUNT not set');
-  process.exit(1);
+
+function loadServiceAccount() {
+  const raw = (ENV.FIREBASE_SERVICE_ACCOUNT_JSON || ENV.FIREBASE_SERVICE_ACCOUNT || '').trim();
+  if (!raw) {
+    console.error('Missing service account: set the FIREBASE_SERVICE_ACCOUNT_JSON repository secret.');
+    process.exit(1);
+  }
+  const text = raw.startsWith('{') ? raw : Buffer.from(raw, 'base64').toString('utf8');
+  try {
+    return JSON.parse(text);
+  } catch {
+    console.error('Service account secret is not valid JSON (raw or base64).');
+    process.exit(1);
+  }
 }
 
-const sa = JSON.parse(Buffer.from(ENV.FIREBASE_SERVICE_ACCOUNT, 'base64').toString('utf8'));
+const sa = loadServiceAccount();
 initializeApp({ credential: cert(sa) });
 const db = getFirestore();
 const msg = getMessaging();
