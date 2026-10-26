@@ -36,8 +36,8 @@ dependencies {
     implementation(composeBom)
 
     implementation("androidx.core:core-ktx:1.19.1")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.11.0")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.11.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.12.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.12.0")
     implementation("androidx.datastore:datastore-preferences:1.2.1")
 
     implementation("androidx.compose.ui:ui")
@@ -51,5 +51,5 @@ dependencies {
 
     // ---- Unit tests (pure JVM, no device needed) ----
     testImplementation("junit:junit:4.13.2")
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.11.0")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.12.0")
 }
