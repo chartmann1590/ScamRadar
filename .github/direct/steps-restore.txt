@@ -6,8 +6,10 @@ shot 02-story-end
 tap (?i)^start protecting me$
 wait 4
 taploop (?i)^(get started|continue|allow|ok|got it|not now|while using the app)$
+taploop (?i)^(get started|continue|allow|ok|got it|not now|while using the app)$
+wait 3
 shot 03-model-setup
-scrollto (?i)^start with lite mode$
+tap (?i)^start with lite mode$
 wait 4
 taploop (?i)^(start scanning|continue|allow|ok|got it|not now|skip|done)$
 adclose
