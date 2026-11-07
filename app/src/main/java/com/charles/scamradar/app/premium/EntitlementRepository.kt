@@ -11,8 +11,9 @@ class EntitlementRepository(context: Context) {
 
     val entitlement: Flow<EntitlementState> = userPrefs.tier.map { stored ->
         when (stored) {
-            UserPrefs.TIER_PREMIUM -> EntitlementState.PREMIUM
-            UserPrefs.TIER_FAMILY -> EntitlementState.FAMILY
+            // Amazon Appstore build: no Play subscriptions, so never Premium/Family (joining a pod stays free).
+            UserPrefs.TIER_PREMIUM -> if (com.charles.scamradar.app.BuildConfig.STORE == "amazon") EntitlementState.FREE else EntitlementState.PREMIUM
+            UserPrefs.TIER_FAMILY -> if (com.charles.scamradar.app.BuildConfig.STORE == "amazon") EntitlementState.FREE else EntitlementState.FAMILY
             UserPrefs.TIER_FAMILY_MEMBER -> EntitlementState.FAMILY_MEMBER
             else -> EntitlementState.FREE
         }

@@ -115,7 +115,7 @@ fun FamilyOnboardingScreen(
                         subtitle = "Generate a fresh code and share it",
                         onClick = onCreate
                     )
-                } else {
+                } else if (!(com.charles.scamradar.app.BuildConfig.STORE == "amazon")) { // Amazon Appstore build: no Family plan upsell
                     GateCard(
                         icon = Icons.Default.WorkspacePremium,
                         title = "Hosting a pod needs the Family plan",

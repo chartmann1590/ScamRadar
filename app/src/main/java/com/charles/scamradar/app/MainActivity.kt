@@ -44,8 +44,11 @@ class MainActivity : ComponentActivity() {
         // subscription canceled/expired outside the app (or in the Play
         // Store) is detected promptly instead of only when the user next
         // opens the Premium screen.
-        val startupBilling = BillingClientWrapper(applicationContext, entitlementRepository)
-        startupBilling.startConnection()
+        // Amazon Appstore build: Play Billing is never started (free + ads on Fire).
+        if (!(com.charles.scamradar.app.BuildConfig.STORE == "amazon")) {
+            val startupBilling = BillingClientWrapper(applicationContext, entitlementRepository)
+            startupBilling.startConnection()
+        }
 
         CoroutineScope(Dispatchers.Main).launch {
             ConsentManager.adsReady.filter { it }.first()

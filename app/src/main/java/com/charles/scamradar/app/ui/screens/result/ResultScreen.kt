@@ -121,7 +121,7 @@ fun ResultScreen(
     LaunchedEffect(scanResult) {
         val prefs = userPrefs ?: return@LaunchedEffect
         val activity = context as? Activity ?: return@LaunchedEffect
-        if (prefs.recordVerdictShownAndCheckReviewPrompt()) {
+        if (!(com.charles.scamradar.app.BuildConfig.STORE == "amazon") && prefs.recordVerdictShownAndCheckReviewPrompt()) { // Amazon Appstore build: no Play review prompt
             runCatching {
                 val manager = ReviewManagerFactory.create(activity)
                 val reviewInfo = manager.requestReviewFlow().await()

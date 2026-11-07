@@ -196,7 +196,7 @@ fun ShieldSettingsScreen(onBack: () -> Unit) {
                     if (!entitlement.unlocksPremium()) {
                         Spacer(Modifier.height(8.dp))
                         Text(
-                            "Free plan watches up to ${ShieldFilter.FREE_TIER_APP_LIMIT} apps at once. Upgrade to Premium for unlimited coverage.",
+                            if (com.charles.scamradar.app.BuildConfig.STORE == "amazon") "Watches up to ${ShieldFilter.FREE_TIER_APP_LIMIT} apps at once." else "Free plan watches up to ${ShieldFilter.FREE_TIER_APP_LIMIT} apps at once. Upgrade to Premium for unlimited coverage.",
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )

@@ -226,7 +226,7 @@ fun RecoveryWizardScreen(
                         Spacer(Modifier.size(8.dp))
                         Text("Export incident PDF")
                     }
-                } else {
+                } else if (!(com.charles.scamradar.app.BuildConfig.STORE == "amazon")) { // Amazon Appstore build: Premium export hidden, no upsell
                     Surface(
                         modifier = Modifier.fillMaxWidth(),
                         shape = RoundedCornerShape(16.dp),
@@ -276,7 +276,7 @@ fun RecoveryWizardScreen(
                         Spacer(Modifier.size(8.dp))
                         Text("Export evidence ZIP")
                     }
-                } else {
+                } else if (!(com.charles.scamradar.app.BuildConfig.STORE == "amazon")) { // Amazon Appstore build: Premium export hidden, no upsell
                     Surface(
                         modifier = Modifier.fillMaxWidth(),
                         shape = RoundedCornerShape(16.dp),

@@ -131,7 +131,8 @@ fun SettingsScreen(
             modifier = Modifier.padding(top = 16.dp, bottom = 16.dp)
         )
 
-        com.charles.scamradar.app.premium.PremiumCard(
+        // Amazon Appstore build: no Premium card (Play subscriptions don't exist on Fire).
+        if (!(com.charles.scamradar.app.BuildConfig.STORE == "amazon")) com.charles.scamradar.app.premium.PremiumCard(
             entitlement = entitlement,
             onClick = onOpenPremium,
         )
@@ -414,19 +415,22 @@ fun SettingsScreen(
                     subtitle = "Review the intro and model setup walkthrough anytime",
                     onClick = onReplayTutorial
                 )
-                Spacer(modifier = Modifier.height(8.dp))
-                SettingsActionRow(
-                    icon = Icons.Default.Apps,
-                    title = "More apps from this developer",
-                    subtitle = "Check out our other privacy-first apps",
-                    onClick = onOpenMoreApps
-                )
+                // Amazon Appstore build: cross-promo opens Google Play listings, so it's hidden.
+                if (!(com.charles.scamradar.app.BuildConfig.STORE == "amazon")) {
+                    Spacer(modifier = Modifier.height(8.dp))
+                    SettingsActionRow(
+                        icon = Icons.Default.Apps,
+                        title = "More apps from this developer",
+                        subtitle = "Check out our other privacy-first apps",
+                        onClick = onOpenMoreApps
+                    )
+                }
             }
         }
 
         Spacer(modifier = Modifier.height(12.dp))
 
-        HartmannCrossPromoRow(
+        if (!(com.charles.scamradar.app.BuildConfig.STORE == "amazon")) HartmannCrossPromoRow(
             placement = "settings",
             limit = 3,
             modifier = Modifier.padding(bottom = 8.dp)

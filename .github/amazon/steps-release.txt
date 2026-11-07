@@ -1,0 +1,37 @@
+launch
+wait 15
+adclose
+shot 01-launch
+taploop (?i)^(get started|continue|next|skip|allow|ok|got it|not now|later|maybe later|no thanks|accept|agree|i agree)$
+wait 3
+shot 02-onboarding
+scrollto (?i)^start with lite mode$
+wait 5
+shot 03-after-lite
+taploop (?i)^(start scanning|continue|next|skip|allow|ok|got it|not now|later|maybe later|no thanks|done|while using the app)$
+adclose
+wait 3
+shot 04-home
+swipeup
+shot 05-home-scrolled
+tap (?i)^(library|history)$
+wait 3
+adclose
+shot 06-tab2
+tap (?i)^(stats|today|shield)$
+wait 3
+adclose
+shot 07-tab3
+tap (?i)^settings$
+wait 4
+adclose
+shot 08-settings
+swipeup
+swipeup
+shot 09-settings-mid
+swipeup
+swipeup
+shot 10-settings-bottom
+back
+wait 2
+shot 11-back

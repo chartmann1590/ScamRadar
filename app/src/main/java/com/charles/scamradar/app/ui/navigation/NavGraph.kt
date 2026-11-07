@@ -519,7 +519,8 @@ fun ScamRadarNavHost(
             }
 
             composable(Screen.Premium.route) {
-                PremiumScreen(onBack = { navController.popBackStack() })
+                // Amazon Appstore build: the Play subscription screen is never shown.
+                if (com.charles.scamradar.app.BuildConfig.STORE == "amazon") LaunchedEffect(Unit) { navController.popBackStack() } else PremiumScreen(onBack = { navController.popBackStack() })
             }
 
             composable(Screen.Achievements.route) {
