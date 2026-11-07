@@ -40,6 +40,8 @@ import com.charles.scamradar.app.premium.BillingClientWrapper
 import com.charles.scamradar.app.premium.EntitlementRepository
 import com.charles.scamradar.app.premium.EntitlementSku
 import com.charles.scamradar.app.premium.EntitlementState
+import com.hartmannstudios.direct.DirectBilling
+import androidx.compose.material3.TextButton
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -129,7 +131,22 @@ fun PremiumScreen(
             Text("Choose a plan", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
             Spacer(Modifier.height(8.dp))
 
-            products.forEach { product ->
+            if (DirectBilling.isDirect) {
+                // Direct (GitHub / charleshartmann.com) build: Stripe Checkout instead of Google Play.
+                DIRECT_PLANS.forEach { plan ->
+                    DirectPlanCard(plan, onSubscribe = {
+                        val activity = context as? Activity ?: return@DirectPlanCard
+                        billing.launchDirect(activity, plan.key)
+                    })
+                    Spacer(Modifier.height(8.dp))
+                }
+                Row {
+                    TextButton(onClick = { (context as? Activity)?.let { billing.restoreDirect(it) } }) { Text("Restore purchases") }
+                    TextButton(onClick = { (context as? Activity)?.let { billing.manageDirect(it) } }) { Text("Manage subscription") }
+                }
+            }
+
+            if (!DirectBilling.isDirect) products.forEach { product ->
                 PlanCard(
                     product = product,
                     onSubscribe = {
@@ -140,7 +157,7 @@ fun PremiumScreen(
                 Spacer(Modifier.height(8.dp))
             }
 
-            if (products.isEmpty()) {
+            if (!DirectBilling.isDirect && products.isEmpty()) {
                 Text(
                     text = "Plans loading… If this persists, check Play Store sign-in.",
                     style = MaterialTheme.typography.bodyMedium,
@@ -151,7 +168,8 @@ fun PremiumScreen(
             Spacer(Modifier.height(24.dp))
 
             Text(
-                text = "Subscriptions auto-renew until cancelled in Google Play. Manage anytime in Play Store > Subscriptions.",
+                text = if (DirectBilling.isDirect) "Prices in USD. Secure checkout by Stripe. Subscriptions auto-renew until cancelled. Manage anytime with Manage subscription above. Your purchase is tied to the email you enter at checkout."
+                else "Subscriptions auto-renew until cancelled in Google Play. Manage anytime in Play Store > Subscriptions.",
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
@@ -177,6 +195,30 @@ private fun BenefitRow(text: String) {
             style = MaterialTheme.typography.bodyLarge,
             modifier = Modifier.padding(start = 12.dp),
         )
+    }
+}
+
+private data class DirectPlan(val key: String, val title: String, val price: String, val name: String)
+
+private val DIRECT_PLANS = listOf(
+    DirectPlan(EntitlementSku.PREMIUM_MONTHLY, "Premium", "$2.99/month", "ScamRadar Premium (Monthly)"),
+    DirectPlan(EntitlementSku.PREMIUM_YEARLY, "Premium", "$19.99/year", "ScamRadar Premium (Yearly)"),
+    DirectPlan(EntitlementSku.FAMILY_MONTHLY, "Family", "$2.99/month", "ScamRadar Family (Monthly)"),
+    DirectPlan(EntitlementSku.FAMILY_YEARLY, "Family", "$19.99/year", "ScamRadar Family (Yearly)"),
+)
+
+@Composable
+private fun DirectPlanCard(plan: DirectPlan, onSubscribe: () -> Unit) {
+    Card(modifier = Modifier.fillMaxWidth()) {
+        Column(modifier = Modifier.padding(16.dp)) {
+            Text(text = plan.title, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+            Text(text = plan.price, style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold, modifier = Modifier.padding(top = 4.dp))
+            Text(text = plan.name, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Spacer(Modifier.height(12.dp))
+            Button(onClick = onSubscribe, modifier = Modifier.fillMaxWidth()) {
+                Text("Subscribe")
+            }
+        }
     }
 }
 

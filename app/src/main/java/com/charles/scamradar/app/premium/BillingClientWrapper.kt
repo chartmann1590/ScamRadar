@@ -13,6 +13,7 @@ import com.android.billingclient.api.QueryProductDetailsParams
 import com.android.billingclient.api.QueryPurchasesParams
 import com.android.billingclient.api.Purchase
 import com.charles.scamradar.app.family.FamilySync
+import com.hartmannstudios.direct.DirectBilling
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -46,16 +47,59 @@ class BillingClientWrapper(
         }
     }
 
-    private val client: BillingClient = BillingClient.newBuilder(context.applicationContext)
-        .enablePendingPurchases(
-            com.android.billingclient.api.PendingPurchasesParams.newBuilder()
-                .enableOneTimeProducts()
-                .build()
-        )
-        .setListener(purchasesUpdatedListener)
-        .build()
+    // Lazy: direct (non-Play) builds never create a Google Play BillingClient.
+    private val client: BillingClient by lazy {
+        BillingClient.newBuilder(context.applicationContext)
+            .enablePendingPurchases(
+                com.android.billingclient.api.PendingPurchasesParams.newBuilder()
+                    .enableOneTimeProducts()
+                    .build()
+            )
+            .setListener(purchasesUpdatedListener)
+            .build()
+    }
+
+    // ── Direct (GitHub / charleshartmann.com) build: Stripe Checkout through DirectBilling instead of Google Play ──
+    private val directListener: () -> Unit = { scope.launch { applyDirect() } }
+
+    init {
+        if (DirectBilling.isDirect) DirectBilling.init(context.applicationContext, "scamradar")
+    }
+
+    private suspend fun applyDirect() {
+        val e = DirectBilling.entitlements()
+        val tier = when {
+            e.contains(EntitlementSku.FAMILY_MONTHLY) || e.contains(EntitlementSku.FAMILY_YEARLY) -> EntitlementState.FAMILY
+            e.contains(EntitlementSku.PREMIUM_MONTHLY) || e.contains(EntitlementSku.PREMIUM_YEARLY) -> EntitlementState.PREMIUM
+            else -> EntitlementState.FREE
+        }
+        entitlementRepository.applyEntitlement(tier)
+        runCatching { FamilySync.sync(context) }
+    }
+
+    /** Direct builds: Stripe Checkout for one of the EntitlementSku keys (same ids as the Play products). */
+    fun launchDirect(activity: Activity, productKey: String) {
+        if (DirectBilling.isDirect) DirectBilling.purchase(activity, productKey)
+    }
+
+    /** Direct builds: look up a Stripe purchase by email (new phone, reinstall). */
+    fun restoreDirect(activity: Activity) {
+        if (DirectBilling.isDirect) DirectBilling.restore(activity)
+    }
+
+    /** Direct builds: Stripe customer portal. */
+    fun manageDirect(activity: Activity) {
+        if (DirectBilling.isDirect) DirectBilling.manageSubscription(activity)
+    }
 
     fun startConnection() {
+        if (DirectBilling.isDirect) {
+            if (_state.value == BillingState.READY) return
+            _state.value = BillingState.READY
+            DirectBilling.addListener(directListener)
+            scope.launch { applyDirect() }
+            return
+        }
         if (_state.value == BillingState.READY) return
         _state.value = BillingState.CONNECTING
         client.startConnection(object : BillingClientStateListener {
@@ -78,6 +122,7 @@ class BillingClientWrapper(
     }
 
     suspend fun queryProducts() {
+        if (DirectBilling.isDirect) return
         val ids = listOf(
             EntitlementSku.PREMIUM_MONTHLY,
             EntitlementSku.PREMIUM_YEARLY,
@@ -121,6 +166,7 @@ class BillingClientWrapper(
     }
 
     suspend fun refreshEntitlement() {
+        if (DirectBilling.isDirect) { applyDirect(); return }
         val params = QueryPurchasesParams.newBuilder()
             .setProductType(BillingClient.ProductType.SUBS)
             .build()
@@ -165,6 +211,7 @@ class BillingClientWrapper(
     }
 
     fun close() {
+        if (DirectBilling.isDirect) { DirectBilling.removeListener(directListener); return }
         if (client.isReady) client.endConnection()
     }
 

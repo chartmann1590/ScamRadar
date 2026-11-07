@@ -44,6 +44,7 @@ class MainActivity : ComponentActivity() {
         // subscription canceled/expired outside the app (or in the Play
         // Store) is detected promptly instead of only when the user next
         // opens the Premium screen.
+        if (com.charles.scamradar.app.BuildConfig.STORE == "direct") com.hartmann.crosspromo.launcher.PlayStoreLauncher.directDownloadUrl = "https://charleshartmann.com/apps/"
         val startupBilling = BillingClientWrapper(applicationContext, entitlementRepository)
         startupBilling.startConnection()
 

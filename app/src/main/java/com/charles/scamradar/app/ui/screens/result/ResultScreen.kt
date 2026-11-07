@@ -119,6 +119,7 @@ fun ResultScreen(
     // A verdict just landed — a genuine moment of delivered value. Any interstitial ad already
     // ran to completion before navigation reached this screen, so there's no overlap risk.
     LaunchedEffect(scanResult) {
+        if (com.charles.scamradar.app.BuildConfig.STORE == "direct") return@LaunchedEffect // direct (non-Play) build: no Play review prompt
         val prefs = userPrefs ?: return@LaunchedEffect
         val activity = context as? Activity ?: return@LaunchedEffect
         if (prefs.recordVerdictShownAndCheckReviewPrompt()) {
