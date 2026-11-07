@@ -17,7 +17,10 @@ shot 03b-all-set
 taploop (?i)^(start scanning|continue|allow|ok|got it|not now|skip|done)$
 wait 3
 adclose
-taploop (?i)^(skip|not now|later|no thanks|got it|done|close)$
+wait 4
+taploop (?i)^(maybe later|skip|not now|later|no thanks|got it|done|close)$
+wait 3
+adclose
 shot 04-scan-home
 swipeup
 shot 05-scan-scrolled
