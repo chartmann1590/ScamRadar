@@ -60,8 +60,10 @@ val envVersionCode = System.getenv("ANDROID_VERSION_CODE")?.toIntOrNull()
 val envVersionName = System.getenv("ANDROID_VERSION_NAME")
 
 android {
-    // DirectBilling: real Stripe client in direct builds, a no-op stub in Play builds
-    sourceSets.getByName("main").java.srcDir(if (((project.findProperty("store") as String?) ?: "play") == "direct") "src/hsdirect/java" else "src/hsplay/java")
+    // DirectBilling: real Stripe client in direct builds, a no-op stub in Play builds (java + kotlin dirs)
+    val hsBillingDir = if (((project.findProperty("store") as String?) ?: "play") == "direct") "src/hsdirect/java" else "src/hsplay/java"
+    sourceSets.getByName("main").java.srcDir(hsBillingDir)
+    sourceSets.getByName("main").kotlin.srcDir(hsBillingDir) // AGP 9 built-in Kotlin reads kotlin dirs
     namespace = "com.charles.scamradar.app"
     compileSdk = 37
 
