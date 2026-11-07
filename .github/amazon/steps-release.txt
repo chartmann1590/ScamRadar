@@ -2,36 +2,51 @@ launch
 wait 15
 adclose
 shot 01-launch
-taploop (?i)^(get started|continue|next|skip|allow|ok|got it|not now|later|maybe later|no thanks|accept|agree|i agree)$
-wait 3
-shot 02-onboarding
+taploop (?i)^(next)$
+shot 02-story-end
+tap (?i)^start protecting me$
+wait 4
+taploop (?i)^(get started|continue|allow|ok|got it|not now|while using the app)$
+shot 03-model-setup
 scrollto (?i)^start with lite mode$
-wait 5
-shot 03-after-lite
-taploop (?i)^(start scanning|continue|next|skip|allow|ok|got it|not now|later|maybe later|no thanks|done|while using the app)$
+wait 4
+taploop (?i)^(start scanning|continue|allow|ok|got it|not now|skip|done)$
 adclose
-wait 3
-shot 04-home
+taploop (?i)^(skip|not now|later|no thanks|got it|done|close)$
+shot 04-scan-home
 swipeup
-shot 05-home-scrolled
-tap (?i)^(library|history)$
-wait 3
+shot 05-scan-scrolled
+tap (?i)^today$
+wait 4
 adclose
-shot 06-tab2
-tap (?i)^(stats|today|shield)$
-wait 3
+shot 06-today
+tap (?i)^library$
+wait 4
 adclose
-shot 07-tab3
+shot 07-library
+tap (?i)^history$
+wait 4
+adclose
+shot 08-history
 tap (?i)^settings$
 wait 4
 adclose
-shot 08-settings
+shot 09-settings
 swipeup
 swipeup
-shot 09-settings-mid
+shot 10-settings-mid
 swipeup
 swipeup
-shot 10-settings-bottom
+swipeup
+shot 11-settings-bottom
+tap (?i)^scan$
+wait 3
+tap (?i)^type manually$
+wait 3
+type Your-package-is-held.-Pay-2.99-at-usps-redelivery.top-now
+wait 1
 back
-wait 2
-shot 11-back
+scrollto (?i)^(check|scan|check it|scan message|analy[sz]e)
+wait 10
+adclose
+shot 12-result
