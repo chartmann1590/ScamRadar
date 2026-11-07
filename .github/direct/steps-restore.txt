@@ -14,6 +14,9 @@ wait 4
 taploop (?i)^(start scanning|continue|allow|ok|got it|not now|skip|done)$
 adclose
 taploop (?i)^(skip|not now|later|no thanks|got it|done|close)$
+tap (?i)^maybe later$
+wait 3
+adclose
 shot 20-scan-home
 tap (?i)^settings$
 wait 4
