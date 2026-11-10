@@ -47,9 +47,9 @@ jobs:
         TEST_ADMOB_INTERSTITIAL_ID: ca-app-pub-3940256099942544/1033173712
         GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
         KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
-        KEYSTORE_PASSWORD: [redacted] secrets.KEYSTORE_PASSWORD }}
+        KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
         KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
-        KEY_PASSWORD: [redacted] secrets.KEY_PASSWORD }}
+        KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
         ADMOB_APP_ID: ${{ secrets.ADMOB_APP_ID }}
         ADMOB_BANNER_ID: ${{ secrets.ADMOB_BANNER_ID }}
         ADMOB_INTERSTITIAL_ID: ${{ secrets.ADMOB_INTERSTITIAL_ID }}
@@ -80,9 +80,9 @@ jobs:
     - name: Build direct APK (store=direct)
       env:
         KEYSTORE_FILE: release.keystore
-        KEYSTORE_PASSWORD: [redacted] secrets.KEYSTORE_PASSWORD }}
+        KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
         KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
-        KEY_PASSWORD: [redacted] secrets.KEY_PASSWORD }}
+        KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
         ADMOB_APP_ID: ${{ secrets.ADMOB_APP_ID }}
         ADMOB_BANNER_ID: ${{ secrets.ADMOB_BANNER_ID }}
         ADMOB_INTERSTITIAL_ID: ${{ secrets.ADMOB_INTERSTITIAL_ID }}
